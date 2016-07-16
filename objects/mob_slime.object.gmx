@@ -67,6 +67,7 @@ stat_jumpspd=16;
 
 wnd_spec[1]=2;
 spr_hp_ring_loc = spr_hp_ring_small
+spr_shadow_loc = spr_shadow_small
 </string>
           </argument>
         </arguments>
@@ -90,6 +91,7 @@ spr_hp_ring_loc = spr_hp_ring_small
           <argument>
             <kind>1</kind>
             <string>act_jump=false;
+do_block=false
 
 if ai_target==noone || not instance_exists(ai_target) {
     //pick new ai_target

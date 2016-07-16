@@ -125,15 +125,6 @@ draw_vertex_texture(get_draw_x(x,y+surf_h)+surf_w,get_draw_y(y+surf_h), 1, 1);
 draw_primitive_end();
 //draw_line(get_draw_x(),get_draw_y(),get_draw_x(x+surf_w,y),get_draw_y());
 //draw_surface_ext(surf,,1,camera.aot,0,c_white,1)
-
-
-/*
-for (i=0;i&lt;cn;i++){
-    var cx=child_x[i];
-    var cy=child_y[i];
-
-    draw_background_part(child_bg[i],child_left[i],child_top[i],child_w[i],child_h[i],get_draw_x(cx,cy),get_draw_y(cy,z));
-}*/
 </string>
           </argument>
         </arguments>

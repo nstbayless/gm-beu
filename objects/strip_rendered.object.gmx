@@ -89,7 +89,7 @@ im_right = im_left+sprite_get_width(sprite_index);
 im_top = -sprite_get_yoffset(sprite_index);
 im_bot = im_top + sprite_get_height(sprite_index);
 var im_h=(im_bot-im_top);
-var daemon_count=ceil(im_h/strip_thickness)+1;
+var daemon_count=floor(im_h/strip_thickness)+2;
 
 //init array:
 daemon[daemon_count]=noone;

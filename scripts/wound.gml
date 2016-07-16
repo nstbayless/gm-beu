@@ -13,6 +13,10 @@ var defn = argument2;
 defn[4]=0;
 
 with (obj) {
-    hp-=defn[1]
+    var damage=defn[1]
+    print(is_blocking)
+    if (is_blocking)
+        damage = max(damage*stat_blk_mult-stat_blk_sub,0);
+    hp-=damage;
     t_since_hit=0;
 }

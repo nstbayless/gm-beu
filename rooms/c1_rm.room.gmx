@@ -65,11 +65,10 @@
     <instance objName="impass" x="960" y="288" name="inst_6987869B" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="impass" x="992" y="320" name="inst_3E9DBACC" locked="0" code="" scaleX="9" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="impass" x="1280" y="288" name="inst_5F6B7A0D" locked="0" code="z=32&#xA;" scaleX="8" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="impass" x="1440" y="416" name="inst_DF41B802" locked="0" code="z=32&#xA;" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="ground" x="1280" y="320" name="inst_EE12015A" locked="0" code="z=32&#xA;depth=1030;&#xA;&#xA;" scaleX="8" scaleY="3" colour="4294967295" rotation="0"/>
     <instance objName="ground" x="960" y="512" name="inst_04D0736E" locked="0" code="z=-64&#xA;" scaleX="15" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="vwall" x="0" y="480" name="inst_206EB407" locked="0" code="depth=1040;&#xA;" scaleX="21" scaleY="9" colour="4294967295" rotation="0"/>
-    <instance objName="vwall" x="960" y="448" name="inst_AE486D4A" locked="0" code="depth=1050;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="vwall" x="960" y="448" name="inst_AE486D4A" locked="0" code="depth=1050;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="dec_sakura" x="1152" y="384" name="inst_CF87DB76" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="dec_sakura" x="1024" y="428" name="inst_FE9FE87C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="dec_sakura" x="1215" y="405" name="inst_5215766F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -78,19 +77,35 @@
     <instance objName="ground" x="1536" y="352" name="inst_C6BCAF40" locked="0" code="" scaleX="17" scaleY="6" colour="4294967295" rotation="0"/>
     <instance objName="impass" x="1536" y="544" name="inst_400456C2" locked="0" code="" scaleX="17" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="impass" x="1536" y="320" name="inst_D105B1CD" locked="0" code="" scaleX="17" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="impass" x="1504" y="448" name="inst_40AE9A55" locked="0" code="" scaleX="1" scaleY="3" colour="4294967295" rotation="0"/>
     <instance objName="vwall" x="1536" y="544" name="inst_D4568B68" locked="0" code="depth = 1060&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="dec_sakura" x="1664" y="384" name="inst_23B4C84A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="dec_sakura" x="1920" y="480" name="inst_EC039B8E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="dec_sakura" x="1600" y="512" name="inst_9BDEE2CC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="dec_sakura" x="1760" y="512" name="inst_9BDEE2CC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="mob_slime" x="384" y="320" name="inst_E5C98A2F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="mob_slime" x="384" y="384" name="inst_CBD4985E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="mob_slime" x="576" y="352" name="inst_70DEB10B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="mob_slime" x="288" y="320" name="inst_1EBE4DD7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="impass" x="2080" y="352" name="inst_9675E74B" locked="0" code="" scaleX="1" scaleY="6" colour="4294967295" rotation="0"/>
     <instance objName="monster_spawner" x="385" y="96" name="inst_90052AC2" locked="0" code="z=7*32&#xA;" scaleX="18" scaleY="3" colour="4294967295" rotation="0"/>
+    <instance objName="ground" x="1440" y="576" name="inst_FD1D0011" locked="0" code="depth=1070;&#xA;z=-128&#xA;" scaleX="3" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="impass" x="1408" y="608" name="inst_3A257F41" locked="0" code="z=-128&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="impass" x="1440" y="640" name="inst_7C3B5735" locked="0" code="z=-128&#xA;" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="vwall" x="1440" y="640" name="inst_5CAB46F0" locked="0" code="z=-128;&#xA;depth=1080;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
+    <tile bgName="bg_cliffs" x="1472" y="640" w="64" h="64" xo="64" yo="0" id="10000709" name="inst_5751C637" depth="1081" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1472" y="704" w="64" h="64" xo="64" yo="64" id="10000710" name="inst_FF5430E5" depth="1081" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1472" y="768" w="64" h="64" xo="64" yo="64" id="10000711" name="inst_D4ED1F2A" depth="1081" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1472" y="832" w="64" h="64" xo="64" yo="64" id="10000712" name="inst_20FE0EC6" depth="1081" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1440" y="704" w="64" h="64" xo="0" yo="64" id="10000714" name="inst_4E258F38" depth="1081" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1440" y="768" w="64" h="64" xo="0" yo="64" id="10000715" name="inst_77E85DF7" depth="1081" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1440" y="640" w="64" h="64" xo="0" yo="0" id="10000716" name="inst_0CF06E82" depth="1081" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_grass" x="1472" y="576" w="32" h="32" xo="96" yo="64" id="10000694" name="inst_CD618A3E" depth="1071" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_grass" x="1440" y="608" w="32" h="32" xo="96" yo="64" id="10000698" name="inst_FAA89220" depth="1071" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_grass" x="1440" y="576" w="32" h="32" xo="128" yo="96" id="10000701" name="inst_905B43FA" depth="1071" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_grass" x="1504" y="608" w="32" h="32" xo="288" yo="64" id="10000704" name="inst_AE408970" depth="1071" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_grass" x="1504" y="576" w="32" h="32" xo="224" yo="0" id="10000705" name="inst_ACE70459" depth="1071" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_grass" x="1472" y="608" w="32" h="32" xo="224" yo="0" id="10000707" name="inst_13F507F1" depth="1071" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1536" y="544" w="64" h="64" xo="0" yo="0" id="10000638" name="inst_A1852708" depth="1061" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1600" y="544" w="64" h="64" xo="0" yo="0" id="10000639" name="inst_20DEA2E9" depth="1061" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1664" y="544" w="64" h="64" xo="0" yo="0" id="10000640" name="inst_C17A2798" depth="1061" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -152,17 +167,10 @@
     <tile bgName="bg_cliffs" x="1280" y="448" w="64" h="64" xo="0" yo="64" id="10000443" name="inst_9F602ED2" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1344" y="448" w="64" h="64" xo="0" yo="64" id="10000444" name="inst_2F37040F" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1408" y="448" w="64" h="64" xo="0" yo="64" id="10000445" name="inst_26FF685A" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1472" y="544" w="64" h="64" xo="64" yo="64" id="10000447" name="inst_B17D9118" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1472" y="608" w="64" h="64" xo="64" yo="64" id="10000448" name="inst_286DE608" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1472" y="672" w="64" h="64" xo="64" yo="64" id="10000449" name="inst_9E532135" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1472" y="736" w="64" h="64" xo="64" yo="64" id="10000450" name="inst_5A043AE8" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1408" y="544" w="64" h="64" xo="0" yo="64" id="10000451" name="inst_60CB3FCC" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1408" y="608" w="64" h="64" xo="0" yo="64" id="10000452" name="inst_AFF29163" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1408" y="672" w="64" h="64" xo="0" yo="64" id="10000453" name="inst_3879A4E4" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1408" y="736" w="64" h="64" xo="0" yo="64" id="10000454" name="inst_CA7C8569" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1472" y="416" w="64" h="64" xo="64" yo="0" id="10000455" name="inst_72286B88" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1472" y="480" w="64" h="64" xo="64" yo="64" id="10000456" name="inst_5408169A" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1408" y="512" w="64" h="64" xo="0" yo="64" id="10000688" name="inst_50C92350" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1472" y="512" w="64" h="64" xo="0" yo="64" id="10000690" name="inst_64F71197" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1472" y="480" w="64" h="64" xo="0" yo="64" id="10000691" name="inst_E094AD0C" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="-32" y="480" w="64" h="64" xo="0" yo="0" id="10000312" name="inst_BFC4F36A" depth="1041" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="32" y="480" w="64" h="64" xo="0" yo="0" id="10000313" name="inst_9A152598" depth="1041" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="96" y="480" w="64" h="64" xo="0" yo="0" id="10000314" name="inst_0C064E42" depth="1041" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

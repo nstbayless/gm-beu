@@ -63,7 +63,48 @@ if (camera.render_flat_behind)
     var w=parent.im_right-parent.im_left
     var h=parent.strip_thickness
     var yoff = floor(parent.y+parent.im_top)%parent.strip_thickness;
-    draw_sprite_part_ext(parent.sprite_index,parent.image_index,0,parent.strip_thickness*n-yoff,w,h,get_draw_x(),get_draw_y(),1,camera.aot,image_blend,image_alpha)
+    
+    var tex=sprite_get_texture(parent.sprite_index,parent.image_index);
+    
+    var im_h=(parent.im_bot-parent.im_top)
+    
+    ty1=(parent.strip_thickness*n-yoff)/(parent.im_bot-parent.im_top)
+    ty2=(parent.strip_thickness*(n+1)-yoff)/(parent.im_bot-parent.im_top)
+    ty1off=0;
+    ty2off=0;
+    if (ty1&lt;0)
+        ty1off=abs(ty1);
+    if (ty2&gt;1)
+        ty2off=1-ty2
+    if (ty1&lt;1) {
+            
+        var x_11=floor(get_draw_x(x,y+ty1off*im_h))
+        var y_11=floor(get_draw_y(y+ty1off*im_h))
+        
+        var x_21=floor(get_draw_x(x+w,y+ty1off*im_h))
+        var y_21=floor(get_draw_y(y+ty1off*im_h))
+        
+        var x_12=floor(get_draw_x(x,y+h+ty2off*im_h))
+        var y_12=floor(get_draw_y(y+h+ty2off*im_h))
+        
+        var x_22=floor(get_draw_x(x+w,y+h+ty2off*im_h))
+        var y_22=floor(get_draw_y(y+h+ty2off*im_h))
+        
+        if (config.SMOOTH_STRIPS) {
+            draw_set_color(parent.image_blend);
+            draw_set_alpha(parent.image_alpha);
+            draw_primitive_begin_texture(pr_trianglestrip, tex);
+            draw_vertex_texture(x_11,y_11, 0, ty1+ty1off);
+            draw_vertex_texture(x_21,y_21, 1, ty1+ty1off);
+            draw_vertex_texture(x_12,y_12, 0, ty2+ty2off);
+            draw_vertex_texture(x_22,y_22, 1, ty2+ty2off);
+            draw_primitive_end();
+            draw_set_alpha(1);
+            draw_set_colour(c_white)
+        }
+        else
+            draw_sprite_part_ext(parent.sprite_index,parent.image_index,0,parent.strip_thickness*n-yoff,w,h,get_draw_x(),get_draw_y(),1,camera.aot,parent.image_blend,parent.image_alpha)
+    }
 }
 </string>
           </argument>

@@ -80,8 +80,8 @@ dim_z=10;
 
 c_hp_gone=make_color_hsv(15,132,156)
 a_hp_gone=0.6;
-c_hp_gone_dire=make_color_hsv(4,252,250)
-a_hp_gone_dire=0.8;
+c_hp_gone_dire=c_hp_gone;
+a_hp_gone_dire=a_hp_gone;
 c_hp_full=make_color_hsv(13,90,220)
 a_hp_full=0.8;
 spr_hp_ring_loc = spr_hp_ring_med
@@ -90,6 +90,7 @@ spr_hp_ring_loc = spr_hp_ring_med
 player=-1;
 
 shadow=noone;
+spr_shadow_loc=spr_shadow_med;
 </string>
           </argument>
         </arguments>
@@ -188,6 +189,7 @@ on_ground=(z==z_rest);
             <string>if (!instance_exists(shadow)) {
     shadow = instance_create(x,y,obj_shadow)
     shadow.parent=id;
+    shadow.sprite_index=spr_shadow_loc;
 }
 </string>
           </argument>
