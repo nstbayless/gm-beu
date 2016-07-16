@@ -282,13 +282,13 @@ var grounds_yn = get_grounds_in(xorig-10,yorig+ydiff-5,xorig+10,yorig+ydiff+5)
 
 for (var i=0;grounds_xn[i]!=noone;i++) {
     //collision!
-    if (grounds_xn[i].z&gt;z&amp;&amp;grounds_xn[i].zbot&lt;z)
+    if (grounds_xn[i].z&gt;z&amp;&amp;grounds_xn[i].zbot&lt;=z)
         xdiff=0;
 }
 
 for (var i=0;grounds_yn[i]!=noone;i++) {
     //collision!
-    if (grounds_yn[i].z&gt;z&amp;&amp;grounds_yn[i].zbot&lt;z)
+    if (grounds_yn[i].z&gt;z&amp;&amp;grounds_yn[i].zbot&lt;=z)
         ydiff=0;
 }
 

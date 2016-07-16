@@ -48,6 +48,7 @@ strip_thickness=config.STRIP_THICKNESS;
 
 strips[0]=noone;
 
+no_cliffs=false;
 </string>
           </argument>
         </arguments>
@@ -213,6 +214,23 @@ depth-=1;
 
 //split into strips
 event_user(0)
+
+//create cliffs:
+if (!no_cliffs) {
+    cr = instance_create(x+width,y,cliff)
+    cr.z=z;
+    cr.length=height;
+    cr.height=z-zbot;
+    
+    /*cl = instance_create(x,y,cliff)
+    cl.z=z;
+    cl.length=height;
+    cl.height=z-zbot;*/
+    
+    //run cliff set-up (makes strips);
+    with (cr) {event_user(0)}
+    //with (cl) {event_user(0)}
+}
 </string>
           </argument>
         </arguments>

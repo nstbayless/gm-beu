@@ -2,36 +2,27 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_xyz</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>604</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>anim=150;
-</string>
-          </argument>
-        </arguments>
       </action>
-    </event>
-    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -48,30 +39,83 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (camera.x&gt;800 or anim&gt;0)
-    anim++;
+            <string>length=32;
+height=32;
+use_strips=false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var strip_thickness=length;
+if (use_strips)
+    strip_thickness=config.STRIP_THICKNESS;
 
-if anim&lt;150 {
-    var aot=anim/150;
-    aot=1-cos(aot*pi/2)
-    camera.aot=aot
-    camera.skew=anim/180*-0.25;
+var strip_count = length/strip_thickness;
+print(strip_count);
+strip[strip_count]=noone
+for (var i=0;i&lt;strip_count;i++) {
+    if (strip[i]==0||!instance_exists(strip[i])) {
+        strip[i]=instance_create(x,y+i*strip_thickness,cliff_strip);
+        strip[i].z=z;
+        strip[i].height=height;
+        strip[i].length=strip_thickness;
+    }
 }
-else {
-    camera.aot=1;
-    camera.skew=-0.25;
-    //camera.aot=0.9+0.1*sin(anim/60);
-    /*dep=obj_focus.y-z_cue.y
-    dep_max=1500;
-    dep_min=-1500;
-    camera.aot=(dep-dep_min)/(dep_max-dep_min)
-    if (camera.aot&lt;0)
-        camera.aot=0
-    if (camera.aot&gt;1)
-        camera.aot=1;
-    
-    camera.skew=sin(anim/40)/4;*/
-}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_user(0);
 </string>
           </argument>
         </arguments>

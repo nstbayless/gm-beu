@@ -5,33 +5,24 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_xyz</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>604</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>anim=150;
-</string>
-          </argument>
-        </arguments>
       </action>
-    </event>
-    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -48,29 +39,36 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (camera.x&gt;800 or anim&gt;0)
-    anim++;
-
-if anim&lt;150 {
-    var aot=anim/150;
-    aot=1-cos(aot*pi/2)
-    camera.aot=aot
-    camera.skew=anim/180*-0.25;
-}
-else {
-    camera.aot=1;
-    camera.skew=-0.25;
-    //camera.aot=0.9+0.1*sin(anim/60);
-    /*dep=obj_focus.y-z_cue.y
-    dep_max=1500;
-    dep_min=-1500;
-    camera.aot=(dep-dep_min)/(dep_max-dep_min)
-    if (camera.aot&lt;0)
-        camera.aot=0
-    if (camera.aot&gt;1)
-        camera.aot=1;
-    
-    camera.skew=sin(anim/40)/4;*/
+            <string>y_boost=-4;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_color(c_gray) {
+    draw_primitive_begin(pr_trianglestrip);
+    draw_vertex(get_draw_x(x,y+length),get_draw_y(y+length,z));
+    draw_vertex(get_draw_x(x,y),get_draw_y(y,z));
+    draw_vertex(get_draw_x(x,y+length),get_draw_y(y+length,z-height));
+    draw_vertex(get_draw_x(x,y),get_draw_y(y,z-height));
+    draw_primitive_end();
 }
 </string>
           </argument>

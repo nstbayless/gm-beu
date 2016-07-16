@@ -14,7 +14,6 @@ defn[4]=0;
 
 with (obj) {
     var damage=defn[1]
-    print(is_blocking)
     if (is_blocking)
         damage = max(damage*stat_blk_mult-stat_blk_sub,0);
     hp-=damage;

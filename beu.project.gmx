@@ -100,10 +100,12 @@
       <object>objects\dec_sakura</object>
       <object>objects\decal</object>
     </objects>
-    <object>objects\ground_strip</object>
     <object>objects\strip_daemon</object>
     <object>objects\strip_rendered</object>
     <object>objects\ground</object>
+    <object>objects\ground_strip</object>
+    <object>objects\cliff</object>
+    <object>objects\cliff_strip</object>
     <object>objects\monster_spawner</object>
     <object>objects\obj_xyz</object>
     <object>objects\z_cue</object>
