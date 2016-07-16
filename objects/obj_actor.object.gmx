@@ -80,6 +80,8 @@ dim_z=10;
 
 c_hp_gone=make_color_hsv(15,132,156)
 a_hp_gone=0.6;
+c_hp_gone_dire=make_color_hsv(4,252,250)
+a_hp_gone_dire=0.8;
 c_hp_full=make_color_hsv(13,90,220)
 a_hp_full=0.8;
 spr_hp_ring_loc = spr_hp_ring_med
@@ -340,12 +342,21 @@ t_since_hit++;
         ring_scale=t_since_hit*0.2/4+0.8;
         ring_scale=sqrt(ring_scale)
     }
-    draw_sprite_ext(spr_hp_ring_loc,0,cx-ring_w/2*ring_scale,cy-ring_h/2*ring_scale,ring_scale,ring_scale,0,c_hp_gone,a_hp_gone*alph_mult);
+    //draw background wheel:
+    var merge_colour_amount=hp/stat_maxhp*3.7-0.8
+    merge_colour_amount=max(0,min(merge_colour_amount,1))
+    var merge_alpha=a_hp_gone_dire*merge_colour_amount+a_hp_gone*(1-merge_colour_amount)
+    var c_hp_gone_tmp=merge_colour(c_hp_gone_dire,c_hp_gone,merge_colour_amount)
+    draw_sprite_ext(spr_hp_ring_loc,0,cx-ring_w/2*ring_scale,cy-ring_h/2*ring_scale,ring_scale,ring_scale,0,c_hp_gone_tmp,merge_alpha*alph_mult);
+    
+    //draw right side of circle:
     var portion = hp/stat_maxhp;
     var part_b=1;
     if (portion&lt;0.5)
         part_b=0.5-cos(portion*pi*2)/2
     draw_sprite_part_ext(spr_hp_ring_loc,0,0.5*ring_w,0,0.5*ring_w,ring_h*part_b,cx,cy-ring_h/2*ring_scale,ring_scale,ring_scale,c_hp_full,a_hp_full*alph_mult);
+    
+    //draw left side of circle:
     if portion&gt;0.5 {
         var part_a=0.5-cos(portion*pi*2)/2
         draw_sprite_part_ext(spr_hp_ring_loc,0,0,ring_h*(part_a),0.5*ring_w,ring_h*(1-part_a),cx-ring_w/2*ring_scale,cy-ring_h/2*ring_scale+ring_h*part_a*ring_scale,ring_scale,ring_scale,c_hp_full,a_hp_full*alph_mult);

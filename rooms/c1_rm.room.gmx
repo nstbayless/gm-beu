@@ -149,9 +149,9 @@
     <tile bgName="bg_cliffs" x="1280" y="416" w="64" h="64" xo="0" yo="0" id="10000438" name="inst_F3C44EEB" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1344" y="416" w="64" h="64" xo="0" yo="0" id="10000439" name="inst_49C59DF0" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1408" y="416" w="64" h="64" xo="0" yo="0" id="10000440" name="inst_8173C070" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1280" y="480" w="64" h="64" xo="0" yo="64" id="10000443" name="inst_9F602ED2" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1344" y="480" w="64" h="64" xo="0" yo="64" id="10000444" name="inst_2F37040F" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cliffs" x="1408" y="480" w="64" h="64" xo="0" yo="64" id="10000445" name="inst_26FF685A" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1280" y="448" w="64" h="64" xo="0" yo="64" id="10000443" name="inst_9F602ED2" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1344" y="448" w="64" h="64" xo="0" yo="64" id="10000444" name="inst_2F37040F" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1408" y="448" w="64" h="64" xo="0" yo="64" id="10000445" name="inst_26FF685A" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1472" y="544" w="64" h="64" xo="64" yo="64" id="10000447" name="inst_B17D9118" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1472" y="608" w="64" h="64" xo="64" yo="64" id="10000448" name="inst_286DE608" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1472" y="672" w="64" h="64" xo="64" yo="64" id="10000449" name="inst_9E532135" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -162,6 +162,7 @@
     <tile bgName="bg_cliffs" x="1408" y="736" w="64" h="64" xo="0" yo="64" id="10000454" name="inst_CA7C8569" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1472" y="416" w="64" h="64" xo="64" yo="0" id="10000455" name="inst_72286B88" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="1472" y="480" w="64" h="64" xo="64" yo="64" id="10000456" name="inst_5408169A" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_cliffs" x="1408" y="512" w="64" h="64" xo="0" yo="64" id="10000688" name="inst_50C92350" depth="1051" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="-32" y="480" w="64" h="64" xo="0" yo="0" id="10000312" name="inst_BFC4F36A" depth="1041" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="32" y="480" w="64" h="64" xo="0" yo="0" id="10000313" name="inst_9A152598" depth="1041" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_cliffs" x="96" y="480" w="64" h="64" xo="0" yo="0" id="10000314" name="inst_0C064E42" depth="1041" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

@@ -57,7 +57,7 @@ if anim&lt;150 {
     camera.aot=aot
 }
 else {
-    //camera.aot=0.9+0.1*sin(anim/60);
+    camera.aot=0.9+0.1*sin(anim/60);
     /*dep=obj_focus.y-z_cue.y
     dep_max=1500;
     dep_min=-1500;

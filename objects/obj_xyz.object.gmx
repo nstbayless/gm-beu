@@ -58,6 +58,9 @@ if (depth==0) use_iso=true
             <string>if (use_iso) {
     depth=get_draw_depth(x+x_boost,y+y_boost,z+z_boost)
 }
+
+if (flat&amp;&amp;camera.render_flat_behind)
+    depth+=100;
 </string>
           </argument>
         </arguments>

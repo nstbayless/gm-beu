@@ -29,7 +29,11 @@
 z=0;
 focus=noone;
 
-camera.skew=-0.25
+skew=-0.25
+
+//render flat objects far behind imposters
+//(this is the old style before the skew update)
+render_flat_behind=false;
 </string>
           </argument>
         </arguments>

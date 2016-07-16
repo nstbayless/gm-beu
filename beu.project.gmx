@@ -31,12 +31,13 @@
     </sprites>
     <sprite>sprites\spr_impass</sprite>
     <sprite>sprites\spr_vwall</sprite>
-    <sprite>sprites\spr_ground0</sprite>
+    <sprite>sprites\spr_ground</sprite>
     <sprites name="placeholders">
       <sprite>sprites\spr_ph_spawn</sprite>
       <sprite>sprites\spr_ph_z</sprite>
       <sprite>sprites\spr_ph_camera</sprite>
     </sprites>
+    <sprite>sprites\spr_shadow</sprite>
     <sprite>sprites\spr_king</sprite>
     <sprite>sprites\spr_slime</sprite>
     <sprites name="hud">
@@ -99,6 +100,8 @@
       <object>objects\decal</object>
     </objects>
     <object>objects\ground_strip</object>
+    <object>objects\strip_daemon</object>
+    <object>objects\strip_rendered</object>
     <object>objects\ground</object>
     <object>objects\monster_spawner</object>
     <object>objects\obj_xyz</object>

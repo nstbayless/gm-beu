@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>RUMBLE_ENABLED=true;
 TRANSITIONS_ENABLED=false;
+STRIP_THICKNESS=8;
 </string>
           </argument>
         </arguments>
