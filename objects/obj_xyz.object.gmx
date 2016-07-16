@@ -27,6 +27,10 @@
             <kind>1</kind>
             <string>z=0
 flat=false;
+//add these values to coords before determining depth
+y_boost=0;
+x_boost=0;
+z_boost=0;
 use_iso=false;
 if (depth==0) use_iso=true
 </string>
@@ -37,37 +41,9 @@ if (depth==0) use_iso=true
     <event eventtype="3" enumb="2">
       <action>
         <libid>1</libid>
-        <id>612</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
-        <isquestion>-1</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_if_variable</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>0</kind>
-            <string>use_iso</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>1</string>
-          </argument>
-          <argument>
-            <kind>4</kind>
-            <string>0</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>611</id>
-        <kind>6</kind>
-        <userelative>-1</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
@@ -79,11 +55,10 @@ if (depth==0) use_iso=true
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>get_draw_depth()</string>
+            <string>if (use_iso) {
+    depth=get_draw_depth(x+x_boost,y+y_boost,z+z_boost)
+}
+</string>
           </argument>
         </arguments>
       </action>

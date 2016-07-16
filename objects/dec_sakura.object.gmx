@@ -68,6 +68,7 @@
             <string>if (shadow==noone) {
     shadow=instance_create(x,y,decal);
     shadow.flat=true;
+    shadow.y_boost=16;
     shadow.z=z;
     shadow.sprite_index=spr_sakura_shadow
     shadow.image_alpha=0.5;

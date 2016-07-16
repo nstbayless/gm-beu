@@ -86,6 +86,8 @@ spr_hp_ring_loc = spr_hp_ring_med
 
 //player controlling this
 player=-1;
+
+shadow=noone;
 </string>
           </argument>
         </arguments>
@@ -141,6 +143,50 @@ for (i=0;grounds[i]!=noone;i++) {
 ground_rest=argmaxz;
 z_rest=maxz;
 on_ground=(z==z_rest);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>shadow</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!instance_exists(shadow)) {
+    shadow = instance_create(x,y,obj_shadow)
+    shadow.parent=id;
+}
 </string>
           </argument>
         </arguments>
@@ -327,18 +373,10 @@ t_since_hit++;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(0.4)
-draw_set_color(c_black);
-//draw shadow:
-var ly=get_draw_y(y,z_rest)
-var lx=get_draw_x()
-draw_ellipse(lx-10,ly-10*camera.aot/2,lx+10,ly+10*camera.aot/2,false)
-image_xscale=dir
+            <string>image_xscale=dir
 draw_set_alpha(1);
 if (t_since_hit&gt;=0&amp;&amp;t_since_hit&lt;6) {
     image_blend=c_red;
-    draw_set_colour(c_white)
-    draw_rectangle(lx-dim_w/2,get_draw_y()-dim_h/2*camera.aot,lx+dim_w/2,get_draw_y()+dim_h/2*camera.aot,false)
 } else
     image_blend=c_white;
 </string>

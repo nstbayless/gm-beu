@@ -2,7 +2,7 @@
 <object>
   <spriteName>spr_ground0</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>1000</depth>
   <persistent>0</persistent>
   <parentName>obj_xyz</parentName>
@@ -42,43 +42,9 @@
             <string>width=sprite_width;
 height=sprite_height;
 zbot=-1000
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="2">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>var ycentre = view_yview[0] + view_hview[0]/2
+surf=-1;
 
-//grab all tiles in region at depth:
-for (i=0;i&lt;cn;i++) {
-    child = children[i]
-    cx=get_draw_x(child_x[i],child_y[i]);
-    cy=get_draw_y(child_y[i]);
-    tile_set_position(child,cx,cy);
-    tile_set_scale(child,1,camera.aot);
-    //x,y,z for drawing purposes
-    dy=child_y[i];
-    dx=child_x[i];
-    dz=z;
-    tile_set_depth(child,get_draw_depth(dx,dy,dz))
-}
+strip_thickness=12;
 </string>
           </argument>
         </arguments>
@@ -126,16 +92,45 @@ cn = array_length_1d(children);
 child_x[cn-1]=0;
 child_y[cn-1]=0;
 child_h[cn-1]=0;
+child_w[cn-1]=0;
+child_bg[cn-1]=0;
+child_left[cn-1]=0;
+child_top[cn-1]=0;
+miny=10000;
+maxy=-10000;
+minx=1000000;
+maxx=0;
 for (i=0;i&lt;cn;i++) {
     child = children[i]
     if (!tile_exists(child)) {
         cn=i-1;
         break;
     }
-    child_y[i]=tile_get_y(child)+z;
+    child_y[i]=tile_get_y(child);
+    if (child_y[i]&lt;miny)
+        miny=child_y[i]
     child_x[i]=tile_get_x(child);
+    if (child_x[i]&lt;minx)
+        minx=child_x[i]
     child_h[i]=tile_get_height(child);
+    if (child_y[i]+child_h[i]&gt;maxy)
+        maxy=child_y[i]+child_h[i]
+    child_w[i]=tile_get_width(child);
+    if (child_x[i]+child_w[i]&gt;maxx)
+        maxx=child_x[i]+child_w[i]
+    child_bg[i]=tile_get_background(child)
+    child_left[i]=tile_get_left(child);
+    child_top[i]=tile_get_top(child);
+    tile_delete(child);
 }
+
+surf_w=maxx-minx;
+surf_h=ceil((maxy-miny)/strip_thickness)*strip_thickness;
+print(surf_w);
+print(surf_h);
+use_surf=true;
+if (abs(surf_w)&gt;4000 || abs(surf_h) &gt; 3000||surf_w&lt;0||surf_h&lt;0)
+    use_surf=false
 
 //allows drawing over tiles.
 depth-=1;
@@ -143,8 +138,26 @@ depth-=1;
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>split graphics into strips</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -161,7 +174,36 @@ depth-=1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>if (!surface_exists(surf)&amp;&amp;use_surf) {
+    //render surface:
+    surf=surface_create(surf_w,surf_h);
+    surface_set_target(surf);
+    draw_clear_alpha(c_black,0);
+    for (i=0;i&lt;cn;i++){
+        var cx=child_x[i]-minx;
+        var cy=child_y[i]-miny;
+        draw_background_part(child_bg[i],child_left[i],child_top[i],child_w[i],child_h[i],cx,cy);
+    }
+    surface_reset_target();
+    
+    //split texture over strips:
+    var strip_surf;
+    var strip
+    for (var i=0;i&lt;surf_h/strip_thickness;i++){
+        strip_surf=surface_create(surf_w,strip_thickness);
+        surface_set_target(strip_surf);
+        draw_surface_part(surf,0,strip_thickness*i,surf_w,strip_thickness,0,0);
+        strip = instance_create(x,y+strip_thickness*i,ground_strip)
+        strip.z=z
+        strip.surf=strip_surf;
+        strip.surf_w=surf_w;
+        strip.surf_h=strip_thickness
+        surface_reset_target();
+    }
+    surface_reset_target();   
+    surface_free(surf);
+}
+</string>
           </argument>
         </arguments>
       </action>

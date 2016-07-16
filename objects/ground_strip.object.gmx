@@ -5,33 +5,24 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_xyz</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>604</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>anim=43;
-</string>
-          </argument>
-        </arguments>
       </action>
-    </event>
-    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -48,27 +39,70 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (camera.x&gt;800 or anim&gt;0)
-    anim++;
+            <string>surf=-1
+surf_w=0;
+surf_h=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+draw_set_colour(c_white);
+var text
+if (surface_exists(surf))
+    tex=surface_get_texture(surf)//surface_get_texture(surf);
+else //TODO: better replacement texture
+    tex=background_get_texture(bg_cliffs)
+draw_primitive_begin_texture(pr_trianglestrip, tex);
+draw_vertex_texture(get_draw_x(),get_draw_y(), 0, 0);
+draw_vertex_texture(get_draw_x()+surf_w,get_draw_y(), 1, 0);
+draw_vertex_texture(get_draw_x(x,y+surf_h),get_draw_y(y+surf_h), 0, 1);
+draw_vertex_texture(get_draw_x(x,y+surf_h)+surf_w,get_draw_y(y+surf_h), 1, 1);
+draw_primitive_end();
+//draw_surface_ext(surf,,1,camera.aot,0,c_white,1)
 
-if anim&lt;150 {
-    var aot=anim/150;
-    aot=1-cos(aot*pi/2)
-    camera.aot=aot
-}
-else {
-    //camera.aot=0.9+0.1*sin(anim/60);
-    /*dep=obj_focus.y-z_cue.y
-    dep_max=1500;
-    dep_min=-1500;
-    camera.aot=(dep-dep_min)/(dep_max-dep_min)
-    if (camera.aot&lt;0)
-        camera.aot=0
-    if (camera.aot&gt;1)
-        camera.aot=1;
-    
-    camera.skew=sin(anim/40)/4;*/
-}
+
+/*
+for (i=0;i&lt;cn;i++){
+    var cx=child_x[i];
+    var cy=child_y[i];
+
+    draw_background_part(child_bg[i],child_left[i],child_top[i],child_w[i],child_h[i],get_draw_x(cx,cy),get_draw_y(cy,z));
+}*/
 </string>
           </argument>
         </arguments>

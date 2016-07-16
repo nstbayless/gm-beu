@@ -89,6 +89,7 @@
       <object>objects\pc</object>
     </objects>
     <object>objects\obj_actor</object>
+    <object>objects\obj_shadow</object>
     <object>objects\ch_spawn</object>
     <object>objects\impass</object>
     <object>objects\obj_bg_mountains</object>
@@ -97,6 +98,7 @@
       <object>objects\dec_sakura</object>
       <object>objects\decal</object>
     </objects>
+    <object>objects\ground_strip</object>
     <object>objects\ground</object>
     <object>objects\monster_spawner</object>
     <object>objects\obj_xyz</object>
