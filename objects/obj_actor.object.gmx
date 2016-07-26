@@ -234,10 +234,17 @@ on_ground=(z==z_rest);
           <argument>
             <kind>1</kind>
             <string>//combat mechanics
-if (hp&lt;=0&amp;&amp;t_since_hit&gt;3)
-    instance_destroy();
+if (hp&lt;=0&amp;&amp;t_since_hit&gt;3) {
+    kill(this);
+}
 else if (t_since_hit&gt;=stat_recharge_delay)
     heal(self,stat_recharge_rate);
+if (z&lt;-2500) {
+    var defn;
+    defn[0]=0;
+    defn[4]=true;
+    wound(this,-1,defn)
+}
 
 is_blocking=do_block;
 

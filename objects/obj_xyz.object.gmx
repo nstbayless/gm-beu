@@ -32,6 +32,9 @@ y_boost=0;
 x_boost=0;
 z_boost=0;
 use_iso=false;
+//ignore z offset for y positioning on room load
+//(set this to true for objects created in scripts before the room starts)
+force_ignore_roomload=false;
 if (depth==0) use_iso=true
 </string>
           </argument>
@@ -83,7 +86,8 @@ if (flat&amp;&amp;camera.render_flat_behind)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>y+=z
+            <string>if (!force_ignore_roomload)
+    y+=z
 </string>
           </argument>
         </arguments>

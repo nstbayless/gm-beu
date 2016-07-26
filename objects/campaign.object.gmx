@@ -29,9 +29,11 @@
 chapter=0;
 show_debug_overlay(true);
 
-chapter_names[0]=""//"The Parable of the Stone Goddess"
+chapter_names[0]="Infinite Room"
+chapter_names[1]="Parable of the Stone Goddess"
 
-chapter_rooms[0]=c1_rm
+chapter_rooms[0]=cinf_rm
+chapter_rooms[1]=c1_rm
 
 art[0]=art0;
 art[1]=art1;
@@ -54,6 +56,48 @@ for (var i=0;i&lt;pc_count;i++) {
     pc_to_add.player=i;
     pc_actor[i]=pc_to_add;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//last element encountered on first traversal:
+var last_element=-1;
+for (var i=0;i&lt;spawn_n;i++) {
+    spawn_timer[i]--;
+    if spawn_inst[i]&gt;=0 {
+        last_element=i;
+        if (spawn_timer[i]&lt;=0) {
+            instance_activate_object(spawn_inst[i]);
+            spawn_inst[i].x=ch_spawn.x;
+            spawn_inst[i].y=ch_spawn.y;
+            spawn_inst[i].z=ch_spawn.z;
+            spawn_inst[i].vspd=0;
+            spawn_inst[i].hp=spawn_inst[i].stat_maxhp;
+            spawn_inst[i].t_since_hit=-1;
+            spawn_inst[i]=noone;
+        }
+    }
+}
+
+spawn_n=last_element+1;
 </string>
           </argument>
         </arguments>
@@ -85,11 +129,19 @@ for (var i=0;i&lt;pc_count;i++) {
         lpc.y=ch_spawn.y;
         lpc.x=ch_spawn.x+i*32;
         lpc.z=ch_spawn.z;
+        lpc.force_ignore_roomload=true;
         obj_focus.subfocus[i]=lpc;
         obj_focus.subfocus[i+1]=noone;
     }
     camera.focus=obj_focus;
 }
+
+//size of spawn list:
+spawn_n=0;
+//time until respawn:
+spawn_timer[0]=0;
+//object to respawn:
+spawn_inst[0]=noone;
 </string>
           </argument>
         </arguments>

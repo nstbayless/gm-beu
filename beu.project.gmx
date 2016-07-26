@@ -23,7 +23,9 @@
     </datafile>
   </datafiles>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\mus_54</sound>
+  </sounds>
   <sprites name="sprites">
     <sprites name="decals">
       <sprite>sprites\spr_sakura_shadow</sprite>
@@ -55,6 +57,7 @@
     </backgrounds>
     <backgrounds name="ground">
       <background>background\bg_cliffs</background>
+      <background>background\bg_darkrock</background>
       <background>background\bg_mountain</background>
       <background>background\bg_trees</background>
       <background>background\bg_whiteclouds</background>
@@ -72,16 +75,29 @@
     </scripts>
     <scripts name="combat">
       <script>scripts\heal.gml</script>
+      <script>scripts\kill.gml</script>
       <script>scripts\wound.gml</script>
       <script>scripts\attack_rectangle.gml</script>
+    </scripts>
+    <scripts name="generation">
+      <script>scripts\generate_cliffs_between.gml</script>
+      <script>scripts\generate_vwall.gml</script>
+      <script>scripts\generate_ground.gml</script>
+    </scripts>
+    <scripts name="camera">
+      <script>scripts\cg_link.gml</script>
+      <script>scripts\switch_to.gml</script>
     </scripts>
     <script>scripts\scale_gp_axis.gml</script>
     <script>scripts\get_art.gml</script>
     <script>scripts\get_target_nearest.gml</script>
     <script>scripts\print.gml</script>
     <script>scripts\get_gamepad_count.gml</script>
+    <script>scripts\music_play.gml</script>
+    <script>scripts\assert.gml</script>
   </scripts>
   <fonts name="fonts">
+    <font>fonts\jukefont</font>
     <font>fonts\cursive</font>
   </fonts>
   <objects name="objects">
@@ -93,40 +109,50 @@
     <object>objects\obj_actor</object>
     <object>objects\obj_shadow</object>
     <object>objects\ch_spawn</object>
-    <object>objects\impass</object>
     <object>objects\obj_bg_mountains</object>
-    <object>objects\vwall</object>
     <objects name="decals">
       <object>objects\dec_sakura</object>
       <object>objects\decal</object>
     </objects>
     <object>objects\strip_daemon</object>
     <object>objects\strip_rendered</object>
-    <object>objects\ground</object>
-    <object>objects\ground_strip</object>
-    <object>objects\cliff</object>
-    <object>objects\cliff_strip</object>
+    <objects name="terrain">
+      <object>objects\ground_strip</object>
+      <object>objects\ground</object>
+      <object>objects\cliff</object>
+      <object>objects\cliff_strip</object>
+      <object>objects\impass</object>
+      <object>objects\vwall</object>
+    </objects>
     <object>objects\monster_spawner</object>
     <object>objects\obj_xyz</object>
     <object>objects\z_cue</object>
     <object>objects\obj_focus</object>
     <objects name="meta">
+      <object>objects\jukebox</object>
       <object>objects\camera</object>
       <object>objects\controller</object>
       <object>objects\campaign</object>
+      <object>objects\camera_guide</object>
       <object>objects\resources</object>
       <object>objects\scene_disp</object>
       <object>objects\config</object>
     </objects>
     <objects name="ch1">
+      <object>objects\cinf_ppt</object>
       <object>objects\ch1_ppt</object>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_scene</room>
+    <room>rooms\cinf_rm</room>
     <room>rooms\c1_rm</room>
   </rooms>
-  <constants number="1">
+  <constants number="5">
+    <constant name="cgs_capr">3</constant>
+    <constant name="cgs_capl">2</constant>
+    <constant name="cgs_interp_next_x">1</constant>
+    <constant name="this">id</constant>
     <constant name="stat_hpmax">stat_maxhp</constant>
   </constants>
   <help>

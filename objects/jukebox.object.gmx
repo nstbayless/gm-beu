@@ -4,27 +4,13 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
-  <parentName>obj_xyz</parentName>
+  <persistent>-1</persistent>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-      <action>
-        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -39,13 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>y_boost=-4;
+            <string>bgm_resource=-1;
+bgm_id=-1;
+t_since_music_change=0;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -62,15 +50,75 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_dkgray)
-if dir==0||sign(-camera.skew)==dir
-{
-    draw_primitive_begin(pr_trianglestrip);
-    draw_vertex(get_draw_x(x,y+length),get_draw_y(y+length,z));
-    draw_vertex(get_draw_x(x,y),get_draw_y(y,z));
-    draw_vertex(get_draw_x(x,y+length),get_draw_y(y+length,z-height));
-    draw_vertex(get_draw_x(x,y),get_draw_y(y,z-height));
-    draw_primitive_end();
+            <string>t_since_music_change++;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//stop old music
+if (audio_exists(bgm_resource)) {
+    audio_stop_sound(bgm_resource);
+}
+
+if (bgm_id&gt;=0 &amp;&amp; config.MUSIC_ENABLED) {
+    //start new music:
+    print("!");
+    bgm_resource=audio_play_sound(resources.song[bgm_id],50,true);
+    t_since_music_change=0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (t_since_music_change&lt;180) {
+    var vh = view_hview[0];
+    var p=t_since_music_change/120-1;
+    if (p&lt;0) p=0;
+    if (p&gt;1) p=1;
+    draw_set_font(jukefont);
+    draw_set_alpha(1-p);
+    draw_set_color(c_black);
+    var title = resources.song_title[bgm_id]
+    var w_title=string_width(title)
+    draw_rectangle(16,vh-32,16+w_title,vh-8,false)
+    draw_set_color(c_white);
+    draw_text(16,vh-32,title)
 }
 </string>
           </argument>

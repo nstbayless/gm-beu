@@ -26,6 +26,12 @@
           <argument>
             <kind>1</kind>
             <string>anim=150;
+
+an_mode=0;
+an_mode_timer=0;
+
+//play song 0:
+with (jukebox) {bgm_id=0;event_user(0)}
 </string>
           </argument>
         </arguments>
@@ -58,8 +64,37 @@ if anim&lt;150 {
     camera.skew=anim/180*-0.25;
 }
 else {
-    camera.aot=1;
-    camera.skew=-0.25;
+    if keyboard_check_pressed(vk_space) {
+        an_mode=0;
+        if (random(1)&lt;0.2) {
+            camera.aot=1;
+            camera.skew=-0.25;
+        } else if (random(1)&lt;0.1) {
+            camera.aot=0;
+            camera.skew=0;
+        } else if (random(1)&lt;0.05) {
+            anim=130;
+        } else if (random(1)&lt;0.1) {
+            camera.aot=1;
+            camera.skew=0;
+        } else if (random(1)&lt;0.1) {
+            camera.aot=0;
+            camera.skew=.25;
+        } else if (random(1)&lt;0.2) {
+            an_mode=floor(random(2))+1;   
+        } else {
+            camera.skew=random(1)*.5-.25
+            camera.aot=sqrt(random(1))
+        }
+    }
+    if (an_mode=1) {
+        an_mode_timer++;
+        camera.skew=sin(an_mode_timer/50)*.25;
+    }
+    if (an_mode=2) {
+        an_mode_timer++;
+        camera.aot=sin(an_mode_timer/50)*.12+.88;
+    }
     //camera.aot=0.9+0.1*sin(anim/60);
     /*dep=obj_focus.y-z_cue.y
     dep_max=1500;

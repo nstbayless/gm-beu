@@ -26,6 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>FT_cursive = cursive
+
+song[0]=mus_54
+song_title[0]="54"
+song_author[0]=""
+song_license[0]="CC0"
 </string>
           </argument>
         </arguments>

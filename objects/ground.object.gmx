@@ -54,7 +54,84 @@ no_cliffs=false;
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="10">
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>image_xscale=width/32;
+image_yscale=height/32;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!no_cliffs) {
+    cr = instance_create(x+width,y,cliff)
+    cr.z=z;
+    cr.length=height;
+    cr.height=z-zbot;
+    cr.dir=1;
+    
+    cl = instance_create(x,y,cliff)
+    cl.z=z;
+    cl.length=height;
+    cl.dir=-1;
+    cl.height=z-zbot;
+    
+    //run cliff set-up (makes strips);
+    with (cr) {event_user(0)}
+    with (cl) {event_user(0)}
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
       <action>
         <libid>1</libid>
         <id>605</id>
@@ -129,20 +206,26 @@ no_cliffs=false;
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="4">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
-        <id>604</id>
+        <id>605</id>
         <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
+        <exetype>0</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>find tiles</string>
+          </argument>
+        </arguments>
       </action>
       <action>
         <libid>1</libid>
@@ -168,13 +251,13 @@ children=tile_get_ids_at_depth(depth);
 cn = array_length_1d(children);
 
 
-child_x[cn-1]=0;
-child_y[cn-1]=0;
-child_h[cn-1]=0;
-child_w[cn-1]=0;
-child_bg[cn-1]=0;
-child_left[cn-1]=0;
-child_top[cn-1]=0;
+child_x[cn]=0;
+child_y[cn]=0;
+child_h[cn]=0;
+child_w[cn]=0;
+child_bg[cn]=0;
+child_left[cn]=0;
+child_top[cn]=0;
 miny=10000;
 maxy=-10000;
 minx=1000000;
@@ -213,24 +296,47 @@ if (abs(surf_w)&gt;4000 || abs(surf_h) &gt; 3000||surf_w&lt;0||surf_h&lt;0)
 depth-=1;
 
 //split into strips
-event_user(0)
+event_user(1)
 
 //create cliffs:
-if (!no_cliffs) {
-    cr = instance_create(x+width,y,cliff)
-    cr.z=z;
-    cr.length=height;
-    cr.height=z-zbot;
-    
-    /*cl = instance_create(x,y,cliff)
-    cl.z=z;
-    cl.length=height;
-    cl.height=z-zbot;*/
-    
-    //run cliff set-up (makes strips);
-    with (cr) {event_user(0)}
-    //with (cl) {event_user(0)}
-}
+event_user(2);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_user(0);
 </string>
           </argument>
         </arguments>

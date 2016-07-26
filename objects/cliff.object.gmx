@@ -42,6 +42,7 @@
             <string>length=32;
 height=32;
 use_strips=false;
+dir=0;
 </string>
           </argument>
         </arguments>
@@ -69,7 +70,6 @@ if (use_strips)
     strip_thickness=config.STRIP_THICKNESS;
 
 var strip_count = length/strip_thickness;
-print(strip_count);
 strip[strip_count]=noone
 for (var i=0;i&lt;strip_count;i++) {
     if (strip[i]==0||!instance_exists(strip[i])) {
@@ -77,6 +77,7 @@ for (var i=0;i&lt;strip_count;i++) {
         strip[i].z=z;
         strip[i].height=height;
         strip[i].length=strip_thickness;
+        strip[i].dir=dir;
     }
 }
 </string>

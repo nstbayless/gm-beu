@@ -3,7 +3,7 @@
   <spriteName>spr_ph_camera</spriteName>
   <solid>0</solid>
   <visible>0</visible>
-  <depth>0</depth>
+  <depth>-950</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -69,8 +69,8 @@ if (vx&lt;0)
     vx=0;
 if (vy&lt;0)
     vy=0;
-if (vx+vw&gt;room_width)
-    vx=room_width-vw;
+//if (vx+vw&gt;room_width)
+//    vx=room_width-vw;
 if (vy+vh&gt;room_height)
     vy=room_height-vh;
 view_xview[0]=vx;
