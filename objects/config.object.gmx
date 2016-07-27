@@ -31,6 +31,7 @@ STRIP_THICKNESS=8;
 SMOOTH_STRIPS=true;
 MUSIC_ENABLED=false;
 DRAW_GUIDES=false;
+RENDER_STRIP_LINES=false;
 </string>
           </argument>
         </arguments>

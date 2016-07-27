@@ -42,6 +42,8 @@
             <string>dir=1;
 vspd=0;
 z_rest=0;
+ground_rest=noone;
+on_ground=false;
 
 stat_recharge_delay=290;
 stat_recharge_rate=0;

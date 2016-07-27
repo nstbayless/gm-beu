@@ -89,7 +89,8 @@ if (camera.render_flat_behind)
         
         var x_22=floor(get_draw_x(x+w,y+h+ty2off*im_h))
         var y_22=floor(get_draw_y(y+h+ty2off*im_h))
-        
+        if (config.RENDER_STRIP_LINES)
+            draw_line(x_11,y_11,x_21,y_21)
         if (config.SMOOTH_STRIPS) {
             draw_set_color(parent.image_blend);
             draw_set_alpha(parent.image_alpha);
@@ -101,6 +102,7 @@ if (camera.render_flat_behind)
             draw_primitive_end();
             draw_set_alpha(1);
             draw_set_colour(c_white)
+            
         }
         else
             draw_sprite_part_ext(parent.sprite_index,parent.image_index,0,parent.strip_thickness*n-yoff,w,h,get_draw_x(),get_draw_y(),1,camera.aot,parent.image_blend,parent.image_alpha)

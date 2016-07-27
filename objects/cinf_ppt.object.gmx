@@ -154,6 +154,10 @@ if (gen_x&gt;x) {
         dw_min=round(dw_min/config.STRIP_THICKNESS)*config.STRIP_THICKNESS
         dw_max=round(dw_max/config.STRIP_THICKNESS)*config.STRIP_THICKNESS
         dx=round(dx/32)*32
+        for (assert(true);random(1)&lt;0.8;assert(true)) {
+            var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_slime);
+            inst_slime.z=z+64;
+        }
         generate_ground(x,y+dw_min,z,dx,dw_max-dw_min)
         generate_vwall(x,y+dw_max,z,dx,1000);
         print("generated at +" + string(x-camera.x) + " from camera.");
