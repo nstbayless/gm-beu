@@ -47,6 +47,14 @@ ANK_run=2;
 ANI_run=9
 AND_run=8;
 
+ANK_atk=1;
+ANI_atk=17;
+AND_atk=6;
+
+ANK_jump=10;
+ANI_jump=6;
+AND_jump=3;
+
 dim_z=32;
 dim_x=24;
 dim_y=24;
@@ -57,6 +65,8 @@ hp=stat_maxhp;
 t_atk=0;
 ai_target=noone;
 anim=0;
+
+t_since_attack=0;
 </string>
           </argument>
         </arguments>
@@ -81,6 +91,7 @@ anim=0;
             <kind>1</kind>
             <string>act_jump=false;
 do_block=false
+do_atk=false
 
 move_x=0;
 move_y=0;
@@ -158,6 +169,55 @@ if instance_exists(ai_target) &amp;&amp; ai_target!=noone {
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>attack</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//attack
+if (t_since_attack&gt;=0)
+    t_since_attack++;
+if (do_atk) {
+    wnd_spec[0]=dir
+    wnd_spec[1]=5;
+    t_since_attack=0;
+    attack_rectangle(x+dir*30-30,y-20,z+1,x+dir*30+30,y+20,z+20,wnd_spec)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>animation</string>
           </argument>
         </arguments>
@@ -187,6 +247,20 @@ if (moved_dist&gt;0) {
     anim_k=ANK_run;
     anim_d=AND_run;
     anim_i=ANI_run;
+}
+
+if (!on_ground) {
+    anim=min(t_since_jump,13);
+    anim_k=ANK_jump;
+    anim_d=AND_jump;
+    anim_i=ANI_jump;
+}
+
+if (t_since_attack&gt;=00&amp;&amp;t_since_attack&lt;6) {
+    anim=t_since_attack;
+    anim_k=ANK_atk;
+    anim_d=AND_atk;
+    anim_i=ANI_atk;
 }
 
 image_index=(anim_i+floor(anim/anim_k)%anim_d)

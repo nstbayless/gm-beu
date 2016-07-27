@@ -5,10 +5,12 @@ var re_time=95;
 if argument_count>1
     re_time=argument[1];
 with (inst_actor) {
+    if (obj_explosion_loc>=0)
+        (instance_create(x,y,obj_explosion_loc)).z=z;
     if (player>=0) {
         campaign.spawn_timer[campaign.spawn_n]=re_time;
         campaign.spawn_inst[campaign.spawn_n]=this;
         campaign.spawn_n++;
+        instance_deactivate_object(this);
     } else instance_destroy();
-    instance_deactivate_object(this);
 }

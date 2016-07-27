@@ -43,6 +43,12 @@
     <sprite>sprites\spr_shadow_small</sprite>
     <sprite>sprites\spr_warrior</sprite>
     <sprite>sprites\spr_king</sprite>
+    <sprites name="explosions">
+      <sprite>sprites\spr_explosion3</sprite>
+      <sprite>sprites\spr_explosion2</sprite>
+      <sprite>sprites\spr_explosion1</sprite>
+      <sprite>sprites\spr_explosion0</sprite>
+    </sprites>
     <sprite>sprites\spr_slime</sprite>
     <sprites name="hud">
       <sprite>sprites\spr_hp_ring_small</sprite>
@@ -129,6 +135,8 @@
       <object>objects\vwall</object>
     </objects>
     <object>objects\monster_spawner</object>
+    <object>objects\obj_explosion_small</object>
+    <object>objects\obj_explosion</object>
     <object>objects\obj_xyz</object>
     <object>objects\z_cue</object>
     <object>objects\obj_focus</object>

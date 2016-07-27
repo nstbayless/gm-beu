@@ -75,6 +75,7 @@ bounce_max=60;
 bounce_mult=0;
 
 t_since_hit=-1;
+t_since_jump=-1;
 
 dim_w=20;
 dim_h=10;
@@ -93,6 +94,7 @@ player=-1;
 
 shadow=noone;
 spr_shadow_loc=spr_shadow_med;
+obj_explosion_loc=obj_explosion;
 </string>
           </argument>
         </arguments>
@@ -254,10 +256,15 @@ is_blocking=do_block;
 phys_bounced=false;
 phys_jumped=false;
 
+if (t_since_jump&gt;=0)
+    t_since_jump++;
+
 //z movement
-if (act_jump&amp;&amp;on_ground) 
+if (act_jump&amp;&amp;on_ground) {
+    t_since_jumped=0;
     if (!is_blocking) vspd=stat_jumpspd;
     else vspd=stat_jumpspd_blk;
+}
 
 if (!on_ground)
     vspd+=stat_grav;

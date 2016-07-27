@@ -68,6 +68,7 @@ stat_jumpspd=16;
 wnd_spec[1]=2;
 spr_hp_ring_loc = spr_hp_ring_small
 spr_shadow_loc = spr_shadow_small
+obj_explosion_loc=obj_explosion_small;
 </string>
           </argument>
         </arguments>
