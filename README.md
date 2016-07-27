@@ -2,9 +2,10 @@
 ### (With RPG elements?)
 #### (And Co-Op!)
 
-Here's a screenshot I guess.
+Version 0.2.0 (alpha)
+
+Here's a screenshot I guess. Currently using tons of open gameart sprites.
 
 ![screenshot](./screenshot.jpg)
 
-Currently using tons of open gameart sprites.
 
