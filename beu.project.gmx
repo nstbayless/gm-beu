@@ -41,6 +41,7 @@
     </sprites>
     <sprite>sprites\spr_shadow_med</sprite>
     <sprite>sprites\spr_shadow_small</sprite>
+    <sprite>sprites\spr_warrior</sprite>
     <sprite>sprites\spr_king</sprite>
     <sprite>sprites\spr_slime</sprite>
     <sprites name="hud">
@@ -101,7 +102,10 @@
     <font>fonts\cursive</font>
   </fonts>
   <objects name="objects">
-    <object>objects\mob_slime</object>
+    <objects name="mob">
+      <object>objects\mob_warrior</object>
+      <object>objects\mob_slime</object>
+    </objects>
     <objects name="pcs">
       <object>objects\pc_main</object>
       <object>objects\pc</object>
