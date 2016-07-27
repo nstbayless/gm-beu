@@ -4,6 +4,8 @@
 
 Version 0.2.0 (alpha)
 
+Download binary ([windows](../../raw/master/bin/beu.exe))
+
 Here's a screenshot I guess. Currently using tons of open gameart sprites.
 
 ![screenshot](./screenshot.jpg)
