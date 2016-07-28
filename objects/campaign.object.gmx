@@ -58,6 +58,10 @@ for (var i=0;i&lt;pc_count;i++) {
     pc_to_add.player=i;
     pc_actor[i]=pc_to_add;
 }
+
+possessor_dummy=instance_create(0,0,obj_struct);
+possessor_dummy.persistent=true;
+with (possessor_dummy) possessor_initialize();
 </string>
           </argument>
         </arguments>

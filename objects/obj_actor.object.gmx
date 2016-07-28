@@ -68,6 +68,7 @@ zhalt=false
 do_run=false;
 do_block=false;
 is_blocking=false;
+extra_action=0;
 
 faction=0
 bounce_sub=20;
@@ -90,7 +91,8 @@ a_hp_full=0.8;
 spr_hp_ring_loc = spr_hp_ring_med
 
 //player controlling this
-player=-1;
+player=PL_NOPLAYER;
+p_mode = P_AUTOMATIC;
 
 shadow=noone;
 spr_shadow_loc=spr_shadow_med;
@@ -209,6 +211,66 @@ on_ground=retval[2];
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>possessor overide</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>601</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_execute_script</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>9</kind>
+            <script>possess_control</script>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>physics update</string>
           </argument>
         </arguments>
@@ -229,7 +291,26 @@ on_ground=retval[2];
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//combat mechanics
+            <string>//input variables:
+//move_x
+//move_y
+//do_block
+//do_jump
+//do_run
+//do_zhalt
+
+//output:
+//phys_bounced
+//phys_jumped
+//phys_xdiff
+//phys_ydiff
+//phys_moved_dist
+//is_blocking
+
+//output timers:
+//t_since_hit
+
+//combat mechanics
 if (hp&lt;=0&amp;&amp;t_since_hit&gt;3) {
     kill(this);
 }
@@ -252,7 +333,7 @@ if (t_since_jump&gt;=0)
     t_since_jump++;
 
 //z movement
-if (act_jump&amp;&amp;on_ground) {
+if (do_jump&amp;&amp;on_ground) {
     t_since_jumped=0;
     if (!is_blocking) vspd=stat_jumpspd;
     else vspd=stat_jumpspd_blk;
@@ -261,7 +342,7 @@ if (act_jump&amp;&amp;on_ground) {
 if (!on_ground)
     vspd+=stat_grav;
     
-if (zhalt&amp;&amp;vspd&gt;0)
+if (do_zhalt&amp;&amp;vspd&gt;0)
     vspd=0;
 
 z+= vspd;
@@ -282,15 +363,14 @@ var xspd = stat_spd;
 var yspd = stat_spd;
 if (do_run) {xspd=stat_run;yspd/=2}
 if (do_block) {xspd=stat_blkspd; yspd=stat_blkspd;}
-xdiff = move_x*xspd;
-ydiff = move_y*yspd;
+phys_xdiff = move_x*xspd;
+phys_ydiff = move_y*yspd;
 
 //what follows is some very messy movement script...
 
-var grounds_xn = get_grounds_in(xorig+xdiff-dim_w/2,yorig-dim_h/2,xorig+xdiff+dim_w/2,yorig+dim_h/2)
-var grounds_yn = get_grounds_in(xorig+xdiff-dim_w/2,yorig-dim_h/2+ydiff,xorig+xdiff+dim_w/2,yorig+dim_h/2+ydiff)
+var grounds_xn = get_grounds_in(xorig+phys_xdiff-dim_w/2,yorig-dim_h/2,xorig+phys_xdiff+dim_w/2,yorig+dim_h/2)
 
-z_allowance=point_distance(0,0,xdiff,ydiff)+0.5;
+z_allowance=point_distance(0,0,phys_xdiff,phys_ydiff)+0.5;
 
 var zdiff=z_allowance
 var collision=false;
@@ -309,23 +389,23 @@ if (collision) {
     for (var i=0;grounds_xn[i]!=noone;i++) {
         //collision!
         if (grounds_xn[i].z&gt;z+zdiff&amp;&amp;grounds_xn[i].zbot&lt;=z+zdiff) {
-            xdiff=0;
+            phys_xdiff=0;
             collision=true;
         }
     }
 }
 
-if (!collision)
-    for (var i=0;grounds_yn[i]!=noone;i++) {
-        //collision!
-        if (grounds_yn[i].z&gt;z+zdiff&amp;&amp;grounds_yn[i].zbot&lt;=z+zdiff) {
-            ydiff=0;
-        }
+x+=phys_xdiff;
+
+var grounds_yn = get_grounds_in(xorig-dim_w/2,yorig-dim_h/2+phys_ydiff,xorig+dim_w/2,yorig+dim_h/2+phys_ydiff)
+for (var i=0;grounds_yn[i]!=noone;i++) {
+    //collision!
+    if (grounds_yn[i].z&gt;z+zdiff&amp;&amp;grounds_yn[i].zbot&lt;=z+zdiff) {
+        phys_ydiff=0;
     }
+}
 
-
-x+=xdiff;
-y+=ydiff;
+y+=phys_ydiff;
 z+=zdiff;
 if (zdiff!=0) {
     var z_rest_alt = find_z_rest(x-dim_w/2,y-dim_h/2,x+dim_z/2,y+dim_h/2,z);
@@ -335,7 +415,7 @@ if (zdiff!=0) {
     } else
         z-=zdiff;
 }
-moved_dist = point_distance(0,0,xdiff,ydiff);
+phys_moved_dist = point_distance(0,0,phys_xdiff,phys_ydiff);
 
 //update facing:
 if (!do_block) {
@@ -346,7 +426,8 @@ if (!do_block) {
 }
 
 //timers:
-t_since_hit++;
+if (t_since_hit&gt;=0)
+    t_since_hit++;
 </string>
           </argument>
         </arguments>

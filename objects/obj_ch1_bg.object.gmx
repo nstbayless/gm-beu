@@ -27,16 +27,16 @@
             <kind>1</kind>
             <string>var anim = ch1_ppt_a.anim;
 draw_background(bg_grassy_scene_bg,0,0)
-if (anim&lt;450) {
+if (anim&lt;ch1_ppt_a.T_SUNRISE+70) {
     var p = 1;
-    if (anim&gt;400)
-        p=1-(anim-400)/50;
+    if (anim&gt;ch1_ppt_a.T_SUNRISE)
+        p=1-(anim-ch1_ppt_a.T_SUNRISE)/70;
     draw_set_alpha(p*0.7);
     draw_set_color(make_color_rgb(3,4,14));
     draw_rectangle(0,0,view_wview[0],view_hview[0],false)
 }
-if (anim&gt;400) {
-    var p = min(1,(anim-400)/50);
+if (anim&gt;ch1_ppt_a.T_SUNRISE) {
+    var p = min(1,(anim-ch1_ppt_a.T_SUNRISE)/50);
     draw_set_alpha(2*p-1)
     draw_set_color(c_white);
     draw_background(bg_grassy_scene_sun,0,0)

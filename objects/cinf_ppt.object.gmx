@@ -100,10 +100,9 @@ randomize();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (camera.x+view_wview[0]/2&gt;gen_x||gen_num==0) {
+            <string>if (camera.x+view_wview[0]&gt;gen_x||gen_num==0) {
 
     //store coords of start of gen
-
     gen_start_x=x;
     gen_start_y=y;
     gen_start_z=z;

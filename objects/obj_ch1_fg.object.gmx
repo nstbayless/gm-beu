@@ -123,8 +123,8 @@ draw_background(bg_grassy_scene_fg,0,0);
 draw_set_colour(c_black);
 draw_rectangle(0,view_hview[0],view_wview[0],view_hview[0]*2,false)
 draw_set_color(c_white);
-if (anim&gt;400) {
-    var p = min(1,(anim-400)/50);
+if (anim&gt;ch1_ppt_a.T_SUNRISE) {
+    var p = min(1,(anim-ch1_ppt_a.T_SUNRISE)/50);
     draw_set_alpha(sqrt(p)*(0.035+.008*sin(anim/100)));
     draw_background(bg_grassy_scene_sunrays,0,0)
 }

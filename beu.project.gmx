@@ -102,6 +102,10 @@
       <script>scripts\cg_link.gml</script>
       <script>scripts\switch_to.gml</script>
     </scripts>
+    <scripts name="possession">
+      <script>scripts\possessor_initialize.gml</script>
+      <script>scripts\possess_control.gml</script>
+    </scripts>
     <script>scripts\scale_gp_axis.gml</script>
     <script>scripts\get_art.gml</script>
     <script>scripts\draw_reset.gml</script>
@@ -156,6 +160,7 @@
       <object>objects\camera_guide</object>
       <object>objects\resources</object>
       <object>objects\scene_disp</object>
+      <object>objects\obj_struct</object>
       <object>objects\config</object>
     </objects>
     <objects name="ch1">
@@ -172,7 +177,7 @@
     <room>rooms\c1_rm</room>
     <room>rooms\c1_rm_a</room>
   </rooms>
-  <constants number="7">
+  <constants number="11">
     <constant name="cgs_halt">4</constant>
     <constant name="cgs_capr">3</constant>
     <constant name="cgs_capl">2</constant>
@@ -180,6 +185,10 @@
     <constant name="this">id</constant>
     <constant name="stat_hpmax">stat_maxhp</constant>
     <constant name="nomap">force_ignore_roomload</constant>
+    <constant name="PL_NOPLAYER">-1</constant>
+    <constant name="P_AUTOMATIC">0</constant>
+    <constant name="P_POSSESSOR">1</constant>
+    <constant name="P_DUMMY">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
