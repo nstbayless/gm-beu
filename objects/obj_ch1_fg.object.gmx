@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-400</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,23 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>z=0
-flat=false;
-//add these values to coords before determining depth
-y_boost=0;
-x_boost=0;
-z_boost=0;
-use_iso=false;
-//ignore z offset for y positioning on room load
-//(set this to true for objects created in scripts before the room starts)
-force_ignore_roomload=false;
-if (depth==0) use_iso=true
+            <string>anim=0;
+
+created_surface=false;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="2">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -58,37 +50,55 @@ if (depth==0) use_iso=true
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (use_iso) {
-    depth=get_draw_depth(x+x_boost,y+y_boost,z+z_boost)
+            <string>anim++
+z_offset=-4
+
+if (!created_surface) {
+    //split int ground:
+    GROUND_WIDTH=4;
+    PREC_Y=2;
+    bg_target = bg_grassy_scene_fg;
+    bg_w=background_get_width(bg_target);
+    bg_h=background_get_height(bg_target);
+    var surf = surface_create(bg_w,bg_h);
+    surface_set_target(surf);
+    draw_clear(c_white);
+    draw_background(bg_target,0,0);
+    surface_reset_target();
+    for (var i=0;i&lt;bg_w/GROUND_WIDTH;i++){
+        
+        //binary search:
+        var py_win_min=0;
+        var py_win_max=bg_h;
+        var avg=bg_h/2;
+        var px=floor((i+0.5)*GROUND_WIDTH);
+        while (abs(py_win_min-py_win_max)&gt;PREC_Y) {
+            
+            
+            var pixel_lum = 1-colour_get_red(surface_getpixel(surf,px,avg));
+            if (pixel_lum&gt;0.2) {
+                py_win_max=avg;
+            } else {
+            py_win_min=avg;
+            }
+            avg = floor((py_win_min+py_win_max)/2);
+        }
+        inst_ground = instance_create(i*GROUND_WIDTH,-100,ground);
+        inst_ground.z=-avg+floor(PREC_Y/2)+bg_h/2+z_offset;
+        inst_ground.nomap=true;
+        inst_ground.width=GROUND_WIDTH;
+        inst_ground.height=bg_h*2;
+        if (i==floor(ch_spawn.x/GROUND_WIDTH))
+            ch_spawn.z=inst_ground.z;
+    }
+    assert(surface_exists(surf));
+    surface_free(surf);
+    created_surface=true;
+    instance_create(0,-100,impass)
+    impass.height=bg_h*2;
+    
 }
 
-if (flat&amp;&amp;camera.render_flat_behind)
-    depth+=100;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="4">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (!force_ignore_roomload) {
-    set_phys_pos();
-}
 </string>
           </argument>
         </arguments>
@@ -111,10 +121,8 @@ if (flat&amp;&amp;camera.render_flat_behind)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var yscale=1;
-if (flat)
-    yscale=camera.aot;
-draw_sprite_ext(sprite_index,image_index,get_draw_x(),get_draw_y(),image_xscale,yscale*image_yscale,0,image_blend,image_alpha);
+            <string>draw_background_ext(bg_grassy_scene_grass,abs(sin(anim/13)),0,1-0.001*abs(sin(anim/11)),1,0,c_white,1);
+draw_background(bg_grassy_scene_fg,0,0);
 </string>
           </argument>
         </arguments>

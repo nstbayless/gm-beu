@@ -26,14 +26,16 @@
           <argument>
             <kind>1</kind>
             <string>// position in the campaign
-chapter=0;
+chapter=2;
 show_debug_overlay(true);
 
 chapter_names[0]="Infinite Room"
 chapter_names[1]="Parable of the Stone Goddess"
+chapter_names[2]="Side view test"
 
 chapter_rooms[0]=cinf_rm
 chapter_rooms[1]=c1_rm
+chapter_rooms[2]=c1_rm_a
 
 art[0]=art0;
 art[1]=art1;

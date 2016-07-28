@@ -60,7 +60,10 @@
       <background>background\art0</background>
       <background>background\art1</background>
       <background>background\art2</background>
+      <background>background\bg_grassy_scene_grass</background>
+      <background>background\bg_grassy_scene_fg</background>
       <background>background\art3</background>
+      <background>background\bg_grassy_scene</background>
     </backgrounds>
     <backgrounds name="ground">
       <background>background\bg_cliffs</background>
@@ -77,6 +80,8 @@
       <script>scripts\get_grounds_at.gml</script>
       <script>scripts\get_draw_x.gml</script>
       <script>scripts\get_draw_y.gml</script>
+      <script>scripts\set_phys_pos.gml</script>
+      <script>scripts\find_z_rest.gml</script>
       <script>scripts\get_draw_depth.gml</script>
       <script>scripts\get_grounds_in.gml</script>
     </scripts>
@@ -151,7 +156,10 @@
       <object>objects\config</object>
     </objects>
     <objects name="ch1">
+      <object>objects\obj_ch1_fg</object>
+      <object>objects\obj_ch1_bg</object>
       <object>objects\cinf_ppt</object>
+      <object>objects\ch1_ppt_a</object>
       <object>objects\ch1_ppt</object>
     </objects>
   </objects>
@@ -159,13 +167,15 @@
     <room>rooms\rm_scene</room>
     <room>rooms\cinf_rm</room>
     <room>rooms\c1_rm</room>
+    <room>rooms\c1_rm_a</room>
   </rooms>
-  <constants number="5">
+  <constants number="6">
     <constant name="cgs_capr">3</constant>
     <constant name="cgs_capl">2</constant>
     <constant name="cgs_interp_next_x">1</constant>
     <constant name="this">id</constant>
     <constant name="stat_hpmax">stat_maxhp</constant>
+    <constant name="nomap">force_ignore_roomload</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

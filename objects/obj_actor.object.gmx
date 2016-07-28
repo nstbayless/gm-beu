@@ -137,19 +137,11 @@ obj_explosion_loc=obj_explosion;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var grounds=get_grounds_in(x-10,y-5,x+10,y+5);
-//highest ground encountered below z:
-var maxz=-10000
-var argmaxz=noone;
-for (i=0;grounds[i]!=noone;i++) {
-    if (grounds[i].z&lt;=z  &amp;&amp; grounds[i].z&gt;maxz) {
-        maxz=grounds[i].z;
-        argmaxz=grounds[i];
-    }
-}
-ground_rest=argmaxz;
-z_rest=maxz;
-on_ground=(z==z_rest);
+            <string>var retval = find_z_rest(x-dim_w/2,y-dim_h/2,x+dim_w/2,y+dim_h/2,z);
+
+ground_rest=retval[0];
+z_rest=retval[1];
+on_ground=retval[2];
 </string>
           </argument>
         </arguments>
@@ -293,23 +285,54 @@ if (do_block) {xspd=stat_blkspd; yspd=stat_blkspd;}
 xdiff = move_x*xspd;
 ydiff = move_y*yspd;
 
-var grounds_xn = get_grounds_in(xorig+xdiff-10,yorig-5,xorig+xdiff+10,yorig+5)
-var grounds_yn = get_grounds_in(xorig-10,yorig+ydiff-5,xorig+10,yorig+ydiff+5)
+var grounds_xn = get_grounds_in(xorig+xdiff-dim_w/2,yorig-dim_h/2,xorig+xdiff+dim_w/2,yorig+dim_h/2)
+var grounds_yn = get_grounds_in(xorig+xdiff-dim_w/2,yorig-dim_h/2+ydiff,xorig+xdiff+dim_w/2,yorig+dim_h/2+ydiff)
+
+z_allowance=point_distance(0,0,xdiff,ydiff)+0.5;
+
+var zdiff=z_allowance
+var collision=false;
 
 for (var i=0;grounds_xn[i]!=noone;i++) {
     //collision!
-    if (grounds_xn[i].z&gt;z&amp;&amp;grounds_xn[i].zbot&lt;=z)
-        xdiff=0;
+    if (grounds_xn[i].z&gt;z+zdiff&amp;&amp;grounds_xn[i].zbot&lt;=z+zdiff) {
+        zdiff=0;
+        collision=true;
+    }
 }
 
-for (var i=0;grounds_yn[i]!=noone;i++) {
-    //collision!
-    if (grounds_yn[i].z&gt;z&amp;&amp;grounds_yn[i].zbot&lt;=z)
-        ydiff=0;
+if (collision) {
+    //try again without slope
+    collision=false;
+    for (var i=0;grounds_xn[i]!=noone;i++) {
+        //collision!
+        if (grounds_xn[i].z&gt;z+zdiff&amp;&amp;grounds_xn[i].zbot&lt;=z+zdiff) {
+            xdiff=0;
+            collision=true;
+        }
+    }
 }
+
+if (!collision)
+    for (var i=0;grounds_yn[i]!=noone;i++) {
+        //collision!
+        if (grounds_yn[i].z&gt;z+zdiff&amp;&amp;grounds_yn[i].zbot&lt;=z+zdiff) {
+            ydiff=0;
+        }
+    }
+
 
 x+=xdiff;
 y+=ydiff;
+z+=zdiff;
+if (zdiff!=0) {
+    var z_rest_alt = find_z_rest(x-dim_w/2,y-dim_h/2,x+dim_z/2,y+dim_h/2,z);
+    if abs(z-z_rest_alt[1])&lt;=2*z_allowance {
+        z=z_rest_alt[1];
+        on_ground=true;
+    } else
+        z-=zdiff;
+}
 moved_dist = point_distance(0,0,xdiff,ydiff);
 
 //update facing:
