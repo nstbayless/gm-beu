@@ -285,6 +285,8 @@ if (do_block) {xspd=stat_blkspd; yspd=stat_blkspd;}
 xdiff = move_x*xspd;
 ydiff = move_y*yspd;
 
+//what follows is some very messy movement script...
+
 var grounds_xn = get_grounds_in(xorig+xdiff-dim_w/2,yorig-dim_h/2,xorig+xdiff+dim_w/2,yorig+dim_h/2)
 var grounds_yn = get_grounds_in(xorig+xdiff-dim_w/2,yorig-dim_h/2+ydiff,xorig+xdiff+dim_w/2,yorig+dim_h/2+ydiff)
 

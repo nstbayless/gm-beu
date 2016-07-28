@@ -25,7 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_background(bg_grassy_scene,0,0)
+            <string>var anim = ch1_ppt_a.anim;
+draw_background(bg_grassy_scene_bg,0,0)
+if (anim&lt;450) {
+    var p = 1;
+    if (anim&gt;400)
+        p=1-(anim-400)/50;
+    draw_set_alpha(p*0.7);
+    draw_set_color(make_color_rgb(3,4,14));
+    draw_rectangle(0,0,view_wview[0],view_hview[0],false)
+}
+if (anim&gt;400) {
+    var p = min(1,(anim-400)/50);
+    draw_set_alpha(2*p-1)
+    draw_set_color(c_white);
+    draw_background(bg_grassy_scene_sun,0,0)
+    draw_set_alpha(0.05*sqrt(p));
+    draw_background(bg_grassy_scene_sunrays,0,0)
+}
+draw_reset();
 </string>
           </argument>
         </arguments>

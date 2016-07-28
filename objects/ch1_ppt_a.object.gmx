@@ -25,8 +25,43 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>camera.aot=0;
-camera.skew=0;
+            <string>anim=0;
+
+cg = instance_create(view_wview[0]/2,0,camera_guide);
+cg.active=true;
+cg.camera_guide_style=cgs_halt;
+cg.aot=0;
+cg.skew=0
+cg.nomap=true;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>anim++;
+
+p=0.5;
+if (anim&lt;340)
+    p=0.5+1-anim/340
+
+cg.z=-p*view_hview[0];
 </string>
           </argument>
         </arguments>

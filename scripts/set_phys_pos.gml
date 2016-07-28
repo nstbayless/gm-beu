@@ -14,9 +14,11 @@ var _w=z;
 if (_aot==0) {
     x=_u;
     y=_w;
-    z=_v;
+    z=-_v;
 } else {
     x=_u;
     y=(_v+_w)/_aot;
     z=_w;
 }
+
+print(object_get_name(object_index));

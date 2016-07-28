@@ -125,6 +125,7 @@ spawn_n=last_element+1;
             <string>if (instance_exists(ch_spawn)) {
     if (!instance_exists(obj_focus))
         instance_create(0,0,obj_focus)
+    obj_focus.nomap=true;
     for (var i=0;i&lt;ds_list_size(party);i++) {
         lpc = ds_list_find_value(party,i);
         instance_activate_object(lpc);

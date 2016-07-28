@@ -60,10 +60,7 @@
       <background>background\art0</background>
       <background>background\art1</background>
       <background>background\art2</background>
-      <background>background\bg_grassy_scene_grass</background>
-      <background>background\bg_grassy_scene_fg</background>
       <background>background\art3</background>
-      <background>background\bg_grassy_scene</background>
     </backgrounds>
     <backgrounds name="ground">
       <background>background\bg_cliffs</background>
@@ -73,6 +70,11 @@
       <background>background\bg_whiteclouds</background>
       <background>background\bg_grass</background>
     </backgrounds>
+    <background>background\bg_grassy_scene_grass</background>
+    <background>background\bg_grassy_scene_sun</background>
+    <background>background\bg_grassy_scene_sunrays</background>
+    <background>background\bg_grassy_scene_fg</background>
+    <background>background\bg_grassy_scene_bg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -102,6 +104,7 @@
     </scripts>
     <script>scripts\scale_gp_axis.gml</script>
     <script>scripts\get_art.gml</script>
+    <script>scripts\draw_reset.gml</script>
     <script>scripts\get_target_nearest.gml</script>
     <script>scripts\print.gml</script>
     <script>scripts\get_gamepad_count.gml</script>
@@ -169,7 +172,8 @@
     <room>rooms\c1_rm</room>
     <room>rooms\c1_rm_a</room>
   </rooms>
-  <constants number="6">
+  <constants number="7">
+    <constant name="cgs_halt">4</constant>
     <constant name="cgs_capr">3</constant>
     <constant name="cgs_capl">2</constant>
     <constant name="cgs_interp_next_x">1</constant>

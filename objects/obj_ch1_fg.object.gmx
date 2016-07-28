@@ -25,9 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>anim=0;
-
-created_surface=false;
+            <string>created_surface=false;
 </string>
           </argument>
         </arguments>
@@ -50,8 +48,7 @@ created_surface=false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>anim++
-z_offset=-4
+            <string>z_offset=-6
 
 if (!created_surface) {
     //split int ground:
@@ -84,7 +81,7 @@ if (!created_surface) {
             avg = floor((py_win_min+py_win_max)/2);
         }
         inst_ground = instance_create(i*GROUND_WIDTH,-100,ground);
-        inst_ground.z=-avg+floor(PREC_Y/2)+bg_h/2+z_offset;
+        inst_ground.z=-avg+floor(PREC_Y/2)+z_offset;
         inst_ground.nomap=true;
         inst_ground.width=GROUND_WIDTH;
         inst_ground.height=bg_h*2;
@@ -94,9 +91,8 @@ if (!created_surface) {
     assert(surface_exists(surf));
     surface_free(surf);
     created_surface=true;
-    instance_create(0,-100,impass)
+    instance_create(-32,-100,impass)
     impass.height=bg_h*2;
-    
 }
 
 </string>
@@ -121,8 +117,18 @@ if (!created_surface) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_background_ext(bg_grassy_scene_grass,abs(sin(anim/13)),0,1-0.001*abs(sin(anim/11)),1,0,c_white,1);
+            <string>var anim=ch1_ppt_a.anim;
+draw_background_ext(bg_grassy_scene_grass,abs(sin(anim/13)),0,1-0.001*abs(sin(anim/11)),1,0,c_white,1);
 draw_background(bg_grassy_scene_fg,0,0);
+draw_set_colour(c_black);
+draw_rectangle(0,view_hview[0],view_wview[0],view_hview[0]*2,false)
+draw_set_color(c_white);
+if (anim&gt;400) {
+    var p = min(1,(anim-400)/50);
+    draw_set_alpha(sqrt(p)*(0.035+.008*sin(anim/100)));
+    draw_background(bg_grassy_scene_sunrays,0,0)
+}
+draw_reset();
 </string>
           </argument>
         </arguments>

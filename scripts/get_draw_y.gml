@@ -10,6 +10,7 @@ if argument_count<1
 else
     ly=argument[0]
 
-var ycentre = view_yview[0] + view_hview[0]/2
+//var ycentre = view_yview[0] + view_hview[0]/2
+//return ycentre-lz+camera.z+(ly-ycentre)*camera.aot;
 
-return ycentre-lz+camera.z+(ly-ycentre)*camera.aot;
+return ly*camera.aot-lz;
