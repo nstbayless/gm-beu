@@ -371,6 +371,8 @@ phys_ydiff = move_y*yspd;
 var grounds_xn = get_grounds_in(xorig+phys_xdiff-dim_w/2,yorig-dim_h/2,xorig+phys_xdiff+dim_w/2,yorig+dim_h/2)
 
 z_allowance=point_distance(0,0,phys_xdiff,phys_ydiff)+0.5;
+if (room_properties.bumpy)
+    z_allowance+=4;
 
 var zdiff=z_allowance
 var collision=false;

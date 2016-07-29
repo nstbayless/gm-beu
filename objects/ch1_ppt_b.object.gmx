@@ -29,6 +29,18 @@
 
 camera.aot=0;
 camera.skew=0;
+
+var cg = instance_create(view_wview[0]/2,0,camera_guide);
+cg.camera_guide_style=cgs_halt;
+cg.z=-view_hview[0]/2;
+cg.nomap=true;
+cg.active=true;
+cg.aot=0;
+cg.skew=0;
+
+inst_spawn = (instance_create(20,0,ch_spawn));
+inst_spawn.z=-300;
+inst_spawn.nomap=true;
 </string>
           </argument>
         </arguments>

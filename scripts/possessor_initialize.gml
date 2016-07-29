@@ -10,6 +10,7 @@ for (var i=0;i<port_n;i++) {
     port_move_x[i]=0;
     port_move_y[i]=0;
     port_do_block[i]=false;
+    port_do_jump[i]=false;
     port_do_run[i]=false;
     port_do_zhalt[i]=false;
     port_do_atk[i]=false;

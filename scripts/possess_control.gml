@@ -18,6 +18,7 @@ if (p_mode==P_DUMMY) {
 move_x=pos.port_move_x[port];
 move_y=pos.port_move_y[port];
 do_block=pos.port_do_block[port];
+do_jump=pos.port_do_jump[port];
 do_run=pos.port_do_run[port];
 do_zhalt=pos.port_do_zhalt[port];
 do_atk=pos.port_do_atk[port];

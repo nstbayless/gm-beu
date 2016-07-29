@@ -143,6 +143,10 @@ spawn_n=last_element+1;
     camera.focus=obj_focus;
 }
 
+//create default room properties:
+if (!instance_exists(room_properties))
+    instance_create(0,0,room_properties);
+
 //size of spawn list:
 spawn_n=0;
 //time until respawn:

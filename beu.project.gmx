@@ -100,6 +100,7 @@
       <script>scripts\generate_cliffs_between.gml</script>
       <script>scripts\generate_vwall.gml</script>
       <script>scripts\generate_ground.gml</script>
+      <script>scripts\split_bg_to_ground.gml</script>
     </scripts>
     <scripts name="camera">
       <script>scripts\cg_link.gml</script>
@@ -159,6 +160,7 @@
       <object>objects\jukebox</object>
       <object>objects\camera</object>
       <object>objects\controller</object>
+      <object>objects\room_properties</object>
       <object>objects\campaign</object>
       <object>objects\camera_guide</object>
       <object>objects\resources</object>
@@ -181,8 +183,8 @@
     <room>rooms\rm_scene</room>
     <room>rooms\cinf_rm</room>
     <room>rooms\c1_rm</room>
-    <room>rooms\c1_rm_b</room>
     <room>rooms\c1_rm_a</room>
+    <room>rooms\c1_rm_b</room>
   </rooms>
   <constants number="11">
     <constant name="cgs_halt">4</constant>
