@@ -46,6 +46,7 @@ prev=noone;
 camera_guide_style=cgs_interp_next_x;
 skew=-0.25;
 aot=1;
+
 </string>
           </argument>
         </arguments>
@@ -79,26 +80,32 @@ aot=1;
         if (focus.x&lt;minx) switch_to(prev);
         if (focus.x&gt;maxx) switch_to(next);
         var p=(focus.x-minx)/(maxx-minx)
-        camera.y=get_draw_y(p*next.y+(1-p)*y,p*next.z+(1-p)*z)
         camera.aot=p*next.aot+(1-p)*aot;
         camera.skew=p*next.skew+(1-p)*skew;
+        camera.y=get_draw_y(p*next.y+(1-p)*y,p*next.z+(1-p)*z)
         break;
     case cgs_capl:
-        camera.x=get_draw_x();
-        camera.y=get_draw_y();
         camera.aot=aot;
         camera.skew=skew;
+        camera.x=get_draw_x();
+        camera.y=get_draw_y();
         if (focus.x&gt;x)
             switch_to(next);
         break;
     case cgs_capr:
-        camera.x=get_draw_x();
-        camera.y=get_draw_y();
         camera.aot=aot;
         camera.skew=skew;
+        camera.x=get_draw_x();
+        camera.y=get_draw_y();
         if (focus.x&lt;x)
             switch_to(prev);
         break; 
+    case cgs_halt:
+        camera.aot=aot;
+        camera.skew=skew;
+        camera.x=get_draw_x();
+        camera.y=get_draw_y();
+        break;
     }
 }
 

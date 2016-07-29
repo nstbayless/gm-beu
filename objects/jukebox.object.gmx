@@ -106,7 +106,7 @@ if (bgm_id&gt;=0 &amp;&amp; config.MUSIC_ENABLED) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (t_since_music_change&lt;180) {
+            <string>if (t_since_music_change&lt;180&amp;&amp;bgm_id&gt;=0) {
     var vh = view_hview[0];
     var p=t_since_music_change/120-1;
     if (p&lt;0) p=0;

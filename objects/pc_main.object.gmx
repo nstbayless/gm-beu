@@ -51,6 +51,8 @@ AND_blk=1;
 ANI_attack=13;
 AND_attack=1;
 
+ANI_look=20;
+
 anim=0;
 
 do_run_timer=0;
@@ -112,8 +114,8 @@ dim_z=20;
             <string>if (player&gt;=0) {
     move_x = controller.move_x[player];
     move_y = controller.move_y[player];
-    act_jump = controller.jump_pressed[player];
-    zhalt = !controller.jump_held[player];
+    do_jump = controller.jump_pressed[player];
+    do_zhalt = !controller.jump_held[player];
     do_atk = controller.atk_pressed[player];
     
     if (do_run_timer&gt;0)
@@ -132,6 +134,10 @@ dim_z=20;
         do_block=true;
     } else
         do_block=false;
+        
+    //reset extra action
+    if (move_x or move_y or do_jump or do_atk)
+        extra_action=0;
 }
 </string>
           </argument>
@@ -188,7 +194,7 @@ dim_z=20;
           <argument>
             <kind>1</kind>
             <string>//stop running if halted
-if (do_run&amp;&amp;xdiff*dir&lt;=0&amp;&amp;on_ground)
+if (do_run&amp;&amp;phys_xdiff*dir&lt;=0&amp;&amp;on_ground)
     do_run=false
     
 //attack
@@ -241,8 +247,8 @@ if (do_atk) {
             <kind>1</kind>
             <string>image_index=ANI_stand;
 
-if (abs(xdiff)+abs(ydiff)&gt;0) {
-    anim+=max(abs(xdiff),abs(ydiff))/5
+if (abs(phys_xdiff)+abs(phys_ydiff)&gt;0) {
+    anim+=max(abs(phys_xdiff),abs(phys_ydiff))/5
     image_index=ANI_walk+floor(anim)%AND_walk
 }
 
@@ -251,6 +257,9 @@ if (do_block)
     
 if (t_since_hit&gt;=0&amp;&amp;t_since_hit&lt;10)
     controller.rumble[player]=1
+
+if (extra_action==1)
+    image_index=ANI_look;
     
 if (t_since_attack&gt;=0&amp;&amp;t_since_attack&lt;4)
     image_index=ANI_attack

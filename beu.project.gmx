@@ -41,7 +41,14 @@
     </sprites>
     <sprite>sprites\spr_shadow_med</sprite>
     <sprite>sprites\spr_shadow_small</sprite>
+    <sprite>sprites\spr_warrior</sprite>
     <sprite>sprites\spr_king</sprite>
+    <sprites name="explosions">
+      <sprite>sprites\spr_explosion3</sprite>
+      <sprite>sprites\spr_explosion2</sprite>
+      <sprite>sprites\spr_explosion1</sprite>
+      <sprite>sprites\spr_explosion0</sprite>
+    </sprites>
     <sprite>sprites\spr_slime</sprite>
     <sprites name="hud">
       <sprite>sprites\spr_hp_ring_small</sprite>
@@ -63,6 +70,14 @@
       <background>background\bg_whiteclouds</background>
       <background>background\bg_grass</background>
     </backgrounds>
+    <background>background\bg_grassy_scene_grass</background>
+    <background>background\bg_grassy_scene_sun</background>
+    <background>background\bg_grassy_scene_sunrays</background>
+    <background>background\bg_grassy_scene_fg</background>
+    <background>background\bg_grassy_scene_bg</background>
+    <background>background\bg_basalt_scene_glow</background>
+    <background>background\bg_basalt_scene_bg</background>
+    <background>background\bg_basalt_scene_fg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -70,6 +85,8 @@
       <script>scripts\get_grounds_at.gml</script>
       <script>scripts\get_draw_x.gml</script>
       <script>scripts\get_draw_y.gml</script>
+      <script>scripts\set_phys_pos.gml</script>
+      <script>scripts\find_z_rest.gml</script>
       <script>scripts\get_draw_depth.gml</script>
       <script>scripts\get_grounds_in.gml</script>
     </scripts>
@@ -83,13 +100,19 @@
       <script>scripts\generate_cliffs_between.gml</script>
       <script>scripts\generate_vwall.gml</script>
       <script>scripts\generate_ground.gml</script>
+      <script>scripts\split_bg_to_ground.gml</script>
     </scripts>
     <scripts name="camera">
       <script>scripts\cg_link.gml</script>
       <script>scripts\switch_to.gml</script>
     </scripts>
+    <scripts name="possession">
+      <script>scripts\possessor_initialize.gml</script>
+      <script>scripts\possess_control.gml</script>
+    </scripts>
     <script>scripts\scale_gp_axis.gml</script>
     <script>scripts\get_art.gml</script>
+    <script>scripts\draw_reset.gml</script>
     <script>scripts\get_target_nearest.gml</script>
     <script>scripts\print.gml</script>
     <script>scripts\get_gamepad_count.gml</script>
@@ -101,7 +124,10 @@
     <font>fonts\cursive</font>
   </fonts>
   <objects name="objects">
-    <object>objects\mob_slime</object>
+    <objects name="mob">
+      <object>objects\mob_warrior</object>
+      <object>objects\mob_slime</object>
+    </objects>
     <objects name="pcs">
       <object>objects\pc_main</object>
       <object>objects\pc</object>
@@ -125,6 +151,8 @@
       <object>objects\vwall</object>
     </objects>
     <object>objects\monster_spawner</object>
+    <object>objects\obj_explosion_small</object>
+    <object>objects\obj_explosion</object>
     <object>objects\obj_xyz</object>
     <object>objects\z_cue</object>
     <object>objects\obj_focus</object>
@@ -132,13 +160,21 @@
       <object>objects\jukebox</object>
       <object>objects\camera</object>
       <object>objects\controller</object>
+      <object>objects\room_properties</object>
       <object>objects\campaign</object>
       <object>objects\camera_guide</object>
       <object>objects\resources</object>
       <object>objects\scene_disp</object>
+      <object>objects\obj_struct</object>
       <object>objects\config</object>
     </objects>
     <objects name="ch1">
+      <object>objects\obj_ch1_fg</object>
+      <object>objects\obj_ch1_bg</object>
+      <object>objects\ch1_ppt_a</object>
+      <object>objects\obj_ch1_bg_b</object>
+      <object>objects\obj_ch1_fg_b</object>
+      <object>objects\ch1_ppt_b</object>
       <object>objects\cinf_ppt</object>
       <object>objects\ch1_ppt</object>
     </objects>
@@ -147,13 +183,21 @@
     <room>rooms\rm_scene</room>
     <room>rooms\cinf_rm</room>
     <room>rooms\c1_rm</room>
+    <room>rooms\c1_rm_a</room>
+    <room>rooms\c1_rm_b</room>
   </rooms>
-  <constants number="5">
+  <constants number="11">
+    <constant name="cgs_halt">4</constant>
     <constant name="cgs_capr">3</constant>
     <constant name="cgs_capl">2</constant>
     <constant name="cgs_interp_next_x">1</constant>
     <constant name="this">id</constant>
     <constant name="stat_hpmax">stat_maxhp</constant>
+    <constant name="nomap">force_ignore_roomload</constant>
+    <constant name="PL_NOPLAYER">-1</constant>
+    <constant name="P_AUTOMATIC">0</constant>
+    <constant name="P_POSSESSOR">1</constant>
+    <constant name="P_DUMMY">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

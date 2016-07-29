@@ -296,7 +296,8 @@ if (abs(surf_w)&gt;4000 || abs(surf_h) &gt; 3000||surf_w&lt;0||surf_h&lt;0)
 depth-=1;
 
 //split into strips
-event_user(1)
+if (cn&gt;0)
+    event_user(1)
 
 //create cliffs:
 event_user(2);

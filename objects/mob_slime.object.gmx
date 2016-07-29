@@ -68,12 +68,33 @@ stat_jumpspd=16;
 wnd_spec[1]=2;
 spr_hp_ring_loc = spr_hp_ring_small
 spr_shadow_loc = spr_shadow_small
+obj_explosion_loc=obj_explosion_small;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
     <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>action input</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -90,7 +111,7 @@ spr_shadow_loc = spr_shadow_small
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>act_jump=false;
+            <string>do_jump=false;
 do_block=false
 
 if ai_target==noone || not instance_exists(ai_target) {
@@ -121,7 +142,7 @@ if instance_exists(ai_target) &amp;&amp; ai_target!=noone {
             slide_y/=len;
         }
         if (random(1)&lt;chance_jump) {
-            act_jump=true;
+            do_jump=true;
             t_since_jump=0;
             slide_x*=1.3;
             slide_y*=1.3;
@@ -148,6 +169,26 @@ move_y=2*slide_y*slide_timer/40;
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>attack</string>
+          </argument>
+        </arguments>
       </action>
       <action>
         <libid>1</libid>
@@ -217,13 +258,13 @@ var anim_k=ANK_idle;
 var anim_d=AND_idle;
 var anim_i=ANI_idle;
 
-if (moved_dist&gt;0) {
+if (phys_moved_dist&gt;0) {
     anim_k=ANK_slide;
     anim_d=AND_slide;
     anim_i=ANI_slide;
 }
 
-image_index=(anim_i+floor(anim/anim_k)%AND_idle)
+image_index=(anim_i+floor(anim/anim_k)%anim_d)
 </string>
           </argument>
         </arguments>

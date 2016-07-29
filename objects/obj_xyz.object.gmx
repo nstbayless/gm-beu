@@ -86,8 +86,9 @@ if (flat&amp;&amp;camera.render_flat_behind)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!force_ignore_roomload)
-    y+=z
+            <string>if (!force_ignore_roomload) {
+    set_phys_pos();
+}
 </string>
           </argument>
         </arguments>

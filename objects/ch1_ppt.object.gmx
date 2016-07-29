@@ -32,6 +32,9 @@ an_mode_timer=0;
 
 //play song 0:
 with (jukebox) {bgm_id=0;event_user(0)}
+
+camera.aot=1;
+camera.skew=-0.25;
 </string>
           </argument>
         </arguments>

@@ -52,7 +52,6 @@
   </views>
   <instances>
     <instance objName="cinf_ppt" x="160" y="320" name="inst_27016270" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="camera_guide" x="160" y="352" name="inst_8E146BDC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
