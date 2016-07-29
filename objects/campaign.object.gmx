@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>// position in the campaign
-chapter=2;
+chapter=0;
 show_debug_overlay(true);
 
 chapter_names[0]="Infinite Room"
