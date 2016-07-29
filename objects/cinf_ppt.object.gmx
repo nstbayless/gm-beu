@@ -43,6 +43,7 @@
 music_play(0);
 ins_spawn=instance_create(x+32,y,ch_spawn);
 ins_spawn.z=z+96;
+ins_spawn.nomap=true;
 
 var cg = instance_create(x,y,camera_guide);
 cg.camera_guide_style = cgs_capl;

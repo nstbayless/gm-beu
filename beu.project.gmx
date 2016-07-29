@@ -75,6 +75,9 @@
     <background>background\bg_grassy_scene_sunrays</background>
     <background>background\bg_grassy_scene_fg</background>
     <background>background\bg_grassy_scene_bg</background>
+    <background>background\bg_basalt_scene_glow</background>
+    <background>background\bg_basalt_scene_bg</background>
+    <background>background\bg_basalt_scene_fg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -166,8 +169,11 @@
     <objects name="ch1">
       <object>objects\obj_ch1_fg</object>
       <object>objects\obj_ch1_bg</object>
-      <object>objects\cinf_ppt</object>
       <object>objects\ch1_ppt_a</object>
+      <object>objects\obj_ch1_bg_b</object>
+      <object>objects\obj_ch1_fg_b</object>
+      <object>objects\ch1_ppt_b</object>
+      <object>objects\cinf_ppt</object>
       <object>objects\ch1_ppt</object>
     </objects>
   </objects>
@@ -175,6 +181,7 @@
     <room>rooms\rm_scene</room>
     <room>rooms\cinf_rm</room>
     <room>rooms\c1_rm</room>
+    <room>rooms\c1_rm_b</room>
     <room>rooms\c1_rm_a</room>
   </rooms>
   <constants number="11">

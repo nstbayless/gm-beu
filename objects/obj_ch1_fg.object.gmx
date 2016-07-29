@@ -50,13 +50,15 @@
             <kind>1</kind>
             <string>z_offset=-6
 
+
+bg_target = bg_grassy_scene_fg;
+bg_w=background_get_width(bg_target);
+bg_h=background_get_height(bg_target)
+
 if (!created_surface) {
     //split int ground:
     GROUND_WIDTH=4;
     PREC_Y=2;
-    bg_target = bg_grassy_scene_fg;
-    bg_w=background_get_width(bg_target);
-    bg_h=background_get_height(bg_target);
     var surf = surface_create(bg_w,bg_h);
     surface_set_target(surf);
     draw_clear(c_white);
@@ -94,7 +96,6 @@ if (!created_surface) {
     instance_create(-32,-100,impass)
     impass.height=bg_h*2;
 }
-
 </string>
           </argument>
         </arguments>
@@ -128,6 +129,14 @@ if (anim&gt;ch1_ppt_a.T_SUNRISE) {
     draw_set_alpha(sqrt(p)*(0.035+.008*sin(anim/100)));
     draw_background(bg_grassy_scene_sunrays,0,0)
 }
+
+var ft = ch1_ppt_a.fadeout_timer;
+if (ft&gt;0) {
+    draw_set_colour(c_black);
+    draw_set_alpha(min(ft/20,1));
+    draw_rectangle(0,0,bg_w,bg_h,false);
+}
+
 draw_reset();
 </string>
           </argument>

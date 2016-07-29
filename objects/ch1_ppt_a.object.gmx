@@ -38,6 +38,8 @@ possessor_initialize();
 port_do_look[0]=false
 
 T_SUNRISE=500;
+
+fadeout_timer=0;
 </string>
           </argument>
         </arguments>
@@ -115,6 +117,17 @@ if (anim&gt;=290&amp;&amp;anim&lt;T_SUNRISE){
     if (skip_sunrise&amp;&amp;anim&lt;T_SUNRISE&amp;&amp;anim&gt;=340)
         anim=T_SUNRISE;
 }
+
+
+if (fadeout_timer==0)
+    if (obj_actor).x &gt; 900
+        fadeout_timer=1;
+
+if (fadeout_timer&gt;=1)
+    fadeout_timer++;
+
+if (fadeout_timer&gt;25)
+    room_goto(c1_rm_b);
 </string>
           </argument>
         </arguments>

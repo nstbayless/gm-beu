@@ -20,5 +20,3 @@ if (_aot==0) {
     y=(_v+_w)/_aot;
     z=_w;
 }
-
-print(object_get_name(object_index));

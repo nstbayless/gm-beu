@@ -63,8 +63,8 @@ stat_jumpspd_blk=15;
 
 move_x=0;
 move_y=0
-act_jump=false;
-zhalt=false
+do_jump=false;
+do_zhalt=false
 do_run=false;
 do_block=false;
 is_blocking=false;
