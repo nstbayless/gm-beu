@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="2" name="datafiles">
+  <datafiles number="3" name="datafiles">
     <datafile>
       <name>Alex Brush SIL OFL Font License 1.1.txt</name>
       <exists>-1</exists>
@@ -20,6 +20,23 @@
         </Config>
       </ConfigOptions>
       <filename>Alex Brush SIL OFL Font License 1.1.txt</filename>
+    </datafile>
+    <datafile>
+      <name>LICENSE__TexturaLibera</name>
+      <exists>-1</exists>
+      <size>249</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>LICENSE__TexturaLibera</filename>
     </datafile>
   </datafiles>
   <NewExtensions/>
@@ -113,13 +130,16 @@
     <script>scripts\scale_gp_axis.gml</script>
     <script>scripts\get_art.gml</script>
     <script>scripts\draw_reset.gml</script>
+    <script>scripts\ch_begin_transition.gml</script>
     <script>scripts\get_target_nearest.gml</script>
     <script>scripts\print.gml</script>
+    <script>scripts\open_menu.gml</script>
     <script>scripts\get_gamepad_count.gml</script>
     <script>scripts\music_play.gml</script>
     <script>scripts\assert.gml</script>
   </scripts>
   <fonts name="fonts">
+    <font>fonts\fnt_main_menu</font>
     <font>fonts\jukefont</font>
     <font>fonts\cursive</font>
   </fonts>
@@ -166,25 +186,29 @@
       <object>objects\resources</object>
       <object>objects\scene_disp</object>
       <object>objects\obj_struct</object>
+      <object>objects\obj_main_menu</object>
       <object>objects\config</object>
     </objects>
-    <objects name="ch1">
-      <object>objects\obj_ch1_fg</object>
-      <object>objects\obj_ch1_bg</object>
-      <object>objects\ch1_ppt_a</object>
-      <object>objects\obj_ch1_bg_b</object>
-      <object>objects\obj_ch1_fg_b</object>
-      <object>objects\ch1_ppt_b</object>
+    <objects name="ch_ppt">
+      <objects name="ch1">
+        <object>objects\obj_ch1_fg</object>
+        <object>objects\ch1_ppt_a</object>
+        <object>objects\obj_ch1_bg</object>
+        <object>objects\obj_ch1_fg_b</object>
+        <object>objects\ch1_ppt_b</object>
+        <object>objects\obj_ch1_bg_b</object>
+      </objects>
       <object>objects\cinf_ppt</object>
-      <object>objects\ch1_ppt</object>
+      <object>objects\rm_test_1_ppt</object>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_scene</room>
+    <room>rooms\rm_menu</room>
     <room>rooms\cinf_rm</room>
-    <room>rooms\c1_rm</room>
-    <room>rooms\c1_rm_a</room>
-    <room>rooms\c1_rm_b</room>
+    <room>rooms\rm_test_1</room>
+    <room>rooms\rm_c1_a</room>
+    <room>rooms\rm_c1_b</room>
   </rooms>
   <constants number="11">
     <constant name="cgs_halt">4</constant>

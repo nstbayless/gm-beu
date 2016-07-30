@@ -86,6 +86,12 @@ block_held[0]=false
 
 left_pressed[0]=false;
 right_pressed[0]=false;
+up_pressed[0]=false;
+down_pressed[0]=false;
+
+open_menu_pressed[0]=false;
+select_pressed[0]=false;
+cancel_pressed[0]=false;
 
 rumble[0]=0;
 
@@ -118,14 +124,24 @@ for (var i=0;i&lt;campaign.gamepad_count;i++) {
     
     left_pressed[i]=false;
     right_pressed[i]=false;
+    up_pressed[i]=false;
+    down_pressed[i]=false;
+    
+    open_menu_pressed[i]=gamepad_button_check_pressed(i,gp_start);
+    select_pressed[i]=gamepad_button_check_pressed(i,gp_face1);
+    cancel_pressed[i]=gamepad_button_check_pressed(i,gp_face2)
     
     if (move_x[i]&lt;=-THRESHOLD_AXIS&amp;&amp;_last_x[i]&gt;-THRESHOLD_AXIS)
         left_pressed[i]=true;
     if (move_x[i]&gt;=THRESHOLD_AXIS&amp;&amp;_last_x[i]&lt;THRESHOLD_AXIS)
         right_pressed[i]=true;
+    if (move_y[i]&lt;=-THRESHOLD_AXIS&amp;&amp;_last_y[i]&gt;-THRESHOLD_AXIS)
+        up_pressed[i]=true;
+    if (move_y[i]&gt;=THRESHOLD_AXIS&amp;&amp;_last_y[i]&lt;THRESHOLD_AXIS)
+        down_pressed[i]=true;
     //store previous values of axes to check if 'pressed'
     _last_x[i]=move_x[i]
-    _last_x[i]=move_x[i]
+    _last_y[i]=move_y[i]
     
     rumble[i]=0;
 }
@@ -138,6 +154,12 @@ block_held[0]|=keyboard_check(vk_shift);
 
 left_pressed[0]|=keyboard_check_pressed(vk_left);
 right_pressed[0]|=keyboard_check_pressed(vk_right);
+up_pressed[0]|=keyboard_check_pressed(vk_up);
+down_pressed[0]|=keyboard_check_pressed(vk_down);
+
+open_menu_pressed[0]|=keyboard_check_pressed(vk_enter);
+select_pressed[0]=(select_pressed[0]|keyboard_check_pressed(vk_enter)|keyboard_check_pressed(ord("Z")))&amp;!open_menu_pressed[0];
+cancel_pressed[0]=(cancel_pressed[0]|keyboard_check_pressed(vk_escape)|keyboard_check_pressed(ord("X")))
 
 if (keyboard_check(vk_right)) move_x[0]=1;
 else if (keyboard_check(vk_left)) move_x[0]=-1;

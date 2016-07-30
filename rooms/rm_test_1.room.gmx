@@ -53,7 +53,7 @@
   <instances>
     <instance objName="ground" x="0" y="288" name="inst_3964EFD5" locked="0" code="depth=1020&#xA;zbot=-64&#xA;" scaleX="21" scaleY="6" colour="4294967295" rotation="0"/>
     <instance objName="z_cue" x="0" y="384" name="inst_5AF9C28F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="ch1_ppt" x="96" y="160" name="inst_A6FB8ECE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="rm_test_1_ppt" x="96" y="160" name="inst_A6FB8ECE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="ground" x="672" y="352" name="inst_DE4B1D11" locked="0" code="z=-64;&#xA;depth=1010" scaleX="9" scaleY="6" colour="4294967295" rotation="0"/>
     <instance objName="impass" x="0" y="256" name="inst_242C6E92" locked="0" code="" scaleX="21" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="impass" x="0" y="480" name="inst_11C76213" locked="0" code="" scaleX="21" scaleY="1" colour="4294967295" rotation="0"/>

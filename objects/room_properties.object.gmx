@@ -30,6 +30,9 @@
 //if bumpy is true, players can move up surfaces more easily
 //intended for side-view art segments
 bumpy=false;
+
+//prevents actors from moving laterally
+sideview=false;
 </string>
           </argument>
         </arguments>
