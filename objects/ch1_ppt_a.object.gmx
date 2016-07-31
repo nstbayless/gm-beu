@@ -127,7 +127,7 @@ if (fadeout_timer&gt;=1)
     fadeout_timer++;
 
 if (fadeout_timer&gt;25)
-    room_goto(c1_rm_b);
+    room_goto(rm_c1_b);
 </string>
           </argument>
         </arguments>

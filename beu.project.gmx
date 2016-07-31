@@ -205,7 +205,7 @@
   <rooms name="rooms">
     <room>rooms\rm_scene</room>
     <room>rooms\rm_menu</room>
-    <room>rooms\cinf_rm</room>
+    <room>rooms\rm_inf</room>
     <room>rooms\rm_test_1</room>
     <room>rooms\rm_c1_a</room>
     <room>rooms\rm_c1_b</room>

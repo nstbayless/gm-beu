@@ -2,7 +2,7 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>-1001</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -27,13 +27,12 @@
             <kind>1</kind>
             <string>// position in the campaign
 chapter=0;
-show_debug_overlay(true);
 
 chapter_names[0]="Infinite Room"
 chapter_names[1]="Engine Demo"
 chapter_names[2]="Side view test"
 
-chapter_rooms[0]=cinf_rm
+chapter_rooms[0]=rm_inf
 chapter_rooms[1]=rm_test_1
 chapter_rooms[2]=rm_c1_a
 
@@ -50,13 +49,11 @@ if (gamepad_count&gt;0)
 //the actor controlled by the given player
 pc_actor[pc_count]=noone;
 //list of people in the party
-party = ds_list_create()
+pc_actor_obj[pc_count]=noone;
 
 for (var i=0;i&lt;pc_count;i++) {
-    var pc_to_add=instance_create(0,0,pc_main)
-    ds_list_add(party,pc_to_add);
-    pc_to_add.player=i;
-    pc_actor[i]=pc_to_add;
+    var pc_to_add=pc_main;
+    pc_actor_obj[i]=pc_to_add;
 }
 
 possessor_dummy=instance_create(0,0,obj_struct);
@@ -132,16 +129,16 @@ spawn_n=last_element+1;
     if (!instance_exists(obj_focus))
         instance_create(0,0,obj_focus)
     obj_focus.nomap=true;
-    for (var i=0;i&lt;ds_list_size(party);i++) {
-        lpc = ds_list_find_value(party,i);
-        instance_activate_object(lpc);
-        assert(instance_exists(lpc));
+    for (var i=0;i&lt;pc_count;i++) {
+        lpc = instance_create(0,0,pc_actor_obj[i]);
+        lpc.player=i;
         lpc.y=ch_spawn.y;
         lpc.x=ch_spawn.x+i*32;
         lpc.z=ch_spawn.z;
         lpc.force_ignore_roomload=true;
         obj_focus.subfocus[i]=lpc;
         obj_focus.subfocus[i+1]=noone;
+        pc_actor[i]=lpc;
     }
     camera.focus=obj_focus;
 }
@@ -156,29 +153,6 @@ spawn_n=0;
 spawn_timer[0]=0;
 //object to respawn:
 spawn_inst[0]=noone;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="3">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>ds_list_destroy(party);
 </string>
           </argument>
         </arguments>

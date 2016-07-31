@@ -32,6 +32,10 @@ SMOOTH_STRIPS=true;
 MUSIC_ENABLED=false;
 DRAW_GUIDES=false;
 RENDER_STRIP_LINES=false;
+RENDER_DEBUG_OVERLAY=true;
+
+
+show_debug_overlay(RENDER_DEBUG_OVERLAY);
 </string>
           </argument>
         </arguments>

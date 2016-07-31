@@ -357,6 +357,8 @@ if (z&lt;z_rest) {
 }
 
 //x-y movement
+if (room_properties.sideview)
+    move_y=0;
 var xorig=x;
 var yorig=y;
 var xspd = stat_spd;

@@ -34,6 +34,7 @@ height=view_hview[0];
 mode=0;
 
 opt_selected=3;
+
 </string>
           </argument>
         </arguments>
@@ -61,13 +62,15 @@ opt_selected=3;
     opt_text[0]="Begin"
     opt_text[1]="Continue"
     opt_text[2]="Config"
-    opt_text[3]="Select Chapter"
+    opt_text[3]="Jump To Room"
     
     opt_disabled[1]=true;
     opt_disabled[opt_n]=0;
+    
+    title_text = "";
 }
 if (mode==1) {
-    opt_n=2;
+    opt_n=3;
     if (config.MUSIC_ENABLED)
         opt_text[0]="Music On"
     else
@@ -76,14 +79,23 @@ if (mode==1) {
         opt_text[1]="Gamepad Rumble On"
     else
         opt_text[1]="Gamepad Rumble Off"
+    if (config.RENDER_DEBUG_OVERLAY)
+        opt_text[2]="Debug Overlay Enabled"
+    else
+        opt_text[2]="Debug Overlay Disabled"
         
     opt_disabled[1]=false;
+    title_text = "Config Options";
 }
+FIRST_ROOM=rm_inf;
 if (mode==2) {
-    room_list = get_room_list[0]
-    opt_n=1;
-    opt_text[0]="";
-    opt_disabled[1]=false;
+    opt_n=0;
+    while room_exists(FIRST_ROOM+opt_n) {
+        opt_text[opt_n]=room_get_name(FIRST_ROOM+opt_n);
+        opt_disabled[opt_n]=false;
+        opt_n++;
+    }
+    title_text = "Select Room [Debug]";
 }
 select_val=false;
 for (var i=0;i&lt;campaign.pc_count;i++) {
@@ -128,9 +140,16 @@ if (mode==1 &amp;&amp; select_val) {
         case 1:
             config.RUMBLE_ENABLED=!config.RUMBLE_ENABLED;
             break;
+        case 2:
+            config.RENDER_DEBUG_OVERLAY=!config.RENDER_DEBUG_OVERLAY;
+            show_debug_overlay(config.RENDER_DEBUG_OVERLAY);
         default:
             break;
     }
+    exit;
+}
+if (mode==2 &amp;&amp; select_val) {
+    room_goto(FIRST_ROOM+opt_selected);
     exit;
 }
 </string>
@@ -173,6 +192,9 @@ for (var i=0;i&lt;opt_n;i++) {
     draw_set_font(jukefont);
     draw_text(width/2,entry_offset+entry_height*i,opt_text[i]);
 }
+
+draw_set_colour(c_green);
+draw_text(width/2,entry_offset/2,title_text);
 </string>
           </argument>
         </arguments>
