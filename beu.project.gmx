@@ -136,6 +136,8 @@
     <script>scripts\open_menu.gml</script>
     <script>scripts\get_gamepad_count.gml</script>
     <script>scripts\music_play.gml</script>
+    <script>scripts\halt_execute_actor.gml</script>
+    <script>scripts\halt_execute.gml</script>
     <script>scripts\assert.gml</script>
   </scripts>
   <fonts name="fonts">
@@ -206,6 +208,7 @@
     <room>rooms\rm_scene</room>
     <room>rooms\rm_menu</room>
     <room>rooms\rm_inf</room>
+    <room>rooms\rm_test_baddies</room>
     <room>rooms\rm_test_1</room>
     <room>rooms\rm_c1_a</room>
     <room>rooms\rm_c1_b</room>

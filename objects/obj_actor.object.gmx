@@ -97,6 +97,8 @@ p_mode = P_AUTOMATIC;
 shadow=noone;
 spr_shadow_loc=spr_shadow_med;
 obj_explosion_loc=obj_explosion;
+
+image_speed=0;
 </string>
           </argument>
         </arguments>
