@@ -138,6 +138,7 @@
     <script>scripts\music_play.gml</script>
     <script>scripts\halt_execute_actor.gml</script>
     <script>scripts\halt_execute.gml</script>
+    <script>scripts\draw_wheel.gml</script>
     <script>scripts\assert.gml</script>
   </scripts>
   <fonts name="fonts">

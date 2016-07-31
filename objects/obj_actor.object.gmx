@@ -49,6 +49,7 @@ stat_recharge_delay=290;
 stat_recharge_rate=0;
 stat_maxhp=20;
 hp=stat_maxhp
+hp_bardrain=0;
 //how blocking affects damage
 stat_blk_mult=0;
 stat_blk_sub=0;
@@ -88,6 +89,8 @@ c_hp_gone_dire=c_hp_gone;
 a_hp_gone_dire=a_hp_gone;
 c_hp_full=make_color_hsv(13,90,220)
 a_hp_full=0.8;
+c_hp_drain=c_red;
+a_hp_drain=1;
 spr_hp_ring_loc = spr_hp_ring_med
 
 //player controlling this
@@ -325,6 +328,12 @@ if (z&lt;-2500) {
     wound(this,-1,defn)
 }
 
+//hp bardrain:
+if (t_since_hit&gt;=5||t_since_hit==-1) {
+    hp_bardrain-=0.6;
+}
+hp_bardrain=max(hp,hp_bardrain);
+
 is_blocking=do_block;
 
 //report flags:
@@ -477,20 +486,16 @@ if (t_since_hit&gt;=0)
     merge_colour_amount=max(0,min(merge_colour_amount,1))
     var merge_alpha=a_hp_gone_dire*merge_colour_amount+a_hp_gone*(1-merge_colour_amount)
     var c_hp_gone_tmp=merge_colour(c_hp_gone_dire,c_hp_gone,merge_colour_amount)
-    draw_sprite_ext(spr_hp_ring_loc,0,cx-ring_w/2*ring_scale,cy-ring_h/2*ring_scale,ring_scale,ring_scale,0,c_hp_gone_tmp,merge_alpha*alph_mult);
     
-    //draw right side of circle:
-    var portion = hp/stat_maxhp;
-    var part_b=1;
-    if (portion&lt;0.5)
-        part_b=0.5-cos(portion*pi*2)/2
-    draw_sprite_part_ext(spr_hp_ring_loc,0,0.5*ring_w,0,0.5*ring_w,ring_h*part_b,cx,cy-ring_h/2*ring_scale,ring_scale,ring_scale,c_hp_full,a_hp_full*alph_mult);
+    //background wheel:
+    draw_wheel(cx,cy,spr_hp_ring_loc,0,1,ring_scale,c_hp_gone_tmp,merge_alpha*alph_mult)
     
-    //draw left side of circle:
-    if portion&gt;0.5 {
-        var part_a=0.5-cos(portion*pi*2)/2
-        draw_sprite_part_ext(spr_hp_ring_loc,0,0,ring_h*(part_a),0.5*ring_w,ring_h*(1-part_a),cx-ring_w/2*ring_scale,cy-ring_h/2*ring_scale+ring_h*part_a*ring_scale,ring_scale,ring_scale,c_hp_full,a_hp_full*alph_mult);
-    }
+    //hp remaining wheel:
+    draw_wheel(cx,cy,spr_hp_ring_loc,0,hp/stat_maxhp,ring_scale,c_hp_full,a_hp_full*alph_mult)
+    
+    if (hp_bardrain&gt;hp)
+    //hp drain wheel:
+    draw_wheel(cx,cy,spr_hp_ring_loc,hp/stat_maxhp,hp_bardrain/stat_maxhp,ring_scale,c_hp_drain,a_hp_drain*alph_mult)
 }
 </string>
           </argument>
