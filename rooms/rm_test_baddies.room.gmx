@@ -57,9 +57,9 @@
     <instance objName="impass" x="32" y="256" name="inst_AD94FC9E" locked="0" code="" scaleX="1.03225803375244" scaleY="5" colour="4294967295" rotation="0"/>
     <instance objName="impass" x="864" y="256" name="inst_0194220B" locked="0" code="" scaleX="1.03225803375244" scaleY="5" colour="4294967295" rotation="0"/>
     <instance objName="ch_spawn" x="128" y="352" name="inst_B054A678" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="mob_warrior" x="672" y="320" name="inst_9F9739FF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_bg_mountains" x="96" y="96" name="inst_1C2CA499" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="vwall" x="64" y="416" name="inst_06ECC8D4" locked="0" code="depth=1300;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="mob_warrior_alt" x="672" y="320" name="inst_60921BDB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_darkrock" x="64" y="416" w="32" h="32" xo="224" yo="288" id="10001294" name="inst_B90FF984" depth="1301" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

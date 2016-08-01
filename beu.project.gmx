@@ -59,6 +59,7 @@
     <sprite>sprites\spr_shadow_med</sprite>
     <sprite>sprites\spr_shadow_small</sprite>
     <sprite>sprites\spr_warrior</sprite>
+    <sprite>sprites\spr_warrior_alt</sprite>
     <sprite>sprites\spr_king</sprite>
     <sprites name="explosions">
       <sprite>sprites\spr_explosion3</sprite>
@@ -140,6 +141,7 @@
     <script>scripts\halt_execute.gml</script>
     <script>scripts\draw_wheel.gml</script>
     <script>scripts\assert.gml</script>
+    <script>scripts\make_animation.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main_menu</font>
@@ -149,6 +151,7 @@
   <objects name="objects">
     <objects name="mob">
       <object>objects\mob_warrior</object>
+      <object>objects\mob_warrior_alt</object>
       <object>objects\mob_slime</object>
     </objects>
     <objects name="pcs">

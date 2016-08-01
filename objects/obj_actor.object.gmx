@@ -70,6 +70,7 @@ do_run=false;
 do_block=false;
 is_blocking=false;
 extra_action=0;
+do_dir=0;
 
 faction=0
 bounce_sub=20;
@@ -439,6 +440,9 @@ if (!do_block) {
     if (move_x&gt;0)
         dir=1;
 }
+
+if(do_dir)
+    dir=sign(do_dir);
 
 //timers:
 if (t_since_hit&gt;=0)
