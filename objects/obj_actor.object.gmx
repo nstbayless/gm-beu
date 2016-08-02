@@ -406,7 +406,8 @@ if can_act() {
     phys_ydiff = move_y*yspd;
 }
 
-if (is_hit_stunned()) {
+if (is_hit_stunned()&amp;&amp;abs(knockback_vx)+abs(knockback_vy)&lt;5) {
+    //knockback if hitstunned -- but not if about to be knocked back
     phys_xdiff=-dir*stat_hitdrift;
 }
 

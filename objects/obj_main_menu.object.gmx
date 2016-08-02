@@ -144,6 +144,7 @@ if (mode==0 &amp;&amp; select_val) {
         break;
     case 3:
         mode=2;
+        opt_selected=0;
         break;
     default:
         break;
@@ -212,7 +213,9 @@ if (mode==2 &amp;&amp; select_val) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (mode==3) {
+            <string>//This is really poorly-written code... will fix up in dialogue
+//update some time (maybe)
+if (mode==3) {
     PARLANT_X=158;
     if (t_begin_anim&lt;ANIM_TIME*submode&amp;&amp;!fademode)
         t_begin_anim++;
@@ -362,7 +365,7 @@ if (mode==2 &amp;&amp; select_val) {
                     dialogue_x[dialogue_history_n]=1;
                     dialogue_history[dialogue_history_n++]=""
                 }
-                str_to_add="You don't sound very ready."
+                str_to_add="You don't sound very sure."
                 if (sub_t&lt;=string_length(str_to_add))
                     dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
                 if (sub_t&gt;30) {
@@ -472,7 +475,7 @@ if (mode==2 &amp;&amp; select_val) {
                         dialogue_x[dialogue_history_n]=PARLANT_X+50;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="Good."
+                    str_to_add="I see."
                     if (sub_t&lt;=string_length(str_to_add))
                         dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
                     if (sub_t&gt;40) {
@@ -482,12 +485,12 @@ if (mode==2 &amp;&amp; select_val) {
                 }
                 if (submode==9 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=PARLANT_X-80;
+                        dialogue_x[dialogue_history_n]=PARLANT_X+50;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="But just so you know --"
-                    if (sub_t&lt;=string_length(str_to_add))
-                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    str_to_add="Well..."
+                    if (sub_t&lt;=string_length(str_to_add)*5 &amp;&amp; sub_t%5==3)
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,floor(sub_t/5)+1);
                     if (sub_t&gt;50) {
                         submode++;
                         sub_t=-1;
@@ -495,10 +498,10 @@ if (mode==2 &amp;&amp; select_val) {
                 }
                 if (submode==10 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=PARLANT_X+30;
+                        dialogue_x[dialogue_history_n]=45;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="Actually,"
+                    str_to_add="I hope you find it."
                     if (sub_t&lt;=string_length(str_to_add))
                         dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
                     else {
@@ -508,20 +511,20 @@ if (mode==2 &amp;&amp; select_val) {
                 }
                 if (submode==11 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=PARLANT_X-54;
+                        dialogue_x[dialogue_history_n]=70;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="It doesn't matter."
+                    str_to_add="Whatever it is."
                     if (sub_t&lt;=string_length(str_to_add))
                         dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
-                    if (sub_t&gt;30) {
+                    if (sub_t&gt;45) {
                         submode++;
                         sub_t=-1;
                     }
                 }
                 if (submode==12 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=1;
+                        dialogue_x[dialogue_history_n]=12;
                         dialogue_history[dialogue_history_n++]=""
                     }
                     str_to_add="You have a long journey ahead."
@@ -534,10 +537,10 @@ if (mode==2 &amp;&amp; select_val) {
                 }
                 if (submode==13 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=12;
+                        dialogue_x[dialogue_history_n]=1;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="Just come back safely."
+                    str_to_add="Try not to get into too much trouble."
                     if (sub_t&lt;=string_length(str_to_add))
                         dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
                     if (sub_t&gt;50) {
