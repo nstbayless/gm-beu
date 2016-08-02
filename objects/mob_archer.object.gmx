@@ -220,15 +220,16 @@ if instance_exists(ai_target) {
 if (t_since_atk&gt;=0)
     t_since_atk++;
 
-if (do_shoot&amp;&amp;(t_since_shot&gt;14||t_since_shot==-1)) {
+if (can_act()&amp;&amp;do_shoot&amp;&amp;(t_since_shot&gt;14||t_since_shot==-1)) {
     t_since_shot=0;
     var bullet = instance_create_xyz(x,y,z+16,obj_bullet);
     bullet.dir=dir;
     bullet.faction=faction;
+    bullet.knockback=10;
     bullet.master=this;
 }
 
-if (do_atk&amp;&amp;(t_since_atk&gt;9||t_since_atk==-1)) {
+if (can_act()&amp;&amp;do_atk&amp;&amp;(t_since_atk&gt;9||t_since_atk==-1)) {
     wnd_spec[0]=dir;
     wnd_spec[1]=1.5;
     attack_rectangle(x+16*dir-16,y-12,z+16,x+16*dir+16,y+12,z+8,wnd_spec)

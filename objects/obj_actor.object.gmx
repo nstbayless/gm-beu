@@ -45,7 +45,7 @@ z_rest=0;
 ground_rest=noone;
 on_ground=false;
 
-stat_recharge_delay=290;
+stat_recharge_delay=190;
 stat_recharge_rate=0;
 stat_maxhp=20;
 hp=stat_maxhp
@@ -53,14 +53,21 @@ hp_bardrain=0;
 //how blocking affects damage
 stat_blk_mult=0;
 stat_blk_sub=0;
+//how blocking affects knockback
+stat_blk_knock_mult=0;
+stat_blk_knock_sub=0;
 //speed
 stat_spd=4;
 stat_blkspd=2;
 stat_run=10;
+stat_hitdrift=2; //speed at which player moves back while in hitstun
 //jumping
 stat_grav=-3;
 stat_jumpspd=20;
 stat_jumpspd_blk=15;
+//knockback:
+stat_knockback_friction_ground=4;
+stat_knockback_friction_air=1;
 
 move_x=0;
 move_y=0
@@ -95,7 +102,7 @@ a_hp_drain=1;
 spr_hp_ring_loc = spr_hp_ring_med
 
 //player controlling this
-player=PL_NOPLAYER;
+player = PL_NOPLAYER;
 p_mode = P_AUTOMATIC;
 
 shadow=noone;
@@ -103,6 +110,15 @@ spr_shadow_loc=spr_shadow_med;
 obj_explosion_loc=obj_explosion;
 
 image_speed=0;
+
+//the attack that holds the lock on further attacking this frame
+attack_lock=0;
+
+//if &gt; 0, prevents moving, etc.
+t_hit_stun=0;
+
+knockback_vx=0;
+knockback_vy=0;
 </string>
           </argument>
         </arguments>
@@ -317,6 +333,9 @@ on_ground=retval[2];
 //output timers:
 //t_since_hit
 
+if (t_hit_stun&gt;0)
+    t_hit_stun--;
+
 //combat mechanics
 if (hp&lt;=0&amp;&amp;t_since_hit&gt;3) {
     kill(this);
@@ -346,27 +365,29 @@ if (t_since_jump&gt;=0)
     t_since_jump++;
 
 //z movement
-if (do_jump&amp;&amp;on_ground) {
-    t_since_jumped=0;
-    if (!is_blocking) vspd=stat_jumpspd;
-    else vspd=stat_jumpspd_blk;
-}
-
-if (!on_ground)
-    vspd+=stat_grav;
+if (!is_hit_stunned()) {
+    if (can_act()&amp;&amp;do_jump&amp;&amp;on_ground) {
+        t_since_jumped=0;
+        if (!is_blocking) vspd=stat_jumpspd;
+        else vspd=stat_jumpspd_blk;
+    }
     
-if (do_zhalt&amp;&amp;vspd&gt;0)
-    vspd=0;
-
-z+= vspd;
-if (z&lt;z_rest) {
-    z=z_rest
-    vspd*=-bounce_mult;
-    vspd-=bounce_sub
-    if (vspd&gt;bounce_max&amp;&amp;bounce_max&gt;0)
-        vspd=bounce_max;
-    if (vspd&lt;0)
+    if (!on_ground)
+        vspd+=stat_grav;
+        
+    if (can_act()&amp;&amp;do_zhalt&amp;&amp;vspd&gt;0)
         vspd=0;
+    
+    z+= vspd;
+    if (z&lt;z_rest) {
+        z=z_rest
+        vspd*=-bounce_mult;
+        vspd-=bounce_sub
+        if (vspd&gt;bounce_max&amp;&amp;bounce_max&gt;0)
+            vspd=bounce_max;
+        if (vspd&lt;0)
+            vspd=0;
+    }
 }
 
 //x-y movement
@@ -378,9 +399,40 @@ var xspd = stat_spd;
 var yspd = stat_spd;
 if (do_run) {xspd=stat_run;yspd/=2}
 if (do_block) {xspd=stat_blkspd; yspd=stat_blkspd;}
-phys_xdiff = move_x*xspd;
-phys_ydiff = move_y*yspd;
+phys_xdiff=0;
+phys_ydiff=0;
+if can_act() {
+    phys_xdiff = move_x*xspd;
+    phys_ydiff = move_y*yspd;
+}
 
+if (is_hit_stunned()) {
+    phys_xdiff=-dir*stat_hitdrift;
+}
+
+if (!is_hit_stunned()) {
+    //knockback stuff:
+    phys_xdiff+=knockback_vx;
+    phys_ydiff+=knockback_vy
+    
+    //friction for knockback:
+    var knockback_friction = stat_knockback_friction_air;
+    if (on_ground)
+        knockback_friction=stat_knockback_friction_ground;
+    
+    //friction for knockback (x):
+    sign_knockback_vx=sign(knockback_vx);
+    knockback_vx-=sign_knockback_vx*knockback_friction;
+    if (knockback_vx*sign_knockback_vx&lt;=0)
+        knockback_vx=0;
+        
+    //friction for knockback (y):
+    sign_knockback_vy=sign(knockback_vy);
+    knockback_vy-=sign_knockback_vy*knockback_friction;
+    if (knockback_vy*sign_knockback_vy&lt;=0)
+        knockback_vy=0;
+}
+    
 //what follows is some very messy movement script...
 
 var grounds_xn = get_grounds_in(xorig+phys_xdiff-dim_w/2,yorig-dim_h/2,xorig+phys_xdiff+dim_w/2,yorig+dim_h/2)
@@ -442,7 +494,7 @@ if (!do_block) {
         dir=1;
 }
 
-if(do_dir!=0)
+if(can_act()&amp;&amp;do_dir!=0)
     dir=sign(do_dir);
 
 //timers:

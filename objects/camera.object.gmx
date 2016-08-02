@@ -26,7 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>aot=1; //angle of attack
-z=0;
 focus=noone;
 
 skew=-0.25

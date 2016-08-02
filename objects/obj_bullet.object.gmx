@@ -45,7 +45,8 @@ spr_shadow_loc=spr_shadow_small;
 dir=1;
 spd=16;
 damage=5;
-camera_kill_distance=1000;
+camera_kill_distance=view_wview[0]/2;
+knocback=0;
 
 dim_x=16;
 dim_y=5;
@@ -206,6 +207,34 @@ on_ground=retval[2];
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
+        <id>612</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>halt_execute()</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -225,11 +254,12 @@ x+=dir*spd
 
 wnd_spec[0]=dir;
 wnd_spec[1]=damage
+wnd_spec[2]=knockback;
 
 if (attack_rectangle(x-dim_x/2,y-dim_y/2,z-dim_z/2,x+dim_x/2,y+dim_y/2,z+dim_z/2,wnd_spec)!=noone)
     instance_destroy();
 
-if abs(x-camera.x)&gt;camera_kill_distance
+if abs(get_draw_x()-camera.x)&gt;camera_kill_distance
     instance_destroy();
 </string>
           </argument>

@@ -114,6 +114,8 @@
       <script>scripts\heal.gml</script>
       <script>scripts\kill.gml</script>
       <script>scripts\wound.gml</script>
+      <script>scripts\is_hit_stunned.gml</script>
+      <script>scripts\can_act.gml</script>
       <script>scripts\attack_rectangle.gml</script>
     </scripts>
     <scripts name="generation">

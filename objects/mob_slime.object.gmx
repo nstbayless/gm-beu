@@ -248,7 +248,7 @@ move_y=2*slide_y*slide_timer/40;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if do_atk {
+            <string>if can_act()&amp;&amp;do_atk {
     wnd_spec[0]=0;
     if abs(slide_x)&gt;0.2
         wnd_spec[0]=sign(slide_x)

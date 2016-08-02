@@ -53,6 +53,8 @@ AND_attack=1;
 
 ANI_look=20;
 
+ANI_hitstun=10;
+
 anim=0;
 
 do_run_timer=0;
@@ -62,6 +64,7 @@ faction=1;
 wnd_spec[1]=10
 
 stat_recharge_rate=0.23;
+stat_blk_mult=0.3;
 stat_maxhp=60;
 hp=stat_maxhp
 
@@ -242,8 +245,10 @@ if (do_run&amp;&amp;phys_xdiff*dir&lt;=0&amp;&amp;on_ground)
 //attack
 if (t_since_attack&gt;=0)
     t_since_attack++;
-if (do_atk) {
+if (can_act()&amp;&amp;do_atk) {
     wnd_spec[0]=dir
+    wnd_spec[1]=10;
+    wnd_spec[2]=6;
     t_since_attack=0;
     attack_rectangle(x+dir*20-20,y-20,z+1,x+dir*20+20,y+20,z+20,wnd_spec)
 }
@@ -305,6 +310,9 @@ if (extra_action==1)
     
 if (t_since_attack&gt;=0&amp;&amp;t_since_attack&lt;4)
     image_index=ANI_attack
+    
+if (is_hit_stunned())
+    image_index=ANI_hitstun
 </string>
           </argument>
         </arguments>
