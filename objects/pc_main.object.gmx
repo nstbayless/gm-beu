@@ -48,7 +48,7 @@ AND_walk=3;
 ANI_blk=9;
 AND_blk=1;
 
-ANI_attack=13;
+ANI_attack=24;
 AND_attack=1;
 
 ANI_look=20;
