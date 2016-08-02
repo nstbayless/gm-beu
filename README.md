@@ -4,7 +4,7 @@
 
 Version 0.2.1 (alpha)
 
-Download binary ([windows](../../raw/master/bin/beu.exe))
+[Download binary](./releases/)
 
 Controls:
 
