@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var anim = ch1_ppt_a.anim;
+            <string>draw_reset();
+var anim = ch1_ppt_a.anim;
 draw_background(bg_grassy_scene_bg,0,0)
 if (anim&lt;ch1_ppt_a.T_SUNRISE+70) {
     var p = 1;

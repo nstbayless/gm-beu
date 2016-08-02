@@ -70,6 +70,7 @@ do_run=false;
 do_block=false;
 is_blocking=false;
 extra_action=0;
+do_dir=0;
 
 faction=0
 bounce_sub=20;
@@ -297,12 +298,13 @@ on_ground=retval[2];
           <argument>
             <kind>1</kind>
             <string>//input variables:
-//move_x
-//move_y
-//do_block
-//do_jump
-//do_run
-//do_zhalt
+//move_x: -1:1
+//move_y -1:1
+//do_block {0,1}
+//do_jump {0,1}
+//do_run {0,1}
+//do_zhalt {0,1}
+//do_dir {-1,0,1}
 
 //output:
 //phys_bounced
@@ -439,6 +441,9 @@ if (!do_block) {
     if (move_x&gt;0)
         dir=1;
 }
+
+if(do_dir!=0)
+    dir=sign(do_dir);
 
 //timers:
 if (t_since_hit&gt;=0)

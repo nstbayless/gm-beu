@@ -2,7 +2,9 @@
 ### (With RPG elements?)
 #### (And Co-Op!)
 
-Version 0.2.2 (alpha)
+Version 0.2.3 (alpha)
+
+[Download binary](./releases/)
 
 Controls:
 

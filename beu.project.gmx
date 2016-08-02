@@ -59,6 +59,7 @@
     <sprite>sprites\spr_shadow_med</sprite>
     <sprite>sprites\spr_shadow_small</sprite>
     <sprite>sprites\spr_warrior</sprite>
+    <sprite>sprites\spr_warrior_alt</sprite>
     <sprite>sprites\spr_king</sprite>
     <sprites name="explosions">
       <sprite>sprites\spr_explosion3</sprite>
@@ -71,6 +72,8 @@
       <sprite>sprites\spr_hp_ring_small</sprite>
       <sprite>sprites\spr_hp_ring_med</sprite>
     </sprites>
+    <sprite>sprites\spr_arrow</sprite>
+    <sprite>sprites\spr_bat</sprite>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="art">
@@ -140,15 +143,21 @@
     <script>scripts\halt_execute.gml</script>
     <script>scripts\draw_wheel.gml</script>
     <script>scripts\assert.gml</script>
+    <script>scripts\make_animation.gml</script>
+    <script>scripts\instance_create_xyz.gml</script>
+    <script>scripts\make_array.gml</script>
   </scripts>
   <fonts name="fonts">
-    <font>fonts\fnt_main_menu</font>
     <font>fonts\jukefont</font>
+    <font>fonts\fnt_script</font>
+    <font>fonts\fnt_menu</font>
     <font>fonts\cursive</font>
   </fonts>
   <objects name="objects">
     <objects name="mob">
       <object>objects\mob_warrior</object>
+      <object>objects\mob_archer</object>
+      <object>objects\mob_bat</object>
       <object>objects\mob_slime</object>
     </objects>
     <objects name="pcs">
@@ -157,6 +166,7 @@
     </objects>
     <object>objects\obj_actor</object>
     <object>objects\obj_shadow</object>
+    <object>objects\obj_bullet</object>
     <object>objects\ch_spawn</object>
     <object>objects\obj_bg_mountains</object>
     <objects name="decals">

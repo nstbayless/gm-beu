@@ -1,12 +1,12 @@
-//attack_rectangle(x1,y1,z1,x2,y2,z2,definition,faction)
+//attack_rectangle(x1,y1,z1,x2,y2,z2,definition,[faction])
 
-var x1=argument0;
-var y1=argument1;
-var z1=argument2;
-var x2=argument3;
-var y2=argument4;
-var z2=argument5;
-var defn = argument6;
+var x1=argument[0];
+var y1=argument[1];
+var z1=argument[2];
+var x2=argument[3];
+var y2=argument[4];
+var z2=argument[5];
+var defn = argument[6];
 var afaction;
 if (argument_count>7)
     afaction = argument[7];

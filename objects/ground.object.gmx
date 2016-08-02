@@ -172,6 +172,7 @@ image_yscale=height/32;
     //render surface:
     surf=surface_create(surf_w,surf_h);
     surface_set_target(surf);
+    draw_reset();
     draw_clear_alpha(c_black,0);
     for (i=0;i&lt;cn;i++){
         var cx=child_x[i]-minx;

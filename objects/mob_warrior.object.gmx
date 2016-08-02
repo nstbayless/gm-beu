@@ -176,7 +176,7 @@ if instance_exists(ai_target) &amp;&amp; ai_target!=noone {
     }
     if (t_atk&gt;16)
         t_atk=0;
-}
+} else ai_target=noone;
 </string>
           </argument>
         </arguments>
