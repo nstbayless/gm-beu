@@ -298,12 +298,13 @@ on_ground=retval[2];
           <argument>
             <kind>1</kind>
             <string>//input variables:
-//move_x
-//move_y
-//do_block
-//do_jump
-//do_run
-//do_zhalt
+//move_x: -1:1
+//move_y -1:1
+//do_block {0,1}
+//do_jump {0,1}
+//do_run {0,1}
+//do_zhalt {0,1}
+//do_dir {-1,0,1}
 
 //output:
 //phys_bounced
@@ -441,7 +442,7 @@ if (!do_block) {
         dir=1;
 }
 
-if(do_dir)
+if(do_dir!=0)
     dir=sign(do_dir);
 
 //timers:

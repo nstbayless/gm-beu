@@ -72,6 +72,7 @@
       <sprite>sprites\spr_hp_ring_small</sprite>
       <sprite>sprites\spr_hp_ring_med</sprite>
     </sprites>
+    <sprite>sprites\spr_arrow</sprite>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="art">
@@ -142,6 +143,8 @@
     <script>scripts\draw_wheel.gml</script>
     <script>scripts\assert.gml</script>
     <script>scripts\make_animation.gml</script>
+    <script>scripts\instance_create_xyz.gml</script>
+    <script>scripts\make_array.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main_menu</font>
@@ -160,6 +163,7 @@
     </objects>
     <object>objects\obj_actor</object>
     <object>objects\obj_shadow</object>
+    <object>objects\obj_bullet</object>
     <object>objects\ch_spawn</object>
     <object>objects\obj_bg_mountains</object>
     <objects name="decals">
