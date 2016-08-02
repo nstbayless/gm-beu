@@ -73,6 +73,7 @@
       <sprite>sprites\spr_hp_ring_med</sprite>
     </sprites>
     <sprite>sprites\spr_arrow</sprite>
+    <sprite>sprites\spr_bat</sprite>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="art">
@@ -147,14 +148,16 @@
     <script>scripts\make_array.gml</script>
   </scripts>
   <fonts name="fonts">
-    <font>fonts\fnt_main_menu</font>
     <font>fonts\jukefont</font>
+    <font>fonts\fnt_script</font>
+    <font>fonts\fnt_menu</font>
     <font>fonts\cursive</font>
   </fonts>
   <objects name="objects">
     <objects name="mob">
       <object>objects\mob_warrior</object>
-      <object>objects\mob_warrior_alt</object>
+      <object>objects\mob_archer</object>
+      <object>objects\mob_bat</object>
       <object>objects\mob_slime</object>
     </objects>
     <objects name="pcs">

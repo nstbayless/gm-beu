@@ -1,3 +1,7 @@
 //make_array(elt_0,...)
 
-return argument;
+var array;
+for (var i=0;i<argument_count;i++)
+    array[i]=argument[i];
+
+return array;

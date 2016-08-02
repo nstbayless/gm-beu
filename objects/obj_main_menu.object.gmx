@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -34,7 +34,8 @@ height=view_hview[0];
 mode=0;
 
 opt_selected=3;
-
+fademode=false;
+fadetimer=0;
 </string>
           </argument>
         </arguments>
@@ -57,7 +58,8 @@ opt_selected=3;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (mode==0) {
+            <string>ANIM_TIME=15;
+if (mode==0) {
     opt_n=4;
     opt_text[0]="Begin"
     opt_text[1]="Continue"
@@ -66,6 +68,7 @@ opt_selected=3;
     
     opt_disabled[1]=true;
     opt_disabled[opt_n]=0;
+    subchoice=0;
     
     title_text = "";
 }
@@ -103,11 +106,17 @@ for (var i=0;i&lt;campaign.pc_count;i++) {
         opt_selected--;
     if (controller.down_pressed[i])
         opt_selected++;
+    if (controller.left_pressed[i])
+        subchoice--;
+    if (controller.right_pressed[i])
+        subchoice++;
     if (controller.select_pressed[i])
         select_val=true;
-    if (controller.cancel_pressed[i]) {
+    if (controller.cancel_pressed[i]&amp;&amp;!fademode) {
         if (mode!=0) {
             opt_selected=1+mode;
+            if (mode==3)
+                opt_selected=0;
             mode=0;
             exit;
         }
@@ -119,7 +128,14 @@ opt_selected=(opt_selected+opt_n) % opt_n;
 if (mode==0 &amp;&amp; select_val) {
     switch (opt_selected) {
     case 0:
-        room_goto(rm_c1_a)
+        mode=3;
+        t_begin_anim=0;
+        submode=1;
+        sub_t=0;
+        dialogue_history[0]=opt_text[0];
+        dialogue_x[0]=0;
+        dialogue_history_n=1;
+        subopt_n=0;
         break
     case 2:
         mode=1;
@@ -150,14 +166,153 @@ if (mode==1 &amp;&amp; select_val) {
 }
 if (mode==2 &amp;&amp; select_val) {
     room_goto(FIRST_ROOM+opt_selected);
+    instance_destroy();
     exit;
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>dialogue</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (mode==3) {
+    PARLANT_X=158;
+    if (t_begin_anim&lt;ANIM_TIME*submode&amp;&amp;!fademode)
+        t_begin_anim++;
+    if (t_begin_anim%ANIM_TIME==0) {
+        if (submode==1) {
+            if (sub_t==0) {
+                dialogue_x[dialogue_history_n]=PARLANT_X;
+                dialogue_history[dialogue_history_n++]=""
+            }
+            str_to_add = "Are you sure?"
+            if (sub_t&lt;string_length(str_to_add))
+                dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+            
+            if (sub_t&gt;15) {
+                submode++;
+                sub_t=0;
+            }
+        }
+        
+        if (submode==2){
+            if (sub_t==4) {
+                subopt_n=2;
+                subopt=make_array("Yes","No")
+                subchoice=0;
+            }
+            if (sub_t&gt;4) {
+                subchoice=(subchoice+subopt_n)%subopt_n;
+                if (select_val) switch(subchoice){
+                case 0:
+                    sub_t=0;
+                    submode++;
+                    dialogue_x[dialogue_history_n]=0;
+                    dialogue_history[dialogue_history_n++]="Yes"
+                    subopt_n=0;
+                    exit;
+                case 1:
+                    mode=0;
+                    exit;
+                default:
+                    break;
+                }
+            }
+        }
+        
+        if (submode==3) {
+            if (sub_t==0) {
+                dialogue_x[dialogue_history_n]=PARLANT_X;
+                dialogue_history[dialogue_history_n++]=""
+            }
+            str_to_add="That's good"
+            if (sub_t&lt;=string_length(str_to_add))
+                dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+            if (sub_t&gt;15) {
+                submode++;
+                sub_t=-1;
+            }
+        }
+        
+        if (submode==4) {
+            if (sub_t==0) {
+                dialogue_x[dialogue_history_n]=PARLANT_X+48;
+                dialogue_history[dialogue_history_n++]=""
+            }
+            str_to_add="Because..."
+            if (sub_t&lt;=string_length(str_to_add)*4+3 &amp;&amp; sub_t%4==0)
+                dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,floor(sub_t/4)+1);
+            if (sub_t&gt;60) {
+                submode++;
+                sub_t=-1;
+            }
+        }
+        
+        if (submode==5) {
+            if (sub_t==0) {
+                dialogue_x[dialogue_history_n]=1;
+                dialogue_history[dialogue_history_n++]=""
+            }
+            str_to_add="You have a long way to go."
+            if (sub_t&lt;=string_length(str_to_add)*2+1 &amp;&amp; sub_t%2==0)
+                dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,floor(sub_t/2)+1);
+            if (sub_t&gt;90) {
+                submode++;
+                room_goto(rm_c1_a)
+                fademode=true;
+                fadetimer=0;
+                sub_t=-1;
+                exit;
+            }
+        }
+        sub_t++
+    }
+    if (fademode==true)
+        fadetimer++;
+    if (fadetimer&gt;150)
+        instance_destroy();
 }
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -175,26 +330,64 @@ if (mode==2 &amp;&amp; select_val) {
           <argument>
             <kind>1</kind>
             <string>draw_reset();
-draw_set_font(fnt_main_menu);
+draw_set_font(fnt_menu);
 draw_set_halign(fa_center);
 
-var entry_offset=128;
-var entry_height=32;
+var entry_offset=180;
+var entry_height=36;
+var dialogue_height=32;
 var select_margin=64;
 
-draw_set_colour(make_color_rgb(128,16,16));
-draw_rectangle(select_margin,entry_offset+entry_height*opt_selected,width-select_margin,entry_offset+entry_height*opt_selected+entry_height,false)
-for (var i=0;i&lt;opt_n;i++) {
-    if (opt_disabled[i])
-        draw_set_colour(c_gray);
-    else
-        draw_set_colour(c_white);
-    draw_set_font(jukefont);
-    draw_text(width/2,entry_offset+entry_height*i,opt_text[i]);
-}
+TOP_OFFSET=-19;
 
-draw_set_colour(c_green);
-draw_text(width/2,entry_offset/2,title_text);
+SEL_COL = make_color_rgb(128,16,16);
+
+if (mode!=3) {
+    draw_set_colour(SEL_COL);
+    draw_rectangle(select_margin,entry_offset+entry_height*opt_selected-4,width-select_margin,entry_offset+entry_height*opt_selected+entry_height-4,false)
+    for (var i=0;i&lt;opt_n;i++) {
+        if (opt_disabled[i])
+            draw_set_colour(c_gray);
+        else
+            draw_set_colour(c_white);
+        draw_text(width/2,entry_offset+entry_height*i,opt_text[i]);
+    }
+    
+    draw_set_colour(c_green);
+    draw_text(width/2,entry_offset/2,title_text);
+} else {
+    draw_reset();
+    if (fademode)
+        draw_set_alpha(1-fadetimer/150)
+    for (var i=0;i&lt;dialogue_history_n;i++) {
+        var draw_y = entry_offset+i*dialogue_height - t_begin_anim/ANIM_TIME * dialogue_height+fadetimer*fademode*2
+        draw_set_color(c_white);
+        tmp_offset=0;
+        if dialogue_x[i]&lt;=0 {
+            draw_set_halign(fa_center);
+            draw_set_font(fnt_menu);
+        } else {
+            draw_set_halign(fa_left);
+            draw_set_font(fnt_script);
+            tmp_offset=TOP_OFFSET;
+        }
+        draw_text(width/2+dialogue_x[i],draw_y+tmp_offset,dialogue_history[i])
+    }
+    draw_set_font(fnt_menu);
+    draw_set_halign(fa_center);
+    for (var i=0;i&lt;subopt_n;i++) {
+        var draw_y = entry_offset+fadetimer*fademode*2;
+        draw_x=width/2+100*i
+        text_w=string_width(subopt[i]);
+        if (subchoice==i) {
+            draw_set_colour(SEL_COL)
+            draw_rectangle(draw_x-text_w/2,draw_y,draw_x+text_w/2,draw_y+26,false)
+            draw_set_color(c_white);
+        }
+        draw_text(draw_x,draw_y,subopt[i])
+    }
+}
+draw_reset();
 </string>
           </argument>
         </arguments>
