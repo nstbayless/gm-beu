@@ -36,6 +36,7 @@ mode=0;
 opt_selected=3;
 fademode=false;
 fadetimer=0;
+fadespd=2;
 </string>
           </argument>
         </arguments>
@@ -136,6 +137,7 @@ if (mode==0 &amp;&amp; select_val) {
         dialogue_x[0]=0;
         dialogue_history_n=1;
         subopt_n=0;
+        branch=0;
         break
     case 2:
         mode=1;
@@ -226,6 +228,7 @@ if (mode==2 &amp;&amp; select_val) {
             
             if (sub_t&gt;15) {
                 submode++;
+                branch=0;
                 sub_t=0;
             }
         }
@@ -257,47 +260,296 @@ if (mode==2 &amp;&amp; select_val) {
         
         if (submode==3) {
             if (sub_t==0) {
-                dialogue_x[dialogue_history_n]=PARLANT_X;
+                dialogue_x[dialogue_history_n]=PARLANT_X-40;
                 dialogue_history[dialogue_history_n++]=""
             }
-            str_to_add="That's good"
+            str_to_add="Are you really sure?"
             if (sub_t&lt;=string_length(str_to_add))
                 dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
-            if (sub_t&gt;15) {
+            if (sub_t&gt;25) {
                 submode++;
                 sub_t=-1;
             }
         }
         
-        if (submode==4) {
-            if (sub_t==0) {
-                dialogue_x[dialogue_history_n]=PARLANT_X+48;
-                dialogue_history[dialogue_history_n++]=""
+        if (submode==4){
+            if (sub_t==4) {
+                subopt_n=2;
+                subopt=make_array("Yes","Definitely")
+                subchoice=0;
             }
-            str_to_add="Because..."
-            if (sub_t&lt;=string_length(str_to_add)*4+3 &amp;&amp; sub_t%4==0)
-                dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,floor(sub_t/4)+1);
-            if (sub_t&gt;60) {
-                submode++;
-                sub_t=-1;
+            if (sub_t&gt;4) {
+                subchoice=(subchoice+subopt_n)%subopt_n;
+                branch=1;
+                if (select_val) switch(subchoice){
+                case 0:
+                    branch=2;
+                case 1:
+                    submode++;
+                    sub_t=0;
+                    dialogue_x[dialogue_history_n]=-subchoice*120;
+                    dialogue_history[dialogue_history_n++]=subopt[subchoice]
+                    subopt_n=0;
+                    exit;
+                default:
+                    break;
+                }
             }
         }
-        
-        if (submode==5) {
-            if (sub_t==0) {
-                dialogue_x[dialogue_history_n]=1;
-                dialogue_history[dialogue_history_n++]=""
+        if (branch==1) {
+            if (submode==5) {
+                if (sub_t==0) {
+                    dialogue_x[dialogue_history_n]=PARLANT_X;
+                    dialogue_history[dialogue_history_n++]=""
+                }
+                str_to_add="That's good"
+                if (sub_t&lt;=string_length(str_to_add))
+                    dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                if (sub_t&gt;15) {
+                    submode++;
+                    sub_t=-1;
+                }
             }
-            str_to_add="You have a long way to go."
-            if (sub_t&lt;=string_length(str_to_add)*2+1 &amp;&amp; sub_t%2==0)
-                dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,floor(sub_t/2)+1);
-            if (sub_t&gt;90) {
-                submode++;
-                room_goto(rm_c1_a)
-                fademode=true;
-                fadetimer=0;
-                sub_t=-1;
-                exit;
+            
+            if (submode==6) {
+                if (sub_t==0) {
+                    dialogue_x[dialogue_history_n]=PARLANT_X+48;
+                    dialogue_history[dialogue_history_n++]=""
+                }
+                str_to_add="Because..."
+                if (sub_t&lt;=string_length(str_to_add)*4+3 &amp;&amp; sub_t%4==0)
+                    dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,floor(sub_t/4)+1);
+                if (sub_t&gt;60) {
+                    submode++;
+                    sub_t=-1;
+                }
+            }
+            
+            if (submode==7) {
+                if (sub_t==0) {
+                    dialogue_x[dialogue_history_n]=1;
+                    dialogue_history[dialogue_history_n++]=""
+                }
+                str_to_add="You have a long way to go."
+                if (sub_t&lt;=string_length(str_to_add)*2+1 &amp;&amp; sub_t%2==0)
+                    dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,floor(sub_t/2)+1);
+                if (sub_t&gt;90) {
+                    submode=100;
+                    room_goto(rm_c1_a)
+                    fademode=true;
+                    fadetimer=0;
+                    sub_t=-1;
+                    exit;
+                }
+            }
+        } else {
+            if (submode==5) {
+                if (sub_t==0) {
+                    dialogue_x[dialogue_history_n]=PARLANT_X+50;
+                    dialogue_history[dialogue_history_n++]=""
+                }
+                str_to_add="Hmm..."
+                if (sub_t&lt;=string_length(str_to_add))
+                    dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                if (sub_t&gt;15) {
+                    submode++;
+                    sub_t=-1;
+                }
+            }
+            
+            if (submode==6 &amp;&amp; sub_t&gt;=0) {
+                if (sub_t==0) {
+                    dialogue_x[dialogue_history_n]=1;
+                    dialogue_history[dialogue_history_n++]=""
+                }
+                str_to_add="You don't sound very ready."
+                if (sub_t&lt;=string_length(str_to_add))
+                    dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                if (sub_t&gt;30) {
+                    submode++;
+                    sub_t=-1;
+                }
+            }
+            
+            if (submode==7) {
+                if (sub_t==4) {
+                    subopt_n=2;
+                    subopt=make_array("I am","I'm not")
+                    subchoice=0;
+                }
+                if (sub_t&gt;4) {
+                    subchoice=(subchoice+subopt_n)%subopt_n;
+                    branch=3;
+                    if (select_val) switch(subchoice){
+                    case 0:
+                        branch=4;
+                    case 1:
+                        submode++;
+                        sub_t=0;
+                        dialogue_x[dialogue_history_n]=-subchoice*120;
+                        dialogue_history[dialogue_history_n++]=subopt[subchoice]
+                        subopt_n=0;
+                        exit;
+                    default:
+                        break;
+                    }
+                }
+            }
+            
+            if (branch==3) {
+                if (submode==8 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=PARLANT_X+50;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="Good."
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;30) {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==9 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=PARLANT_X;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="You're honest."
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;30) {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==10 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=PARLANT_X-100;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="If you ever come back --"
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;40) {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==11 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=1;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="Let me know if it helps."
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;60) {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==12 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=1;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="Just don't forget to come back."
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;70) {
+                        submode=100;
+                        room_goto(rm_c1_a)
+                        fademode=true;
+                        fadetimer=0;
+                        sub_t=-1;
+                        exit;
+                    }
+                }
+            } else {
+                if (submode==8 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=PARLANT_X+50;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="Good."
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;40) {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==9 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=PARLANT_X-80;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="But just so you know --"
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;50) {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==10 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=PARLANT_X+30;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="Actually,"
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    else {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==11 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=PARLANT_X-54;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="It doesn't matter."
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;30) {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==12 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=1;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="You have a long journey ahead."
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;50) {
+                        submode++;
+                        sub_t=-1;
+                    }
+                }
+                if (submode==13 &amp;&amp; sub_t&gt;=0) {
+                    if (sub_t==0) {
+                        dialogue_x[dialogue_history_n]=12;
+                        dialogue_history[dialogue_history_n++]=""
+                    }
+                    str_to_add="Just come back safely."
+                    if (sub_t&lt;=string_length(str_to_add))
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    if (sub_t&gt;50) {
+                        submode=100;
+                        room_goto(rm_c1_a)
+                        fademode=true;
+                        fadespd=3;
+                        fadetimer=0;
+                        sub_t=-1;
+                        exit;
+                    }
+                }
             }
         }
         sub_t++
@@ -335,7 +587,7 @@ draw_set_halign(fa_center);
 
 var entry_offset=180;
 var entry_height=36;
-var dialogue_height=32;
+var dialogue_height=48;
 var select_margin=64;
 
 TOP_OFFSET=-19;
@@ -360,7 +612,7 @@ if (mode!=3) {
     if (fademode)
         draw_set_alpha(1-fadetimer/150)
     for (var i=0;i&lt;dialogue_history_n;i++) {
-        var draw_y = entry_offset+i*dialogue_height - t_begin_anim/ANIM_TIME * dialogue_height+fadetimer*fademode*2
+        var draw_y = entry_offset+i*dialogue_height - t_begin_anim/ANIM_TIME * dialogue_height+fadetimer*fademode*fadespd
         draw_set_color(c_white);
         tmp_offset=0;
         if dialogue_x[i]&lt;=0 {
@@ -371,13 +623,13 @@ if (mode!=3) {
             draw_set_font(fnt_script);
             tmp_offset=TOP_OFFSET;
         }
-        draw_text(width/2+dialogue_x[i],draw_y+tmp_offset,dialogue_history[i])
+        draw_text(width/2+abs(dialogue_x[i]),draw_y+tmp_offset,dialogue_history[i])
     }
     draw_set_font(fnt_menu);
     draw_set_halign(fa_center);
     for (var i=0;i&lt;subopt_n;i++) {
-        var draw_y = entry_offset+fadetimer*fademode*2;
-        draw_x=width/2+100*i
+        var draw_y = entry_offset+fadetimer*fademode*fadespd;
+        draw_x=width/2+120*i
         text_w=string_width(subopt[i]);
         if (subchoice==i) {
             draw_set_colour(SEL_COL)

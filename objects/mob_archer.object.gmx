@@ -53,6 +53,8 @@ anim_walk_t=0;
 ai_target=noone
 t_since_shot=-1;
 t_since_atk=-1;
+
+stat_spd=3
 </string>
           </argument>
         </arguments>
