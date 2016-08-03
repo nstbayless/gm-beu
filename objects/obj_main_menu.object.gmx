@@ -67,6 +67,7 @@ if (mode==0) {
     opt_text[2]="Config"
     opt_text[3]="Jump To Room"
     
+    opt_disabled[0]=!config.STORY_MODE_ENABLED;
     opt_disabled[1]=true;
     opt_disabled[opt_n]=0;
     subchoice=0;
@@ -87,7 +88,8 @@ if (mode==1) {
         opt_text[2]="Debug Overlay Enabled"
     else
         opt_text[2]="Debug Overlay Disabled"
-        
+    
+    opt_disabled[0]=false;
     opt_disabled[1]=false;
     title_text = "Config Options";
 }
@@ -129,6 +131,8 @@ opt_selected=(opt_selected+opt_n) % opt_n;
 if (mode==0 &amp;&amp; select_val) {
     switch (opt_selected) {
     case 0:
+        if (config.STORY_MODE_ENABLED==false)
+            exit;
         mode=3;
         t_begin_anim=0;
         submode=1;
