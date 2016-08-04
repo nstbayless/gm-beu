@@ -54,7 +54,7 @@ hp_bardrain=0;
 stat_blk_mult=0;
 stat_blk_sub=0;
 //how blocking affects knockback
-stat_blk_knock_mult=0;
+stat_blk_knock_mult=0.3;
 stat_blk_knock_sub=0;
 //speed
 stat_spd=4;
@@ -119,6 +119,10 @@ t_hit_stun=0;
 
 knockback_vx=0;
 knockback_vy=0;
+
+loc_sfx_on_hit=sfx_hit;
+loc_sfx_on_block=sfx_ping;
+loc_sfx_on_death=sfx_explosion;
 </string>
           </argument>
         </arguments>
@@ -346,6 +350,7 @@ if (z&lt;-2500) {
     var defn;
     defn[0]=0;
     defn[4]=true;
+    defn[6]=true;
     wound(this,-1,defn)
 }
 

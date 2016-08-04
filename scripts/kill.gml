@@ -13,4 +13,6 @@ with (inst_actor) {
         campaign.spawn_n++;
         instance_deactivate_object(this);
     } else instance_destroy();
+    if (loc_sfx_on_death>=0)
+        play_sfx_at(x,y,z+dim_z/2,loc_sfx_on_death)
 }

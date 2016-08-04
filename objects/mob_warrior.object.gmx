@@ -240,6 +240,7 @@ if (can_act()&amp;&amp;do_atk) {
     wnd_spec[2]=18;
     t_since_attack=0;
     attack_rectangle(x+dir*30-30,y-20,z+1,x+dir*30+30,y+20,z+20,wnd_spec)
+    play_sfx_at(x,y,z+dim_z/2,sfx_attack)
 }
 </string>
           </argument>

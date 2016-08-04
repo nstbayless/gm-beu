@@ -75,7 +75,7 @@ if (mode==0) {
     title_text = "";
 }
 if (mode==1) {
-    opt_n=3;
+    opt_n=4;
     if (config.MUSIC_ENABLED)
         opt_text[0]="Music On"
     else
@@ -88,6 +88,10 @@ if (mode==1) {
         opt_text[2]="Debug Overlay Enabled"
     else
         opt_text[2]="Debug Overlay Disabled"
+    if (config.SFX_ENABLED)
+        opt_text[3]="SFX Enabled"
+    else
+        opt_text[3]="SFX Disabled"
     
     opt_disabled[0]=false;
     opt_disabled[1]=false;
@@ -166,6 +170,10 @@ if (mode==1 &amp;&amp; select_val) {
         case 2:
             config.RENDER_DEBUG_OVERLAY=!config.RENDER_DEBUG_OVERLAY;
             show_debug_overlay(config.RENDER_DEBUG_OVERLAY);
+        case 3:
+            config.SFX_ENABLED=!config.SFX_ENABLED;
+            play_sfx(sfx_attack);
+            break
         default:
             break;
     }

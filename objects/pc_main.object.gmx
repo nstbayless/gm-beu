@@ -72,6 +72,8 @@ c_hp_gone_dire=make_color_hsv(4,252,250);
 a_hp_gone_dire=0.8;
 
 dim_z=20;
+
+loc_sfx_on_hit=sfx_hurt;
 </string>
           </argument>
         </arguments>
@@ -251,6 +253,7 @@ if (can_act()&amp;&amp;do_atk) {
     wnd_spec[2]=6;
     t_since_attack=0;
     attack_rectangle(x+dir*20-20,y-20,z+1,x+dir*20+20,y+20,z+20,wnd_spec)
+    play_sfx_at(x,y,z+8,sfx_attack);
 }
 </string>
           </argument>

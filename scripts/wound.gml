@@ -7,13 +7,14 @@
 // 3 : hit-stun time (zero is default)
 // 4 : instant kill
 // 5 : respawn time (zero is default)
-// 6 : freeze time
+// 6 : silent
+// 7 : freeze time
 
 var obj = argument0;
 var afaction = argument1;
 var defn = argument2;
 //init array if neceesary
-defn[7]=0;
+defn[8]=0;
 
 //hitstun defaults
 if (defn[3]==0)
@@ -28,8 +29,12 @@ with (obj) {
         damage = max(damage*stat_blk_mult-stat_blk_sub,0);
         knockback*=stat_blk_knock_mult;
         knockback-=stat_blk_knock_sub;
+        if (loc_sfx_on_block>=0&&!defn[6])
+            play_sfx_at(x,y,z+dim_z/2,loc_sfx_on_block);
     } else {
         t_hit_stun=defn[3]
+        if (loc_sfx_on_hit>=0&&!defn[6])
+            play_sfx_at(x,y,z+dim_z/2,loc_sfx_on_hit);
     }
     if (knockback<0)
         knockback=0;
@@ -43,3 +48,4 @@ with (obj) {
             kill(this);
     }
 }
+    

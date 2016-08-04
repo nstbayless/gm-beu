@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="3" name="datafiles">
+  <datafiles number="5" name="datafiles">
     <datafile>
       <name>Alex Brush SIL OFL Font License 1.1.txt</name>
       <exists>-1</exists>
@@ -42,6 +42,12 @@
   <NewExtensions/>
   <sounds name="sound">
     <sound>sound\mus_54</sound>
+    <sound>sound\sfx_hit</sound>
+    <sound>sound\sfx_ping</sound>
+    <sound>sound\sfx_explosion</sound>
+    <sound>sound\sfx_hurt</sound>
+    <sound>sound\sfx_slime</sound>
+    <sound>sound\sfx_attack</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="decals">
@@ -140,6 +146,8 @@
     <script>scripts\print.gml</script>
     <script>scripts\open_menu.gml</script>
     <script>scripts\get_gamepad_count.gml</script>
+    <script>scripts\play_sfx.gml</script>
+    <script>scripts\play_sfx_at.gml</script>
     <script>scripts\music_play.gml</script>
     <script>scripts\halt_execute_actor.gml</script>
     <script>scripts\halt_execute.gml</script>
