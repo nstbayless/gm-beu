@@ -38,7 +38,7 @@ with (obj) {
     }
     if (knockback<0)
         knockback=0;
-    knockback_vx+=knockback*defn[0]
+    knockback_vx=add_signed_quadrature(knockback_vx,knockback*defn[0])
     hp-=damage;
     t_since_hit=0;
     if (defn[4]) {

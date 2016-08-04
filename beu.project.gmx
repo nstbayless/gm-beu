@@ -47,6 +47,8 @@
     <sound>sound\sfx_explosion</sound>
     <sound>sound\sfx_hurt</sound>
     <sound>sound\sfx_slime</sound>
+    <sound>sound\sfx_twang1</sound>
+    <sound>sound\sfx_twang2</sound>
     <sound>sound\sfx_attack</sound>
   </sounds>
   <sprites name="sprites">
@@ -156,6 +158,7 @@
     <script>scripts\make_animation.gml</script>
     <script>scripts\instance_create_xyz.gml</script>
     <script>scripts\make_array.gml</script>
+    <script>scripts\add_signed_quadrature.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\jukefont</font>

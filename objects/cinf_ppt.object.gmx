@@ -154,23 +154,24 @@ if (gen_x&gt;x) {
         dw_min=round(dw_min/config.STRIP_THICKNESS)*config.STRIP_THICKNESS
         dw_max=round(dw_max/config.STRIP_THICKNESS)*config.STRIP_THICKNESS
         dx=round(dx/32)*32
-        if (gen_num)&gt;11
-            while (random(1)&lt;0.2) {
+        p_slime_d = 0.3*(gen_num&gt;11)
+        if (gen_num)&gt;6
+            while (random(1)&lt;0.2+p_slime_d*1.5) {
                 var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_archer);
-                inst_slime.z=z;
+                inst_slime.z=z+8;
             }
         if (gen_num)&gt;2
-            while (random(1)&lt;0.3) {
+            while (random(1)&lt;0.3+p_slime_d/2) {
                 var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),dec_sakura);
                 inst_slime.z=z;
             }
         if (gen_num)&gt;9
-            while (random(1)&lt;0.16) {
+            while (random(1)&lt;0.16+p_slime_d) {
                 var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_warrior);
                 inst_slime.z=z+64;
             }
-        if (gen_num)&gt;4
-            while (random(1)&lt;0.7) {
+        if (gen_num)&gt;3
+            while (random(1)&lt;0.7-p_slime_d) {
                 var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_slime);
                 inst_slime.z=z+64;
             }

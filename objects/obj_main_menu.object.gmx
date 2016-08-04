@@ -170,6 +170,7 @@ if (mode==1 &amp;&amp; select_val) {
         case 2:
             config.RENDER_DEBUG_OVERLAY=!config.RENDER_DEBUG_OVERLAY;
             show_debug_overlay(config.RENDER_DEBUG_OVERLAY);
+            break;
         case 3:
             config.SFX_ENABLED=!config.SFX_ENABLED;
             play_sfx(sfx_attack);

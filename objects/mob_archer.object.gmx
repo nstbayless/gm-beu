@@ -227,12 +227,17 @@ if (can_act()&amp;&amp;do_shoot&amp;&amp;(t_since_shot&gt;14||t_since_shot==-1))
     bullet.faction=faction;
     bullet.knockback=10;
     bullet.master=this;
+    sfx_to_play = sfx_twang1;
+    if (random(1)&gt;0.73)
+        sfx_to_play=sfx_twang2;
+    play_sfx_at(x,y,z+dim_z/2,sfx_to_play)
 }
 
 if (can_act()&amp;&amp;do_atk&amp;&amp;(t_since_atk&gt;9||t_since_atk==-1)) {
     wnd_spec[0]=dir;
     wnd_spec[1]=1.5;
     attack_rectangle(x+16*dir-16,y-12,z+16,x+16*dir+16,y+12,z+8,wnd_spec)
+    play_sfx_at(x,y,z+dim_z/2,sfx_attack) 
     t_since_atk=0;
 }
 </string>
