@@ -75,6 +75,7 @@ do_jump=false;
 do_zhalt=false
 do_run=false;
 do_block=false;
+do_atk=false;
 is_blocking=false;
 extra_action=0;
 do_dir=0;

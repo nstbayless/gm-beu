@@ -42,19 +42,12 @@ art[2]=art2;
 art[3]=art3;
 
 //number of pc's currently playing
-pc_count=1
-gamepad_count = get_gamepad_count();
-if (gamepad_count&gt;0)
-    pc_count=gamepad_count;
+pc_count=0
+gamepad_count = 0
 //the actor controlled by the given player
 pc_actor[pc_count]=noone;
-//list of people in the party
+//list of pcs in the party
 pc_actor_obj[pc_count]=noone;
-
-for (var i=0;i&lt;pc_count;i++) {
-    var pc_to_add=pc_main;
-    pc_actor_obj[i]=pc_to_add;
-}
 
 possessor_dummy=instance_create(0,0,obj_struct);
 possessor_dummy.persistent=true;
@@ -62,6 +55,8 @@ with (possessor_dummy) possessor_initialize();
 
 open_menu();
 audio_falloff_set_model(audio_falloff_linear_distance_clamped);
+
+frame=0;
 </string>
           </argument>
         </arguments>
@@ -86,24 +81,59 @@ audio_falloff_set_model(audio_falloff_linear_distance_clamped);
             <kind>1</kind>
             <string>//last element encountered on first traversal:
 var last_element=-1;
-for (var i=0;i&lt;spawn_n;i++) {
-    spawn_timer[i]--;
-    if spawn_inst[i]&gt;=0 {
-        last_element=i;
-        if (spawn_timer[i]&lt;=0) {
-            instance_activate_object(spawn_inst[i]);
-            spawn_inst[i].x=ch_spawn.x;
-            spawn_inst[i].y=ch_spawn.y;
-            spawn_inst[i].z=ch_spawn.z;
-            spawn_inst[i].vspd=0;
-            spawn_inst[i].hp=spawn_inst[i].stat_maxhp;
-            spawn_inst[i].t_since_hit=-1;
-            spawn_inst[i]=noone;
+if (instance_exists(room_properties))
+    for (var i=0;i&lt;spawn_n;i++) {
+        spawn_timer[i]--;
+        if spawn_player[i]&gt;=0 {
+            last_element=i;
+            if (spawn_timer[i]&lt;=0) {
+                var player = spawn_player[i];
+                var pc_inst = instance_create_xyz(ch_spawn.x,ch_spawn.y,ch_spawn.z,pc_actor_obj[player]);
+                pc_inst.player=player;
+                obj_focus.subfocus[player]=pc_inst;
+                pc_actor[player]=pc_inst;
+                spawn_player[i]=-1;
+            }
         }
     }
-}
 
 spawn_n=last_element+1;
+
+//adjust number of players if gamepad inserted:
+
+frame++;
+if (frame%30==1) {
+    var tmp_gamepad_count = get_gamepad_count()
+    if (tmp_gamepad_count!=gamepad_count) {
+        gamepad_count = tmp_gamepad_count;
+        var tmp_pc_count = max(1,gamepad_count);
+        if (tmp_pc_count&gt;pc_count) {
+            //add players to make up difference
+            for (var i=pc_count;i&lt;tmp_pc_count;i++) {
+                pc_actor[i]=noone;
+                pc_actor_obj[i]=pc_main;
+                //add to spawn list:
+                spawn_timer[spawn_n]=0;
+                spawn_player[spawn_n]=i;
+                spawn_n++;
+                if (instance_exists(obj_focus))
+                    obj_focus.subfocus[i+1]=noone;
+            }
+        }
+        if (tmp_pc_count&lt;pc_count) {
+            //remove players
+            for (var i=pc_count-1;i&gt;=tmp_pc_count;i--) {
+                instance_activate_object(pc_actor[i])
+                with (pc_actor[i]) {
+                    instance_destroy();
+                }
+                pc_actor[i]=noone;
+                pc_actor_obj[i]=noone
+            }
+        }
+        pc_count=tmp_pc_count;
+    }    
+}
 </string>
           </argument>
         </arguments>
@@ -153,7 +183,7 @@ spawn_n=0;
 //time until respawn:
 spawn_timer[0]=0;
 //object to respawn:
-spawn_inst[0]=noone;
+spawn_player[0]=-1;
 </string>
           </argument>
         </arguments>
