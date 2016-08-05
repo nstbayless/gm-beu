@@ -65,6 +65,8 @@ wnd_spec[1]=10
 
 stat_recharge_rate=0.23;
 stat_blk_mult=0.3;
+stat_hit_stun_recovery_mult=1;
+stat_hit_stun_recovers=true;
 stat_maxhp=60;
 hp=stat_maxhp
 
@@ -74,6 +76,8 @@ a_hp_gone_dire=0.8;
 dim_z=40;
 
 loc_sfx_on_hit=sfx_hurt;
+
+
 </string>
           </argument>
         </arguments>
@@ -166,7 +170,10 @@ loc_sfx_on_hit=sfx_hurt;
         do_jump=false;
         do_atk=false;
         do_zhalt = !controller.jump_held[player];
+        do_dir=0;
     }
+    if (!controller.block_held[player])
+        do_dir = controller.right_pressed[player]-controller.left_pressed[player]
     do_jump |= controller.jump_pressed[player];
     do_atk |= controller.atk_pressed[player];
     
@@ -185,6 +192,7 @@ loc_sfx_on_hit=sfx_hurt;
         if (controller.block_held[player]) {
             do_run=false;
             do_block=true;
+            do_dir=0;
         } else
             do_block=false;
     }

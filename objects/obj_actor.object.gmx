@@ -68,6 +68,10 @@ stat_jumpspd_blk=15;
 //knockback:
 stat_knockback_friction_ground=4;
 stat_knockback_friction_air=1;
+//multiplies length of hit stun
+stat_hit_stun_recovery_mult=2.5;
+//can recover from hit stun over time
+stat_hit_stun_recovers=false;
 
 move_x=0;
 move_y=0

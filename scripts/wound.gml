@@ -32,7 +32,7 @@ with (obj) {
         if (loc_sfx_on_block>=0&&!defn[6])
             play_sfx_at(x,y,z+dim_z/2,loc_sfx_on_block);
     } else {
-        t_hit_stun=max(ceil(defn[3]*(get_hit_stun_length(hit_stun_counter))),t_hit_stun)
+        t_hit_stun=max(ceil(defn[3]*stat_hit_stun_recovery_mult*(get_hit_stun_length(hit_stun_counter))),t_hit_stun)
         hit_stun_counter++;
         if (loc_sfx_on_hit>=0&&!defn[6])
             play_sfx_at(x,y,z+dim_z/2,loc_sfx_on_hit);
