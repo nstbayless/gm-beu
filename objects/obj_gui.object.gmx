@@ -31,12 +31,15 @@
     var p_n = campaign.pc_count;
     var player_gui_delta = config.SCREEN_WIDTH/p_n;
     var player_gui_x_offset = player_gui_delta/2;
+    draw_set_halign(fa_center)
+    draw_set_valign(fa_middle)
+    draw_set_font(fnt_script);
     for (var i=0;i&lt;p_n;i++) {
         var cx = player_gui_delta*i+player_gui_x_offset;
-        var cy = config.SCREEN_HEIGHT-64;
-        var width = 100;
+        var cy = config.SCREEN_HEIGHT-24;
+        var width = 200;
         var xl = cx-width/2;
-        var actor_target = campaign.pc_actor_obj[i];
+        var actor_target = campaign.pc_actor[i];
         var hpp = 0;
         var hpp_drain = 0;
         var hp_border_color = c_gray;
@@ -48,6 +51,14 @@
                 if (is_hit_stunned())
                     hp_border_color=c_red;
         }
+        draw_set_colour(get_player_color(i));
+        draw_set_alpha(0.4);
+        draw_circle(cx,cy-48,width/3.5,false);
+        draw_set_color(c_white);
+        //lighting bubble
+        draw_circle(cx-24,cy-48-24,width/13,false)
+        draw_reset();
+        draw_text(cx,cy-48-7,get_player_name(i))
         draw_set_color(c_black);
         draw_rectangle(xl,cy-12,xl+width,cy+12,false)
         draw_set_color(c_red);
@@ -57,6 +68,8 @@
         draw_set_color(hp_border_color);
         draw_rectangle(xl,cy-12,xl+width,cy+12,true)
     }
+    draw_set_halign(fa_left)
+    draw_set_valign(fa_top)
 }
 </string>
           </argument>

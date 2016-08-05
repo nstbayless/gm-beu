@@ -528,9 +528,10 @@ if (t_since_hit&gt;=0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
-    var cx=get_draw_x()
-    var cy=get_draw_y()-dim_z/2;
+            <string>var cx = get_draw_x();
+var cy = get_draw_y()-dim_z/2;
+
+if (hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
     var ring_w = sprite_get_width(spr_hp_ring_loc);
     var ring_h = sprite_get_height(spr_hp_ring_loc);
     var ring_scale = 1;
@@ -560,6 +561,23 @@ if (t_since_hit&gt;=0)
     //hp drain wheel:
     draw_wheel(cx,cy,spr_hp_ring_loc,hp/stat_maxhp,hp_bardrain/stat_maxhp,ring_scale,c_hp_drain,a_hp_drain*alph_mult)
 }
+
+if (player&gt;=0)
+    if (cx&lt;view_xview[0]-32||cx &gt; view_xview[0]+view_wview[0]+32) {
+        var bubble_dir = sign(cx-camera.x);
+        var bubble_r_large = 64;
+        var bubble_r_med = 52;
+        var bubble_r_small = 48;
+        var bubble_cx = max(min(cx,view_xview[0]+view_wview[0]-bubble_r_large),view_xview[0]+bubble_r_large)
+        var bubble_cy = max(min(cy,view_yview[0]+view_hview[0]-bubble_r_large),view_yview[0]+bubble_r_large)
+        draw_set_color(get_player_color(player));
+        draw_set_alpha(1);
+        draw_circle(bubble_cx,bubble_cy,bubble_r_med,false)
+        draw_sprite_ext(spr_bubble_pointer,0,bubble_cx,bubble_cy,1,1,point_direction(bubble_cx,bubble_cy,cx,cy),get_player_color(player),1)
+        draw_set_color(c_ltgray)
+        draw_circle(bubble_cx,bubble_cy,bubble_r_small,false)
+        draw_sprite_ext(sprite_index,image_index,bubble_cx,bubble_cy+dim_z/2,image_xscale,image_yscale,0,c_white,1);
+    }
 </string>
           </argument>
         </arguments>

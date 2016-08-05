@@ -71,7 +71,7 @@ hp=stat_maxhp
 c_hp_gone_dire=make_color_hsv(4,252,250);
 a_hp_gone_dire=0.8;
 
-dim_z=20;
+dim_z=40;
 
 loc_sfx_on_hit=sfx_hurt;
 </string>
