@@ -213,6 +213,12 @@ if (gen_x&gt;x) {
             print("vwall destroyed");
             }
     }
+    with (cliff) {
+        if (x&lt;max_destroy_x) {
+            instance_destroy();
+            print("cliff destroyed");
+        }
+    }
     with (camera_guide) {
         if x&lt;max_destroy_x {
             if (instance_exists(prev)) {

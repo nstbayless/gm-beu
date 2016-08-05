@@ -48,6 +48,61 @@ RENDER_VWALL_ENABLED=true;
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>set version</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>VERSION_TYPE = "alpha"
+
+var date = date_date_string(GM_build_date)
+var pos = string_pos("/",date)
+var day=string_copy(date,0,pos-1);
+var rest = string_copy(date,pos+1,string_length(date)-pos)
+var pos2 =string_pos("/",rest)
+var month = string_copy(rest,0,pos2-1)
+var year = string_copy(rest,pos2+1,string_length(rest)-pos2)
+
+BUILD_DATE = year+"-"+month+"-"+day
+
+var version = string_copy(GM_version,0,string_length(GM_version)-2);
+
+FULL_VERSION= "v"+version + " ("+VERSION_TYPE+"): " + BUILD_DATE
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="1">
       <action>
