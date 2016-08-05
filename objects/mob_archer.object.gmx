@@ -227,6 +227,7 @@ if (can_act()&amp;&amp;do_shoot&amp;&amp;(t_since_shot&gt;14||t_since_shot==-1))
     bullet.faction=faction;
     bullet.knockback=10;
     bullet.master=this;
+    bullet.damage=4;
     sfx_to_play = sfx_twang1;
     if (random(1)&gt;0.73)
         sfx_to_play=sfx_twang2;

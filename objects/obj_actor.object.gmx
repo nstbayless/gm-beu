@@ -117,6 +117,8 @@ attack_lock=0;
 
 //if &gt; 0, prevents moving, etc.
 t_hit_stun=0;
+//histry of times hit-stunned before being able to act
+hit_stun_counter=0;
 
 knockback_vx=0;
 knockback_vy=0;
@@ -340,6 +342,32 @@ on_ground=retval[2];
 
 if (t_hit_stun&gt;0)
     t_hit_stun--;
+    
+var knockback_xdiff=0
+var knockback_ydiff=0;
+    
+if (!is_hit_stunned()) {
+    //knockback stuff:
+    knockback_xdiff=knockback_vx;
+    knockback_ydiff=knockback_vy
+    
+    //friction for knockback:
+    var knockback_friction = stat_knockback_friction_air;
+    if (on_ground)
+        knockback_friction=stat_knockback_friction_ground;
+    
+    //friction for knockback (x):
+    sign_knockback_vx=sign(knockback_vx);
+    knockback_vx-=sign_knockback_vx*knockback_friction;
+    if (knockback_vx*sign_knockback_vx&lt;=0)
+        knockback_vx=0;
+        
+    //friction for knockback (y):
+    sign_knockback_vy=sign(knockback_vy);
+    knockback_vy-=sign_knockback_vy*knockback_friction;
+    if (knockback_vy*sign_knockback_vy&lt;=0)
+        knockback_vy=0;
+}
 
 //combat mechanics
 if (hp&lt;=0&amp;&amp;t_since_hit&gt;3) {
@@ -363,6 +391,10 @@ hp_bardrain=max(hp,hp_bardrain);
 
 if (can_act())
     is_blocking=do_block;
+    
+//hit-stun-counter reset:
+if (can_act())
+    hit_stun_counter=0;
 
 //report flags:
 phys_bounced=false;
@@ -371,13 +403,15 @@ phys_jumped=false;
 if (t_since_jump&gt;=0)
     t_since_jump++;
 
-//z movement
-if (!is_hit_stunned()) {
-    if (can_act()&amp;&amp;do_jump&amp;&amp;on_ground) {
+//jumping
+if (can_act()&amp;&amp;do_jump&amp;&amp;on_ground) {
         t_since_jumped=0;
         if (!is_blocking) vspd=stat_jumpspd;
         else vspd=stat_jumpspd_blk;
-    }
+    }    
+
+//z movement
+if (!is_hit_stunned()) {
     
     if (!on_ground)
         vspd+=stat_grav;
@@ -418,28 +452,8 @@ if (is_hit_stunned()&amp;&amp;abs(knockback_vx)+abs(knockback_vy)&lt;5) {
     phys_xdiff=-dir*stat_hitdrift;
 }
 
-if (!is_hit_stunned()) {
-    //knockback stuff:
-    phys_xdiff+=knockback_vx;
-    phys_ydiff+=knockback_vy
-    
-    //friction for knockback:
-    var knockback_friction = stat_knockback_friction_air;
-    if (on_ground)
-        knockback_friction=stat_knockback_friction_ground;
-    
-    //friction for knockback (x):
-    sign_knockback_vx=sign(knockback_vx);
-    knockback_vx-=sign_knockback_vx*knockback_friction;
-    if (knockback_vx*sign_knockback_vx&lt;=0)
-        knockback_vx=0;
-        
-    //friction for knockback (y):
-    sign_knockback_vy=sign(knockback_vy);
-    knockback_vy-=sign_knockback_vy*knockback_friction;
-    if (knockback_vy*sign_knockback_vy&lt;=0)
-        knockback_vy=0;
-}
+phys_xdiff+=knockback_xdiff;
+phys_ydiff+=knockback_ydiff;
     
 //what follows is some very messy movement script...
 

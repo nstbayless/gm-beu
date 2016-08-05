@@ -125,6 +125,7 @@
       <script>scripts\wound.gml</script>
       <script>scripts\is_hit_stunned.gml</script>
       <script>scripts\can_act.gml</script>
+      <script>scripts\get_hit_stun_length.gml</script>
       <script>scripts\attack_rectangle.gml</script>
     </scripts>
     <scripts name="generation">

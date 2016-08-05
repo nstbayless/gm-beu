@@ -4,7 +4,7 @@
 // 0 : dir
 // 1 : damage
 // 2 : knockback
-// 3 : hit-stun time (zero is default)
+// 3 : hit-stun time multiplier (zero is default)
 // 4 : instant kill
 // 5 : respawn time (zero is default)
 // 6 : silent
@@ -18,7 +18,7 @@ defn[8]=0;
 
 //hitstun defaults
 if (defn[3]==0)
-    defn[3]=4;
+    defn[3]=1;
 if (defn[3]<0)
     defn[3]=0;
 
@@ -32,7 +32,8 @@ with (obj) {
         if (loc_sfx_on_block>=0&&!defn[6])
             play_sfx_at(x,y,z+dim_z/2,loc_sfx_on_block);
     } else {
-        t_hit_stun=defn[3]
+        t_hit_stun=max(ceil(defn[3]*(get_hit_stun_length(hit_stun_counter))),t_hit_stun)
+        hit_stun_counter++;
         if (loc_sfx_on_hit>=0&&!defn[6])
             play_sfx_at(x,y,z+dim_z/2,loc_sfx_on_hit);
     }
