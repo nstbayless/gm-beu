@@ -67,6 +67,7 @@ ai_target=noone;
 anim=0;
 
 t_since_attack=0;
+t_rxn=0;
 </string>
           </argument>
         </arguments>
@@ -168,7 +169,7 @@ if instance_exists(ai_target) &amp;&amp; ai_target!=noone {
     if (len&lt;40) {
         if (t_atk==0)
             t_atk++;
-        if (t_atk==5) {
+        if (t_atk==12) {
             do_atk=true;
         }
         move_x=0;

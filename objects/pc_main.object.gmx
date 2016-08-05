@@ -161,9 +161,14 @@ loc_sfx_on_hit=sfx_hurt;
             <string>if (player&gt;=0) {
     move_x = controller.move_x[player];
     move_y = controller.move_y[player];
-    do_jump = controller.jump_pressed[player];
+    if (can_act()) {
+        do_jump=false;
+        do_atk=false;
+    }
+    do_jump |= controller.jump_pressed[player];
+    do_atk |= controller.atk_pressed[player];
+    
     do_zhalt = !controller.jump_held[player];
-    do_atk = controller.atk_pressed[player];
     
     if (do_run_timer&gt;0)
         do_run_timer--;
@@ -176,11 +181,13 @@ loc_sfx_on_hit=sfx_hurt;
         do_run_timer=7;
     }
     
-    if (controller.block_held[player]) {
-        do_run=false;
-        do_block=true;
-    } else
-        do_block=false;
+    if can_act() {
+        if (controller.block_held[player]) {
+            do_run=false;
+            do_block=true;
+        } else
+            do_block=false;
+    }
         
     //reset extra action
     if (move_x or move_y or do_jump or do_atk)

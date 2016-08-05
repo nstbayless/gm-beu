@@ -18,7 +18,7 @@ defn[8]=0;
 
 //hitstun defaults
 if (defn[3]==0)
-    defn[3]=7;
+    defn[3]=4;
 if (defn[3]<0)
     defn[3]=0;
 
@@ -40,6 +40,8 @@ with (obj) {
         knockback=0;
     knockback_vx=add_signed_quadrature(knockback_vx,knockback*defn[0])
     hp-=damage;
+    if (hp<0)
+        hp=0
     t_since_hit=0;
     if (defn[4]) {
         if (defn[5])
