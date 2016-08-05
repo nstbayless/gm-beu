@@ -111,7 +111,7 @@ if (mode==2) {
     title_text = "Select Room [Debug]";
 }
 select_val=false;
-for (var i=0;i&lt;controller.gamepad_count;i++) {
+for (var i=0;i&lt;controller.player_count;i++) {
     if (controller.up_pressed[i])
         opt_selected--;
     if (controller.down_pressed[i])

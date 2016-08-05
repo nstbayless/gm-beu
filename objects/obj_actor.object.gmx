@@ -361,7 +361,8 @@ if (t_since_hit&gt;=5||t_since_hit==-1) {
 }
 hp_bardrain=max(hp,hp_bardrain);
 
-is_blocking=do_block;
+if (can_act())
+    is_blocking=do_block;
 
 //report flags:
 phys_bounced=false;

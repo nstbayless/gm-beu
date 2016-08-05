@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>THRESHOLD_AXIS=.7;
 gamepad_count=0;
+player_count=0;
 </string>
           </argument>
         </arguments>
@@ -99,6 +100,7 @@ rumble[0]=0;
 _last_x[campaign.gamepad_count]=0;
 _last_y[campaign.gamepad_count]=0;
 gamepad_count=campaign.gamepad_count;
+player_count=campaign.pc_count;
 for (var i=0;i&lt;gamepad_count;i++) {
     if (!gamepad_is_connected(i))
         continue;
