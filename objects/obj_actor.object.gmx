@@ -528,7 +528,7 @@ if (t_since_hit&gt;=0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (hp&lt;stat_maxhp) {
+            <string>if (hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
     var cx=get_draw_x()
     var cy=get_draw_y()-dim_z/2;
     var ring_w = sprite_get_width(spr_hp_ring_loc);

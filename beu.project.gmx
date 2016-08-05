@@ -211,6 +211,7 @@
       <object>objects\camera_guide</object>
       <object>objects\resources</object>
       <object>objects\scene_disp</object>
+      <object>objects\obj_gui</object>
       <object>objects\obj_struct</object>
       <object>objects\obj_main_menu</object>
       <object>objects\config</object>

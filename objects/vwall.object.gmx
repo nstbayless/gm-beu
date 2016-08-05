@@ -180,7 +180,10 @@ depth-=1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//grab all tiles in region at depth:
+            <string>if (!config.RENDER_VWALL_ENABLED)
+    exit;
+
+//grab all tiles in region at depth:
 for (var i=0;i&lt;cn;i++) {
     var cx=get_draw_x(child_x[i],y);
     var cy=get_draw_y(y,child_z[i]);

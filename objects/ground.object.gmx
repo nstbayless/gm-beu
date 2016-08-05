@@ -49,6 +49,11 @@ strip_thickness=config.STRIP_THICKNESS;
 strips[0]=noone;
 
 no_cliffs=false;
+
+tint_edges=false;
+edge_tint_col=c_white;
+edge_tint_a=0.05;
+edge_tint_thickness=3;
 </string>
           </argument>
         </arguments>
@@ -179,8 +184,19 @@ image_yscale=height/32;
         var cy=child_y[i]-miny;
         draw_background_part(child_bg[i],child_left[i],child_top[i],child_w[i],child_h[i],cx,cy);
     }
+    if (tint_edges) {
+        //apply edge tint
+        draw_set_color(edge_tint_col);
+        draw_set_alpha(edge_tint_a);
+        draw_set_colour_write_enable(true, true, true, false)
+        draw_rectangle(0,0,surf_w,edge_tint_thickness,false);
+        draw_rectangle(0,surf_h-edge_tint_thickness,surf_w,surf_h,false);
+        draw_rectangle(0,edge_tint_thickness,edge_tint_thickness,surf_h-edge_tint_thickness,false);
+        draw_rectangle(surf_w-edge_tint_thickness,edge_tint_thickness,surf_w,surf_h-edge_tint_thickness,false);
+        draw_set_colour_write_enable(true, true, true, true)
+    }
     surface_reset_target();
-    
+    draw_reset();
     //split texture over strips:
     var strip_surf;
     var strip

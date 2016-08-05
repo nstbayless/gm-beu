@@ -59,7 +59,10 @@ fadespd=2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ANIM_TIME=15;
+            <string>width=config.SCREEN_WIDTH;
+height=config.SCREEN_HEIGHT;
+
+ANIM_TIME=15;
 if (mode==0) {
     opt_n=4;
     opt_text[0]="Begin"
