@@ -69,6 +69,7 @@
     <sprite>sprites\spr_shadow_small</sprite>
     <sprite>sprites\spr_warrior</sprite>
     <sprite>sprites\spr_warrior_alt</sprite>
+    <sprite>sprites\spr_pc_main</sprite>
     <sprite>sprites\spr_king</sprite>
     <sprites name="explosions">
       <sprite>sprites\spr_explosion3</sprite>
@@ -115,6 +116,11 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="animation">
+      <script>scripts\animation_set_frame.gml</script>
+      <script>scripts\animation_set_image_index.gml</script>
+      <script>scripts\make_animation.gml</script>
+    </scripts>
     <scripts name="physics">
       <script>scripts\get_grounds_at.gml</script>
       <script>scripts\get_draw_x.gml</script>
@@ -132,6 +138,7 @@
       <script>scripts\can_act.gml</script>
       <script>scripts\get_hit_stun_length.gml</script>
       <script>scripts\attack_rectangle.gml</script>
+      <script>scripts\add_signed_quadrature.gml</script>
     </scripts>
     <scripts name="generation">
       <script>scripts\generate_cliffs_between.gml</script>
@@ -147,27 +154,35 @@
       <script>scripts\possessor_initialize.gml</script>
       <script>scripts\possess_control.gml</script>
     </scripts>
-    <script>scripts\scale_gp_axis.gml</script>
-    <script>scripts\get_art.gml</script>
-    <script>scripts\draw_reset.gml</script>
-    <script>scripts\ch_begin_transition.gml</script>
+    <scripts name="draw">
+      <script>scripts\draw_reset.gml</script>
+      <script>scripts\draw_wheel.gml</script>
+    </scripts>
+    <scripts name="ch">
+      <script>scripts\ch_begin_transition.gml</script>
+      <script>scripts\open_menu.gml</script>
+      <script>scripts\get_art.gml</script>
+      <script>scripts\get_player_name.gml</script>
+      <script>scripts\get_player_color.gml</script>
+    </scripts>
+    <scripts name="gamepad">
+      <script>scripts\scale_gp_axis.gml</script>
+      <script>scripts\get_gamepad_count.gml</script>
+    </scripts>
+    <scripts name="sound">
+      <script>scripts\play_sfx.gml</script>
+      <script>scripts\music_play.gml</script>
+      <script>scripts\play_sfx_at.gml</script>
+    </scripts>
+    <scripts name="util">
+      <script>scripts\assert.gml</script>
+      <script>scripts\print.gml</script>
+      <script>scripts\make_array.gml</script>
+    </scripts>
     <script>scripts\get_target_nearest.gml</script>
-    <script>scripts\print.gml</script>
-    <script>scripts\open_menu.gml</script>
-    <script>scripts\get_gamepad_count.gml</script>
-    <script>scripts\play_sfx.gml</script>
-    <script>scripts\play_sfx_at.gml</script>
-    <script>scripts\music_play.gml</script>
     <script>scripts\halt_execute_actor.gml</script>
-    <script>scripts\halt_execute.gml</script>
-    <script>scripts\draw_wheel.gml</script>
-    <script>scripts\assert.gml</script>
-    <script>scripts\make_animation.gml</script>
     <script>scripts\instance_create_xyz.gml</script>
-    <script>scripts\make_array.gml</script>
-    <script>scripts\get_player_color.gml</script>
-    <script>scripts\add_signed_quadrature.gml</script>
-    <script>scripts\get_player_name.gml</script>
+    <script>scripts\halt_execute.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\jukefont</font>

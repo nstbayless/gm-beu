@@ -130,6 +130,20 @@ knockback_vy=0;
 loc_sfx_on_hit=sfx_hit;
 loc_sfx_on_block=sfx_ping;
 loc_sfx_on_death=sfx_explosion;
+
+AN_idle = make_animation(0,1,1);
+AN_walk = make_animation(0,1,1);
+AN_run = AN_walk
+AN_jump_up = make_animation(0,1,1);
+AN_jump_down = make_animation(0,1,1);
+AN_jump_land = make_animation(0,1,1);
+AN_block = make_animation(0,1,1);
+AN_hitstun = make_animation(0,1,1);
+AN_death = AN_hitstun;
+AN_extra[0]=make_animation(0,1,1);
+
+anim=0;
+anim_move=0;
 </string>
           </argument>
         </arguments>
@@ -452,8 +466,8 @@ if can_act() {
     phys_ydiff = move_y*yspd;
 }
 
-if (is_hit_stunned()&amp;&amp;abs(knockback_vx)+abs(knockback_vy)&lt;5) {
-    //knockback if hitstunned -- but not if about to be knocked back
+if (is_hit_stunned()) {
+    //drift if hitstunned
     phys_xdiff=-dir*stat_hitdrift;
 }
 
