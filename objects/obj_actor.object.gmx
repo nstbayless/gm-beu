@@ -408,6 +408,7 @@ if (t_since_jump&gt;=0)
     t_since_jump++;
 
 //jumping
+print(on_ground)
 if (can_act()&amp;&amp;do_jump&amp;&amp;on_ground) {
         t_since_jumped=0;
         if (!is_blocking) vspd=stat_jumpspd;
@@ -442,7 +443,7 @@ var xorig=x;
 var yorig=y;
 var xspd = stat_spd;
 var yspd = stat_spd;
-if (do_run) {xspd=stat_run;yspd/=2}
+if (do_run&amp;&amp;!room_properties.no_running) {xspd=stat_run;yspd/=2}
 if (do_block) {xspd=stat_blkspd; yspd=stat_blkspd;}
 phys_xdiff=0;
 phys_ydiff=0;

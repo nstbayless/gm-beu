@@ -34,8 +34,9 @@ SFX_ENABLED=true;
 DRAW_GUIDES=false;
 RENDER_STRIP_LINES=false;
 RENDER_DEBUG_OVERLAY=true;
-STORY_MODE_ENABLED=false;
+STORY_MODE_ENABLED=true;
 
+//these update in the step event
 SCREEN_WIDTH=view_wview[0];
 SCREEN_HEIGHT=view_hview[0];
 
@@ -133,6 +134,12 @@ if (keyboard_check_pressed(vk_f4))
 var diff = SCREEN_WIDTH!=window_get_width() || SCREEN_HEIGHT!=window_get_height();    
 SCREEN_WIDTH=window_get_width();
 SCREEN_HEIGHT=window_get_height();
+if (instance_exists(room_properties)) {
+    if (room_properties.room_display_width&gt;=0)
+        SCREEN_WIDTH=room_properties.room_display_width
+    if (room_properties.room_display_height&gt;=0)
+        SCREEN_HEIGHT=room_properties.room_display_height
+}
 views_enabled=true;
 view_enabled=true;
 view_visible[0]=true;

@@ -2,8 +2,8 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
-  <depth>-500</depth>
+  <visible>-1</visible>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,22 +27,34 @@
             <kind>1</kind>
             <string>anim=0;
 
-camera.aot=0;
-camera.skew=0;
 
-var cg = instance_create(view_wview[0]/2,0,camera_guide);
-cg.camera_guide_style=cgs_halt;
-cg.z=-view_hview[0]/2;
-cg.nomap=true;
+cg_l = instance_create(config.SCREEN_WIDTH/2,0,camera_guide);
+cg_l.z=-room_height/2;
+cg_l.camera_guide_style=cgs_capl;
+cg_l.skew=0;
+cg_l.aot=0;
+cg = instance_create(config.SCREEN_WIDTH/2,0,camera_guide);
+cg.z=-room_height/2
+cg.camera_guide_style=cgs_interp_next_x;
 cg.active=true;
-cg.aot=0;
 cg.skew=0;
+cg.aot=0;
+cg2 = instance_create(room_width-config.SCREEN_WIDTH/2,0,camera_guide)
+cg2.camera_guide_style=cgs_capr;
+cg2.z=cg.z;
+cg2.aot=0;
+cg2.skew=0;
+cg_link(cg,cg2);
+cg_link(cg_l,cg);
 
 inst_spawn = (instance_create(20,0,ch_spawn));
-inst_spawn.z=-400;
+inst_spawn.z=-650;
 inst_spawn.nomap=true;
+t_heartbeat=1000;
+heart1=false;
+heart2=false;
 
-t_fadeout=0;
+insanity_p=1;
 </string>
           </argument>
         </arguments>
@@ -65,18 +77,36 @@ t_fadeout=0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>anim++;
+            <string>if (!halt_execute()) {
+anim++;
+t_heartbeat++;
 
-var do_fadeout=false;
-with (obj_actor)
-    if x&gt;800 do_fadeout=true;
-    
-if (t_fadeout)
-    t_fadeout++
-if (do_fadeout)
-    t_fadeout++;
-if (t_fadeout&gt;30)
-    room_goto(rm_c1_c);
+if (view_xview[0]&gt;300&amp;&amp;!heart1) {
+    heart1=true;
+    t_heartbeat=0;
+}
+
+if (view_xview[0]&gt;700&amp;&amp;!heart2&amp;&amp;t_heartbeat&gt;50) {
+    heart2=true;
+    t_heartbeat=0;
+    room_properties.no_running=true;
+}
+
+if (heart2&amp;&amp;t_heartbeat&gt;80*sqrt(insanity_p)) {
+    t_heartbeat=0;
+}
+
+if (t_heartbeat==0)
+    play_sfx(sfx_heartbeat);
+}
+
+if (t_heartbeat&lt;50 &amp;&amp; heart2) {
+    insanity_p*=.99485;
+}
+
+if (t_heartbeat==17&amp;&amp;insanity_p&lt;0.4) {
+    open_menu();
+}
 </string>
           </argument>
         </arguments>

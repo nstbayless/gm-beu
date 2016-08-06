@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>if (instance_exists(room_properties)) {
+    if (room_properties.peaceful)
+        exit;
     draw_reset();
     //only draw if this is an actual game-room
     var p_n = campaign.pc_count;

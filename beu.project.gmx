@@ -49,6 +49,7 @@
     <sound>sound\sfx_slime</sound>
     <sound>sound\sfx_twang1</sound>
     <sound>sound\sfx_twang2</sound>
+    <sound>sound\sfx_heartbeat</sound>
     <sound>sound\sfx_attack</sound>
   </sounds>
   <sprites name="sprites">
@@ -107,6 +108,10 @@
     <background>background\bg_basalt_scene_glow</background>
     <background>background\bg_basalt_scene_bg</background>
     <background>background\bg_basalt_scene_fg</background>
+    <background>background\bg_mountain_scene_structure</background>
+    <background>background\bg_mountain_scene_tree</background>
+    <background>background\bg_mountain_scene</background>
+    <background>background\bg_mountain_scene_fg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -228,6 +233,9 @@
         <object>objects\obj_ch1_fg_b</object>
         <object>objects\ch1_ppt_b</object>
         <object>objects\obj_ch1_bg_b</object>
+        <object>objects\ch1_ppt_c</object>
+        <object>objects\obj_ch1_fg_c</object>
+        <object>objects\obj_ch1_bg_c</object>
       </objects>
       <object>objects\cinf_ppt</object>
       <object>objects\rm_test_1_ppt</object>
@@ -241,6 +249,7 @@
     <room>rooms\rm_test_1</room>
     <room>rooms\rm_c1_a</room>
     <room>rooms\rm_c1_b</room>
+    <room>rooms\rm_c1_c</room>
   </rooms>
   <constants number="11">
     <constant name="cgs_halt">4</constant>

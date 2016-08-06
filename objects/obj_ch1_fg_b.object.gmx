@@ -91,6 +91,11 @@ if (ch1_ppt_b.anim&lt;30) {
     draw_set_colour(c_black);
     draw_rectangle(0,0,background_get_width(bg_basalt_scene_fg),background_get_height(bg_basalt_scene_fg),false)
 }
+if (ch1_ppt_b.t_fadeout&gt;0) {
+    draw_set_alpha(ch1_ppt_b.t_fadeout/30);
+    draw_set_colour(c_black);
+    draw_rectangle(0,0,background_get_width(bg_basalt_scene_fg),background_get_height(bg_basalt_scene_fg),false)
+}
 draw_reset();
 </string>
           </argument>
