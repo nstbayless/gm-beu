@@ -40,12 +40,12 @@
           <argument>
             <kind>1</kind>
             <string>AN_idle = make_animation(0,1,1);
-AN_walk = make_animation(0,3,8);
+AN_walk = make_animation(1,4,12);
 AN_run=AN_walk;
-AN_block = make_animation(3,1,1);
-AN_attack = make_animation(4,1,1);
-AN_hitstun = make_animation(3,1,1);
-AN_extra[0] = make_animation(3,1,1);
+AN_block = make_animation(5,1,1);
+AN_attack = make_animation(6,1,1);
+AN_hitstun = make_animation(5,1,1);
+AN_extra[0] = make_animation(5,1,1);
 
 anim=0;
 

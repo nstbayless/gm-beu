@@ -422,7 +422,6 @@ if (t_since_jump&gt;=0)
     t_since_jump++;
 
 //jumping
-print(on_ground)
 if (can_act()&amp;&amp;do_jump&amp;&amp;on_ground) {
         t_since_jumped=0;
         if (!is_blocking) vspd=stat_jumpspd;

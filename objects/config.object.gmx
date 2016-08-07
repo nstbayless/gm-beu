@@ -34,7 +34,7 @@ SFX_ENABLED=true;
 DRAW_GUIDES=false;
 RENDER_STRIP_LINES=false;
 RENDER_DEBUG_OVERLAY=true;
-STORY_MODE_ENABLED=true;
+STORY_MODE_ENABLED=false;
 
 //these update in the step event
 SCREEN_WIDTH=view_wview[0];
@@ -148,7 +148,7 @@ view_hview[0]=SCREEN_HEIGHT;
 view_wport[0]=SCREEN_WIDTH;
 view_hport[0]=SCREEN_HEIGHT;
 
-if (diff) {
+if (diff &amp;&amp; SCREEN_WIDTH&gt;200 &amp;&amp; SCREEN_HEIGHT &gt;200) {
     display_set_gui_size(SCREEN_WIDTH, SCREEN_HEIGHT)
     surface_resize(application_surface, SCREEN_WIDTH,SCREEN_HEIGHT);
 }
