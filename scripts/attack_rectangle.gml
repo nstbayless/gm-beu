@@ -24,10 +24,10 @@ var hit=noone;
 with (obj_actor) {
     if faction!=afaction {
         
-        if (x2>=x-dim_w/2)
-         if (x1<=x+dim_w/2) 
-          if (y2>=y-dim_h/2)
-           if (y1<=y+dim_h/2)
+        if (x2>=x-dim_x/2)
+         if (x1<=x+dim_x/2) 
+          if (y2>=y-dim_y/2)
+           if (y1<=y+dim_y/2)
             if (z2>=z)
              if (z1<=z+dim_z) {
                 //attack struck!

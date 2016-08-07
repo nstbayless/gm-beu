@@ -54,6 +54,9 @@ tint_edges=false;
 edge_tint_col=c_white;
 edge_tint_a=0.05;
 edge_tint_thickness=3;
+
+//registered in room properties
+registered=false;
 </string>
           </argument>
         </arguments>
@@ -355,6 +358,7 @@ event_user(2);
           <argument>
             <kind>1</kind>
             <string>event_user(0);
+register_ground(this);
 </string>
           </argument>
         </arguments>

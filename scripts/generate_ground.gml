@@ -38,3 +38,4 @@ for (var i=0;i<gr.width/tw;i++)
     }
 with (gr) {event_user(1)};
 with (gr) {event_user(2)};
+register_ground(gr);
