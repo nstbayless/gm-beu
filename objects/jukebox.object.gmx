@@ -111,6 +111,7 @@ if (bgm_id&gt;=0 &amp;&amp; config.MUSIC_ENABLED) {
     var p=t_since_music_change/120-1;
     if (p&lt;0) p=0;
     if (p&gt;1) p=1;
+    draw_set_halign(fa_left);
     draw_set_font(jukefont);
     draw_set_alpha(1-p);
     draw_set_color(c_black);

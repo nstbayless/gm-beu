@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>THRESHOLD_AXIS=.7;
+gamepad_count=0;
+player_count=0;
 </string>
           </argument>
         </arguments>
@@ -48,7 +50,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (var i=0;i&lt;campaign.gamepad_count;i++){
+            <string>for (var i=0;i&lt;gamepad_count;i++){
     var amount=rumble[i]*config.RUMBLE_ENABLED
     gamepad_set_vibration(i,amount,amount);
     if (amount&gt;0)
@@ -97,7 +99,9 @@ rumble[0]=0;
 
 _last_x[campaign.gamepad_count]=0;
 _last_y[campaign.gamepad_count]=0;
-for (var i=0;i&lt;campaign.gamepad_count;i++) {
+gamepad_count=campaign.gamepad_count;
+player_count=campaign.pc_count;
+for (var i=0;i&lt;gamepad_count;i++) {
     if (!gamepad_is_connected(i))
         continue;
     move_x[i] = gamepad_axis_value(i, gp_axislh);
@@ -142,7 +146,6 @@ for (var i=0;i&lt;campaign.gamepad_count;i++) {
     //store previous values of axes to check if 'pressed'
     _last_x[i]=move_x[i]
     _last_y[i]=move_y[i]
-    
     rumble[i]=0;
 }
 

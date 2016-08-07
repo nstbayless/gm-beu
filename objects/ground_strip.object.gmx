@@ -133,7 +133,14 @@ reset_timer=0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>if (!config.RENDER_GROUND_ENABLED)
+    exit;
+draw_x=get_draw_x();
+draw_y=get_draw_y();
+draw_x2=get_draw_x(x,y+surf_h)
+draw_y2=get_draw_y(y+surf_h)
+if (draw_x+surf_w+16&lt;view_xview[0]) || (draw_x&gt;view_xview[0]+view_wview[0])
+    exit;
 draw_set_colour(c_white);
 var tex
 if (surface_exists(surf))
@@ -156,10 +163,10 @@ else {
     tex=sprite_get_texture(spr_ground,0)
 }
 draw_primitive_begin_texture(pr_trianglestrip, tex);
-draw_vertex_texture(get_draw_x(),get_draw_y(), 0, 0);
-draw_vertex_texture(get_draw_x()+surf_w,get_draw_y(), 1, 0);
-draw_vertex_texture(get_draw_x(x,y+surf_h),get_draw_y(y+surf_h), 0, 1);
-draw_vertex_texture(get_draw_x(x,y+surf_h)+surf_w,get_draw_y(y+surf_h), 1, 1);
+draw_vertex_texture(draw_x,draw_y, 0, 0);
+draw_vertex_texture(draw_x+surf_w,draw_y, 1, 0);
+draw_vertex_texture(draw_x2,draw_y2, 0, 1);
+draw_vertex_texture(draw_x2+surf_w,draw_y2, 1, 1);
 draw_primitive_end();
 //draw_line(get_draw_x(),get_draw_y(),get_draw_x(x+surf_w,y),get_draw_y());
 //draw_surface_ext(surf,,1,camera.aot,0,c_white,1)

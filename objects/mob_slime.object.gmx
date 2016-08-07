@@ -69,6 +69,8 @@ wnd_spec[1]=2;
 spr_hp_ring_loc = spr_hp_ring_small
 spr_shadow_loc = spr_shadow_small
 obj_explosion_loc=obj_explosion_small;
+
+loc_sfx_on_death=sfx_slime;
 </string>
           </argument>
         </arguments>
@@ -248,7 +250,7 @@ move_y=2*slide_y*slide_timer/40;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if do_atk {
+            <string>if can_act()&amp;&amp;do_atk {
     wnd_spec[0]=0;
     if abs(slide_x)&gt;0.2
         wnd_spec[0]=sign(slide_x)

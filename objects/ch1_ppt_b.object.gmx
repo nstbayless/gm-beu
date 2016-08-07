@@ -39,8 +39,10 @@ cg.aot=0;
 cg.skew=0;
 
 inst_spawn = (instance_create(20,0,ch_spawn));
-inst_spawn.z=-300;
+inst_spawn.z=-400;
 inst_spawn.nomap=true;
+
+t_fadeout=0;
 </string>
           </argument>
         </arguments>
@@ -64,6 +66,17 @@ inst_spawn.nomap=true;
           <argument>
             <kind>1</kind>
             <string>anim++;
+
+var do_fadeout=false;
+with (obj_actor)
+    if x&gt;800 do_fadeout=true;
+    
+if (t_fadeout)
+    t_fadeout++
+if (do_fadeout)
+    t_fadeout++;
+if (t_fadeout&gt;30)
+    room_goto(rm_c1_c);
 </string>
           </argument>
         </arguments>

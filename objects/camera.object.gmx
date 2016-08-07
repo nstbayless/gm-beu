@@ -26,7 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>aot=1; //angle of attack
-z=0;
 focus=noone;
 
 skew=-0.25
@@ -75,30 +74,6 @@ if (vy+vh&gt;room_height)
     vy=room_height-vh;
 view_xview[0]=vx;
 view_yview[0]=vy;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="4">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>view_enabled=true;
-view_visible[0]=true;
 </string>
           </argument>
         </arguments>

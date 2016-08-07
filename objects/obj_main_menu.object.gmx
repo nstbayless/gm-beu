@@ -59,14 +59,19 @@ fadespd=2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ANIM_TIME=15;
+            <string>width=config.SCREEN_WIDTH;
+height=config.SCREEN_HEIGHT;
+
+ANIM_TIME=15;
 if (mode==0) {
+    t_begin_anim=0;
     opt_n=4;
     opt_text[0]="Begin"
     opt_text[1]="Continue"
     opt_text[2]="Config"
     opt_text[3]="Jump To Room"
     
+    opt_disabled[0]=!config.STORY_MODE_ENABLED;
     opt_disabled[1]=true;
     opt_disabled[opt_n]=0;
     subchoice=0;
@@ -74,7 +79,7 @@ if (mode==0) {
     title_text = "";
 }
 if (mode==1) {
-    opt_n=3;
+    opt_n=4;
     if (config.MUSIC_ENABLED)
         opt_text[0]="Music On"
     else
@@ -87,7 +92,12 @@ if (mode==1) {
         opt_text[2]="Debug Overlay Enabled"
     else
         opt_text[2]="Debug Overlay Disabled"
-        
+    if (config.SFX_ENABLED)
+        opt_text[3]="SFX Enabled"
+    else
+        opt_text[3]="SFX Disabled"
+    
+    opt_disabled[0]=false;
     opt_disabled[1]=false;
     title_text = "Config Options";
 }
@@ -102,7 +112,7 @@ if (mode==2) {
     title_text = "Select Room [Debug]";
 }
 select_val=false;
-for (var i=0;i&lt;campaign.pc_count;i++) {
+for (var i=0;i&lt;controller.player_count;i++) {
     if (controller.up_pressed[i])
         opt_selected--;
     if (controller.down_pressed[i])
@@ -129,6 +139,8 @@ opt_selected=(opt_selected+opt_n) % opt_n;
 if (mode==0 &amp;&amp; select_val) {
     switch (opt_selected) {
     case 0:
+        if (config.STORY_MODE_ENABLED==false)
+            exit;
         mode=3;
         t_begin_anim=0;
         submode=1;
@@ -144,6 +156,7 @@ if (mode==0 &amp;&amp; select_val) {
         break;
     case 3:
         mode=2;
+        opt_selected=0;
         break;
     default:
         break;
@@ -161,6 +174,11 @@ if (mode==1 &amp;&amp; select_val) {
         case 2:
             config.RENDER_DEBUG_OVERLAY=!config.RENDER_DEBUG_OVERLAY;
             show_debug_overlay(config.RENDER_DEBUG_OVERLAY);
+            break;
+        case 3:
+            config.SFX_ENABLED=!config.SFX_ENABLED;
+            play_sfx(sfx_attack);
+            break
         default:
             break;
     }
@@ -212,7 +230,9 @@ if (mode==2 &amp;&amp; select_val) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (mode==3) {
+            <string>//This is really poorly-written code... will fix up in dialogue
+//update some time (maybe)
+if (mode==3) {
     PARLANT_X=158;
     if (t_begin_anim&lt;ANIM_TIME*submode&amp;&amp;!fademode)
         t_begin_anim++;
@@ -362,7 +382,7 @@ if (mode==2 &amp;&amp; select_val) {
                     dialogue_x[dialogue_history_n]=1;
                     dialogue_history[dialogue_history_n++]=""
                 }
-                str_to_add="You don't sound very ready."
+                str_to_add="You don't sound very sure."
                 if (sub_t&lt;=string_length(str_to_add))
                     dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
                 if (sub_t&gt;30) {
@@ -472,7 +492,7 @@ if (mode==2 &amp;&amp; select_val) {
                         dialogue_x[dialogue_history_n]=PARLANT_X+50;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="Good."
+                    str_to_add="I see."
                     if (sub_t&lt;=string_length(str_to_add))
                         dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
                     if (sub_t&gt;40) {
@@ -482,12 +502,12 @@ if (mode==2 &amp;&amp; select_val) {
                 }
                 if (submode==9 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=PARLANT_X-80;
+                        dialogue_x[dialogue_history_n]=PARLANT_X+50;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="But just so you know --"
-                    if (sub_t&lt;=string_length(str_to_add))
-                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
+                    str_to_add="Well..."
+                    if (sub_t&lt;=string_length(str_to_add)*5 &amp;&amp; sub_t%5==3)
+                        dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,floor(sub_t/5)+1);
                     if (sub_t&gt;50) {
                         submode++;
                         sub_t=-1;
@@ -495,10 +515,10 @@ if (mode==2 &amp;&amp; select_val) {
                 }
                 if (submode==10 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=PARLANT_X+30;
+                        dialogue_x[dialogue_history_n]=45;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="Actually,"
+                    str_to_add="I hope you find it."
                     if (sub_t&lt;=string_length(str_to_add))
                         dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
                     else {
@@ -508,20 +528,20 @@ if (mode==2 &amp;&amp; select_val) {
                 }
                 if (submode==11 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=PARLANT_X-54;
+                        dialogue_x[dialogue_history_n]=70;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="It doesn't matter."
+                    str_to_add="Whatever it is."
                     if (sub_t&lt;=string_length(str_to_add))
                         dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
-                    if (sub_t&gt;30) {
+                    if (sub_t&gt;45) {
                         submode++;
                         sub_t=-1;
                     }
                 }
                 if (submode==12 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=1;
+                        dialogue_x[dialogue_history_n]=12;
                         dialogue_history[dialogue_history_n++]=""
                     }
                     str_to_add="You have a long journey ahead."
@@ -534,10 +554,10 @@ if (mode==2 &amp;&amp; select_val) {
                 }
                 if (submode==13 &amp;&amp; sub_t&gt;=0) {
                     if (sub_t==0) {
-                        dialogue_x[dialogue_history_n]=12;
+                        dialogue_x[dialogue_history_n]=1;
                         dialogue_history[dialogue_history_n++]=""
                     }
-                    str_to_add="Just come back safely."
+                    str_to_add="Try not to get into too much trouble."
                     if (sub_t&lt;=string_length(str_to_add))
                         dialogue_history[dialogue_history_n-1]+=string_char_at(str_to_add,sub_t+1);
                     if (sub_t&gt;50) {
@@ -639,7 +659,11 @@ if (mode!=3) {
         draw_text(draw_x,draw_y,subopt[i])
     }
 }
+
 draw_reset();
+
+draw_set_font(jukefont)
+draw_text(width/2,height-22+t_begin_anim,config.FULL_VERSION);
 </string>
           </argument>
         </arguments>

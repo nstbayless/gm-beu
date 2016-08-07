@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="3" name="datafiles">
+  <datafiles number="5" name="datafiles">
     <datafile>
       <name>Alex Brush SIL OFL Font License 1.1.txt</name>
       <exists>-1</exists>
@@ -42,6 +42,15 @@
   <NewExtensions/>
   <sounds name="sound">
     <sound>sound\mus_54</sound>
+    <sound>sound\sfx_hit</sound>
+    <sound>sound\sfx_ping</sound>
+    <sound>sound\sfx_explosion</sound>
+    <sound>sound\sfx_hurt</sound>
+    <sound>sound\sfx_slime</sound>
+    <sound>sound\sfx_twang1</sound>
+    <sound>sound\sfx_twang2</sound>
+    <sound>sound\sfx_heartbeat</sound>
+    <sound>sound\sfx_attack</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="decals">
@@ -60,6 +69,7 @@
     <sprite>sprites\spr_shadow_small</sprite>
     <sprite>sprites\spr_warrior</sprite>
     <sprite>sprites\spr_warrior_alt</sprite>
+    <sprite>sprites\spr_pc_main</sprite>
     <sprite>sprites\spr_king</sprite>
     <sprites name="explosions">
       <sprite>sprites\spr_explosion3</sprite>
@@ -74,6 +84,7 @@
     </sprites>
     <sprite>sprites\spr_arrow</sprite>
     <sprite>sprites\spr_bat</sprite>
+    <sprite>sprites\spr_bubble_pointer</sprite>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="art">
@@ -98,9 +109,18 @@
     <background>background\bg_basalt_scene_glow</background>
     <background>background\bg_basalt_scene_bg</background>
     <background>background\bg_basalt_scene_fg</background>
+    <background>background\bg_mountain_scene_structure</background>
+    <background>background\bg_mountain_scene_tree</background>
+    <background>background\bg_mountain_scene</background>
+    <background>background\bg_mountain_scene_fg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="animation">
+      <script>scripts\animation_set_frame.gml</script>
+      <script>scripts\animation_set_image_index.gml</script>
+      <script>scripts\make_animation.gml</script>
+    </scripts>
     <scripts name="physics">
       <script>scripts\get_grounds_at.gml</script>
       <script>scripts\get_draw_x.gml</script>
@@ -114,7 +134,11 @@
       <script>scripts\heal.gml</script>
       <script>scripts\kill.gml</script>
       <script>scripts\wound.gml</script>
+      <script>scripts\is_hit_stunned.gml</script>
+      <script>scripts\can_act.gml</script>
+      <script>scripts\get_hit_stun_length.gml</script>
       <script>scripts\attack_rectangle.gml</script>
+      <script>scripts\add_signed_quadrature.gml</script>
     </scripts>
     <scripts name="generation">
       <script>scripts\generate_cliffs_between.gml</script>
@@ -130,22 +154,35 @@
       <script>scripts\possessor_initialize.gml</script>
       <script>scripts\possess_control.gml</script>
     </scripts>
-    <script>scripts\scale_gp_axis.gml</script>
-    <script>scripts\get_art.gml</script>
-    <script>scripts\draw_reset.gml</script>
-    <script>scripts\ch_begin_transition.gml</script>
+    <scripts name="draw">
+      <script>scripts\draw_reset.gml</script>
+      <script>scripts\draw_wheel.gml</script>
+    </scripts>
+    <scripts name="ch">
+      <script>scripts\ch_begin_transition.gml</script>
+      <script>scripts\open_menu.gml</script>
+      <script>scripts\get_art.gml</script>
+      <script>scripts\get_player_name.gml</script>
+      <script>scripts\get_player_color.gml</script>
+    </scripts>
+    <scripts name="gamepad">
+      <script>scripts\scale_gp_axis.gml</script>
+      <script>scripts\get_gamepad_count.gml</script>
+    </scripts>
+    <scripts name="sound">
+      <script>scripts\play_sfx.gml</script>
+      <script>scripts\music_play.gml</script>
+      <script>scripts\play_sfx_at.gml</script>
+    </scripts>
+    <scripts name="util">
+      <script>scripts\assert.gml</script>
+      <script>scripts\print.gml</script>
+      <script>scripts\make_array.gml</script>
+    </scripts>
     <script>scripts\get_target_nearest.gml</script>
-    <script>scripts\print.gml</script>
-    <script>scripts\open_menu.gml</script>
-    <script>scripts\get_gamepad_count.gml</script>
-    <script>scripts\music_play.gml</script>
     <script>scripts\halt_execute_actor.gml</script>
-    <script>scripts\halt_execute.gml</script>
-    <script>scripts\draw_wheel.gml</script>
-    <script>scripts\assert.gml</script>
-    <script>scripts\make_animation.gml</script>
     <script>scripts\instance_create_xyz.gml</script>
-    <script>scripts\make_array.gml</script>
+    <script>scripts\halt_execute.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\jukefont</font>
@@ -198,6 +235,7 @@
       <object>objects\camera_guide</object>
       <object>objects\resources</object>
       <object>objects\scene_disp</object>
+      <object>objects\obj_gui</object>
       <object>objects\obj_struct</object>
       <object>objects\obj_main_menu</object>
       <object>objects\config</object>
@@ -210,6 +248,9 @@
         <object>objects\obj_ch1_fg_b</object>
         <object>objects\ch1_ppt_b</object>
         <object>objects\obj_ch1_bg_b</object>
+        <object>objects\ch1_ppt_c</object>
+        <object>objects\obj_ch1_fg_c</object>
+        <object>objects\obj_ch1_bg_c</object>
       </objects>
       <object>objects\cinf_ppt</object>
       <object>objects\rm_test_1_ppt</object>
@@ -223,6 +264,7 @@
     <room>rooms\rm_test_1</room>
     <room>rooms\rm_c1_a</room>
     <room>rooms\rm_c1_b</room>
+    <room>rooms\rm_c1_c</room>
   </rooms>
   <constants number="11">
     <constant name="cgs_halt">4</constant>

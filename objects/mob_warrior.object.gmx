@@ -67,6 +67,7 @@ ai_target=noone;
 anim=0;
 
 t_since_attack=0;
+t_rxn=0;
 </string>
           </argument>
         </arguments>
@@ -168,7 +169,7 @@ if instance_exists(ai_target) &amp;&amp; ai_target!=noone {
     if (len&lt;40) {
         if (t_atk==0)
             t_atk++;
-        if (t_atk==5) {
+        if (t_atk==12) {
             do_atk=true;
         }
         move_x=0;
@@ -234,11 +235,13 @@ if instance_exists(ai_target) &amp;&amp; ai_target!=noone {
             <string>//attack
 if (t_since_attack&gt;=0)
     t_since_attack++;
-if (do_atk) {
+if (can_act()&amp;&amp;do_atk) {
     wnd_spec[0]=dir
     wnd_spec[1]=5;
+    wnd_spec[2]=18;
     t_since_attack=0;
     attack_rectangle(x+dir*30-30,y-20,z+1,x+dir*30+30,y+20,z+20,wnd_spec)
+    play_sfx_at(x,y,z+dim_z/2,sfx_attack)
 }
 </string>
           </argument>

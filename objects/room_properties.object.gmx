@@ -36,6 +36,14 @@ sideview=false;
 
 //prevents update cycle
 paused=false;
+
+//don't show gui
+peaceful=false;
+
+no_running=false;
+
+room_display_width=-1;
+room_display_height=-1;
 </string>
           </argument>
         </arguments>

@@ -15,6 +15,7 @@ if (p_mode==P_DUMMY) {
     }
 }
 
+do_dir=0;
 move_x=pos.port_move_x[port];
 move_y=pos.port_move_y[port];
 do_block=pos.port_do_block[port];

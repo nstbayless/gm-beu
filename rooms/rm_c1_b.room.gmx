@@ -54,7 +54,7 @@
     <instance objName="obj_ch1_fg_b" x="64" y="96" name="inst_152B0538" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_ch1_bg_b" x="0" y="32" name="inst_CB7175C5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="ch1_ppt_b" x="96" y="384" name="inst_30AD27C7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="room_properties" x="64" y="224" name="inst_02F79459" locked="0" code="bumpy=true;&#xA;sideview=true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="room_properties" x="64" y="224" name="inst_02F79459" locked="0" code="bumpy=true;&#xA;sideview=true;&#xA;&#xA;peaceful=true;&#xA;&#xA;room_display_width=1024;&#xA;room_display_height=768;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

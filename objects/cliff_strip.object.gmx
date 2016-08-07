@@ -63,6 +63,8 @@
           <argument>
             <kind>1</kind>
             <string>draw_set_color(c_dkgray)
+if (!config.RENDER_CLIFFS_ENABLED)
+    exit;
 if dir==0||sign(-camera.skew)==dir
 {
     draw_primitive_begin(pr_trianglestrip);

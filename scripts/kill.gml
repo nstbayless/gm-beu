@@ -9,8 +9,10 @@ with (inst_actor) {
         (instance_create(x,y,obj_explosion_loc)).z=z;
     if (player>=0) {
         campaign.spawn_timer[campaign.spawn_n]=re_time;
-        campaign.spawn_inst[campaign.spawn_n]=this;
+        campaign.spawn_player[campaign.spawn_n]=player;
         campaign.spawn_n++;
         instance_deactivate_object(this);
     } else instance_destroy();
+    if (loc_sfx_on_death>=0)
+        play_sfx_at(x,y,z+dim_z/2,loc_sfx_on_death)
 }

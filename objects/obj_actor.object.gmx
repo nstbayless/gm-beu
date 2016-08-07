@@ -45,7 +45,7 @@ z_rest=0;
 ground_rest=noone;
 on_ground=false;
 
-stat_recharge_delay=290;
+stat_recharge_delay=190;
 stat_recharge_rate=0;
 stat_maxhp=20;
 hp=stat_maxhp
@@ -53,14 +53,25 @@ hp_bardrain=0;
 //how blocking affects damage
 stat_blk_mult=0;
 stat_blk_sub=0;
+//how blocking affects knockback
+stat_blk_knock_mult=0.3;
+stat_blk_knock_sub=0;
 //speed
 stat_spd=4;
 stat_blkspd=2;
 stat_run=10;
+stat_hitdrift=2; //speed at which player moves back while in hitstun
 //jumping
 stat_grav=-3;
 stat_jumpspd=20;
 stat_jumpspd_blk=15;
+//knockback:
+stat_knockback_friction_ground=4;
+stat_knockback_friction_air=1;
+//multiplies length of hit stun
+stat_hit_stun_recovery_mult=2.5;
+//can recover from hit stun over time
+stat_hit_stun_recovers=false;
 
 move_x=0;
 move_y=0
@@ -68,6 +79,7 @@ do_jump=false;
 do_zhalt=false
 do_run=false;
 do_block=false;
+do_atk=false;
 is_blocking=false;
 extra_action=0;
 do_dir=0;
@@ -95,7 +107,7 @@ a_hp_drain=1;
 spr_hp_ring_loc = spr_hp_ring_med
 
 //player controlling this
-player=PL_NOPLAYER;
+player = PL_NOPLAYER;
 p_mode = P_AUTOMATIC;
 
 shadow=noone;
@@ -103,6 +115,35 @@ spr_shadow_loc=spr_shadow_med;
 obj_explosion_loc=obj_explosion;
 
 image_speed=0;
+
+//the attack that holds the lock on further attacking this frame
+attack_lock=0;
+
+//if &gt; 0, prevents moving, etc.
+t_hit_stun=0;
+//histry of times hit-stunned before being able to act
+hit_stun_counter=0;
+
+knockback_vx=0;
+knockback_vy=0;
+
+loc_sfx_on_hit=sfx_hit;
+loc_sfx_on_block=sfx_ping;
+loc_sfx_on_death=sfx_explosion;
+
+AN_idle = make_animation(0,1,1);
+AN_walk = make_animation(0,1,1);
+AN_run = AN_walk
+AN_jump_up = make_animation(0,1,1);
+AN_jump_down = make_animation(0,1,1);
+AN_jump_land = make_animation(0,1,1);
+AN_block = make_animation(0,1,1);
+AN_hitstun = make_animation(0,1,1);
+AN_death = AN_hitstun;
+AN_extra[0]=make_animation(0,1,1);
+
+anim=0;
+anim_move=0;
 </string>
           </argument>
         </arguments>
@@ -317,6 +358,35 @@ on_ground=retval[2];
 //output timers:
 //t_since_hit
 
+if (t_hit_stun&gt;0)
+    t_hit_stun--;
+    
+var knockback_xdiff=0
+var knockback_ydiff=0;
+    
+if (!is_hit_stunned()) {
+    //knockback stuff:
+    knockback_xdiff=knockback_vx;
+    knockback_ydiff=knockback_vy
+    
+    //friction for knockback:
+    var knockback_friction = stat_knockback_friction_air;
+    if (on_ground)
+        knockback_friction=stat_knockback_friction_ground;
+    
+    //friction for knockback (x):
+    sign_knockback_vx=sign(knockback_vx);
+    knockback_vx-=sign_knockback_vx*knockback_friction;
+    if (knockback_vx*sign_knockback_vx&lt;=0)
+        knockback_vx=0;
+        
+    //friction for knockback (y):
+    sign_knockback_vy=sign(knockback_vy);
+    knockback_vy-=sign_knockback_vy*knockback_friction;
+    if (knockback_vy*sign_knockback_vy&lt;=0)
+        knockback_vy=0;
+}
+
 //combat mechanics
 if (hp&lt;=0&amp;&amp;t_since_hit&gt;3) {
     kill(this);
@@ -327,6 +397,7 @@ if (z&lt;-2500) {
     var defn;
     defn[0]=0;
     defn[4]=true;
+    defn[6]=true;
     wound(this,-1,defn)
 }
 
@@ -336,7 +407,12 @@ if (t_since_hit&gt;=5||t_since_hit==-1) {
 }
 hp_bardrain=max(hp,hp_bardrain);
 
-is_blocking=do_block;
+if (can_act())
+    is_blocking=do_block;
+    
+//hit-stun-counter reset:
+if (can_act())
+    hit_stun_counter=0;
 
 //report flags:
 phys_bounced=false;
@@ -345,28 +421,32 @@ phys_jumped=false;
 if (t_since_jump&gt;=0)
     t_since_jump++;
 
+//jumping
+if (can_act()&amp;&amp;do_jump&amp;&amp;on_ground) {
+        t_since_jumped=0;
+        if (!is_blocking) vspd=stat_jumpspd;
+        else vspd=stat_jumpspd_blk;
+    }    
+
 //z movement
-if (do_jump&amp;&amp;on_ground) {
-    t_since_jumped=0;
-    if (!is_blocking) vspd=stat_jumpspd;
-    else vspd=stat_jumpspd_blk;
-}
-
-if (!on_ground)
-    vspd+=stat_grav;
+if (!is_hit_stunned()) {
     
-if (do_zhalt&amp;&amp;vspd&gt;0)
-    vspd=0;
-
-z+= vspd;
-if (z&lt;z_rest) {
-    z=z_rest
-    vspd*=-bounce_mult;
-    vspd-=bounce_sub
-    if (vspd&gt;bounce_max&amp;&amp;bounce_max&gt;0)
-        vspd=bounce_max;
-    if (vspd&lt;0)
+    if (!on_ground)
+        vspd+=stat_grav;
+        
+    if (can_act()&amp;&amp;do_zhalt&amp;&amp;vspd&gt;0)
         vspd=0;
+    
+    z+= vspd;
+    if (z&lt;z_rest) {
+        z=z_rest
+        vspd*=-bounce_mult;
+        vspd-=bounce_sub
+        if (vspd&gt;bounce_max&amp;&amp;bounce_max&gt;0)
+            vspd=bounce_max;
+        if (vspd&lt;0)
+            vspd=0;
+    }
 }
 
 //x-y movement
@@ -376,11 +456,23 @@ var xorig=x;
 var yorig=y;
 var xspd = stat_spd;
 var yspd = stat_spd;
-if (do_run) {xspd=stat_run;yspd/=2}
+if (do_run&amp;&amp;!room_properties.no_running) {xspd=stat_run;yspd/=2}
 if (do_block) {xspd=stat_blkspd; yspd=stat_blkspd;}
-phys_xdiff = move_x*xspd;
-phys_ydiff = move_y*yspd;
+phys_xdiff=0;
+phys_ydiff=0;
+if can_act() {
+    phys_xdiff = move_x*xspd;
+    phys_ydiff = move_y*yspd;
+}
 
+if (is_hit_stunned()) {
+    //drift if hitstunned
+    phys_xdiff=-dir*stat_hitdrift;
+}
+
+phys_xdiff+=knockback_xdiff;
+phys_ydiff+=knockback_ydiff;
+    
 //what follows is some very messy movement script...
 
 var grounds_xn = get_grounds_in(xorig+phys_xdiff-dim_w/2,yorig-dim_h/2,xorig+phys_xdiff+dim_w/2,yorig+dim_h/2)
@@ -442,7 +534,7 @@ if (!do_block) {
         dir=1;
 }
 
-if(do_dir!=0)
+if(can_act()&amp;&amp;do_dir!=0)
     dir=sign(do_dir);
 
 //timers:
@@ -470,9 +562,10 @@ if (t_since_hit&gt;=0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (hp&lt;stat_maxhp) {
-    var cx=get_draw_x()
-    var cy=get_draw_y()-dim_z/2;
+            <string>var cx = get_draw_x();
+var cy = get_draw_y()-dim_z/2;
+
+if (hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
     var ring_w = sprite_get_width(spr_hp_ring_loc);
     var ring_h = sprite_get_height(spr_hp_ring_loc);
     var ring_scale = 1;
@@ -502,6 +595,23 @@ if (t_since_hit&gt;=0)
     //hp drain wheel:
     draw_wheel(cx,cy,spr_hp_ring_loc,hp/stat_maxhp,hp_bardrain/stat_maxhp,ring_scale,c_hp_drain,a_hp_drain*alph_mult)
 }
+
+if (player&gt;=0)
+    if (cx&lt;view_xview[0]-32||cx &gt; view_xview[0]+view_wview[0]+32) {
+        var bubble_dir = sign(cx-camera.x);
+        var bubble_r_large = 64;
+        var bubble_r_med = 52;
+        var bubble_r_small = 48;
+        var bubble_cx = max(min(cx,view_xview[0]+view_wview[0]-bubble_r_large),view_xview[0]+bubble_r_large)
+        var bubble_cy = max(min(cy,view_yview[0]+view_hview[0]-bubble_r_large),view_yview[0]+bubble_r_large)
+        draw_set_color(get_player_color(player));
+        draw_set_alpha(1);
+        draw_circle(bubble_cx,bubble_cy,bubble_r_med,false)
+        draw_sprite_ext(spr_bubble_pointer,0,bubble_cx,bubble_cy,1,1,point_direction(bubble_cx,bubble_cy,cx,cy),get_player_color(player),1)
+        draw_set_color(c_ltgray)
+        draw_circle(bubble_cx,bubble_cy,bubble_r_small,false)
+        draw_sprite_ext(sprite_index,image_index,bubble_cx,bubble_cy+dim_z/2,image_xscale,image_yscale,0,c_white,1);
+    }
 </string>
           </argument>
         </arguments>
