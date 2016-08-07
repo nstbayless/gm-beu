@@ -165,8 +165,7 @@ loc_sfx_on_hit=sfx_hurt;
         do_atk=false;
         do_zhalt = !controller.jump_held[player];
         do_dir=0;
-    }
-    if (!controller.block_held[player])
+    } else if (!controller.block_held[player])
         do_dir = controller.right_pressed[player]-controller.left_pressed[player]
     do_jump |= controller.jump_pressed[player];
     do_atk |= controller.atk_pressed[player];
