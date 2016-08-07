@@ -44,6 +44,10 @@ height=sprite_height;
 zbot=-1000
 surf=-1;
 
+//allows players to move up/down the surface.
+//Don't enable for non-sloped surfaces, since it's slow.
+slope_px=0;
+
 strip_thickness=config.STRIP_THICKNESS;
 
 strips[0]=noone;

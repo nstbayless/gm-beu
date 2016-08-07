@@ -8,7 +8,7 @@ var z1=argument4;
 
 var grounds=get_grounds_in(x1,y1,x2,y2);
 //highest ground encountered below z:
-var maxz=-10000
+var maxz=-100000
 var argmaxz=noone;
 for (i=0;grounds[i]!=noone;i++) {
     if (grounds[i].z<=z1  && grounds[i].z>maxz) {

@@ -27,10 +27,6 @@
             <kind>1</kind>
             <string>gravity=-3;
 
-//if bumpy is true, players can move up surfaces more easily
-//intended for side-view art segments
-bumpy=false;
-
 //prevents actors from moving laterally
 sideview=false;
 
@@ -46,9 +42,10 @@ room_display_width=-1;
 room_display_height=-1;
 
 //use global b/c faster than pointer lookup
-global.ground_n[200] = 0;
-for (var i=0;i&lt;200;i++)
+for (var i=0;i&lt;200;i++) {
     global.ground_l[i,0]= noone;
+    global.ground_n[i] = 0;
+}
 
 global.geohash_x=300;
 </string>

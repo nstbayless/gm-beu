@@ -21,8 +21,6 @@ for (var i=0;i<bg_w/GROUND_WIDTH;i++){
     var avg=bg_h/2;
     var px=floor((i+0.5)*GROUND_WIDTH);
     while (abs(py_win_min-py_win_max)>PREC_Y) {
-        
-        
         var pixel_lum = 1-colour_get_red(surface_getpixel(surf,px,avg));
         if (pixel_lum>0.2) {
             py_win_max=avg;
@@ -36,6 +34,8 @@ for (var i=0;i<bg_w/GROUND_WIDTH;i++){
     inst_ground.nomap=true;
     inst_ground.width=GROUND_WIDTH;
     inst_ground.height=bg_h*2;
+    inst_ground.slope_px=2+GROUND_WIDTH*1.5;
+    register_ground(inst_ground);
     if (i==floor(ch_spawn.x/GROUND_WIDTH))
         ch_spawn.z=inst_ground.z;
 }

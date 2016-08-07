@@ -462,7 +462,7 @@ phys_xdiff+=knockback_xdiff;
 phys_ydiff+=knockback_ydiff;
 
 //do actual movement
-move(phys_xdiff,phys_ydiff,vspd*!is_hit_stunned(),2);
+move(phys_xdiff,phys_ydiff,vspd*!is_hit_stunned(),2,ground_rest);
 
 //bounce:
 if (collision_z!=noone &amp;&amp; vspd&lt;0) {

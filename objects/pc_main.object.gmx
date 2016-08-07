@@ -66,6 +66,8 @@ c_hp_gone_dire=make_color_hsv(4,252,250);
 a_hp_gone_dire=0.8;
 
 dim_z=40;
+dim_x=30;
+dim_y=20;
 
 loc_sfx_on_hit=sfx_hurt;
 

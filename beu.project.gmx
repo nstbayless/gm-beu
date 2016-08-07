@@ -131,8 +131,10 @@
       <script>scripts\get_grounds_in.gml</script>
       <script>scripts\register_ground.gml</script>
       <script>scripts\collides_ag_offset.gml</script>
+      <script>scripts\get_ground_at.gml</script>
       <script>scripts\sanitize_geohash.gml</script>
       <script>scripts\move.gml</script>
+      <script>scripts\move_slope.gml</script>
     </scripts>
     <scripts name="combat">
       <script>scripts\heal.gml</script>
