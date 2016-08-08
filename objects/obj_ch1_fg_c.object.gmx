@@ -59,10 +59,14 @@ if (!created_surface) {
     split_bg_to_ground(bg_target,4,2);
     created_surface=true;
     var bgh=bg_h;
-    with instance_create(-32,-100,impass)
+    with instance_create(-32,-100,impass){
         height=bgh*2
-    with instance_create(room_width,-100,impass)
+        register_ground(this);
+    }
+    with instance_create(room_width,-100,impass) {
         height=bgh*2
+        register_ground(this); 
+    }
 }
 </string>
           </argument>

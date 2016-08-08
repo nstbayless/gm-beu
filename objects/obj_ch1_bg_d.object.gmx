@@ -2,13 +2,13 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
-  <depth>-500</depth>
+  <visible>-1</visible>
+  <depth>1000</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="0" enumb="0">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,58 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>anim=0;
-
-camera.aot=0;
-camera.skew=0;
-
-var cg = instance_create(view_wview[0]/2,0,camera_guide);
-cg.camera_guide_style=cgs_halt;
-cg.z=-view_hview[0]/2;
-cg.nomap=true;
-cg.active=true;
-cg.aot=0;
-cg.skew=0;
-
-inst_spawn = (instance_create(20,0,ch_spawn));
-inst_spawn.z=-400;
-inst_spawn.nomap=true;
-
-t_fadeout=0;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>anim++;
-
-var do_fadeout=false;
-with (obj_actor)
-    if x&gt;800 do_fadeout=true;
-    
-if (t_fadeout)
-    t_fadeout++
-if (do_fadeout)
-    t_fadeout++;
-if (t_fadeout&gt;30)
-    room_goto(rm_c1_d);
+            <string>draw_background(bg_mountain_scene,0,0)
+draw_background(bg_mushroom_scene,0,0)
 </string>
           </argument>
         </arguments>

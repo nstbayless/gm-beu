@@ -60,7 +60,7 @@ if (!created_surface) {
     created_surface=true;
     instance_create(-32,-100,impass)
     impass.height=bg_h*2;
-    
+    register_ground(impass);
 }
 </string>
           </argument>

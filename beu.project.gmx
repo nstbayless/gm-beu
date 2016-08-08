@@ -113,6 +113,9 @@
     <background>background\bg_mountain_scene_tree</background>
     <background>background\bg_mountain_scene</background>
     <background>background\bg_mountain_scene_fg</background>
+    <background>background\bg_mushroom_scene_shrooms_fg</background>
+    <background>background\bg_mushroom_scene</background>
+    <background>background\bg_mushroom_scene_fg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -248,15 +251,18 @@
     </objects>
     <objects name="ch_ppt">
       <objects name="ch1">
-        <object>objects\obj_ch1_fg</object>
         <object>objects\ch1_ppt_a</object>
+        <object>objects\obj_ch1_fg</object>
         <object>objects\obj_ch1_bg</object>
-        <object>objects\obj_ch1_fg_b</object>
         <object>objects\ch1_ppt_b</object>
+        <object>objects\obj_ch1_fg_b</object>
         <object>objects\obj_ch1_bg_b</object>
         <object>objects\ch1_ppt_c</object>
         <object>objects\obj_ch1_fg_c</object>
         <object>objects\obj_ch1_bg_c</object>
+        <object>objects\ch1_ppt_d</object>
+        <object>objects\obj_ch1_bg_d</object>
+        <object>objects\obj_ch1_fg_d</object>
       </objects>
       <object>objects\cinf_ppt</object>
       <object>objects\rm_test_1_ppt</object>
@@ -270,6 +276,7 @@
     <room>rooms\rm_test_1</room>
     <room>rooms\rm_c1_a</room>
     <room>rooms\rm_c1_b</room>
+    <room>rooms\rm_c1_d</room>
     <room>rooms\rm_c1_c</room>
   </rooms>
   <constants number="11">
