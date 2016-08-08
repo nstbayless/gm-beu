@@ -85,6 +85,7 @@
     <sprite>sprites\spr_arrow</sprite>
     <sprite>sprites\spr_bat</sprite>
     <sprite>sprites\spr_bubble_pointer</sprite>
+    <sprite>sprites\spr_mushy</sprite>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="art">
@@ -216,6 +217,7 @@
     <object>objects\ch_spawn</object>
     <object>objects\obj_bg_mountains</object>
     <objects name="decals">
+      <object>objects\dec_mushy</object>
       <object>objects\dec_sakura</object>
       <object>objects\decal</object>
     </objects>
