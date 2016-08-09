@@ -3,3 +3,5 @@
 dialogue.queue_v[dialogue.queue_n++]=argument0;
 if (dialogue.current_line==noone)
     dialogue_advance();
+
+return argument0; //for convenience

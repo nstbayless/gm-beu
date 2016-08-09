@@ -119,6 +119,7 @@
     <background>background\bg_mushroom_scene_fg</background>
     <background>background\prt_mushmom</background>
     <background>background\prt_mushy</background>
+    <background>background\prt_pc_main</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -195,6 +196,7 @@
       <script>scripts\dialogue_unlock.gml</script>
       <script>scripts\dialogue_lock.gml</script>
       <script>scripts\make_line.gml</script>
+      <script>scripts\sanitize_line.gml</script>
       <script>scripts\dialogue_enqueue.gml</script>
       <script>scripts\dialogue_dequeue.gml</script>
       <script>scripts\dialogue_free.gml</script>

@@ -28,10 +28,12 @@
             <string>speaker=""; //name of speaker
 portrait=noone; //background index
 text="" //content
+font=fnt_dialogue;
 
 f_skip = true; //can speed/skip through dialogue
 f_wait = false; //wait for scene to instruct before progressing
 f_close_box=false; //closes box when completed
+f_any_control=true; //all participants can advance
 
 option_n=0; //dialogue options
 option_v[0]="";
@@ -39,6 +41,7 @@ control_n=0; //set of players that can control advance
 control_v[0]=0;
 
 _completed=false;
+_waited_for=false;
 </string>
           </argument>
         </arguments>

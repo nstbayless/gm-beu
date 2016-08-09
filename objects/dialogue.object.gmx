@@ -32,16 +32,18 @@ current_line = noone;
 
 is_locked=false;
 
-_result=0; //result of last dialogue option
-
+SPEED_RATE=4; //rate at which player speeds through text
 BOX_OPEN_TIME = 5; //number of frames for box to open/close
 _box_open_t = 0;
 _box_open = false; //true if box is open or opening, false if closed or closing.
 
 _text_buffer = ""; //fills up with text while advancing through dialogue.
 _can_advance=false; //true when dialogue can be advanced.
+_option_selected=0; //option temporarily selected
+_result=0; //result of last dialogue option
 
-SPEED_RATE=4; //rate at which player speeds through text
+control_n=0;
+control_v[0]=0;
 </string>
           </argument>
         </arguments>
@@ -73,18 +75,20 @@ SPEED_RATE=4; //rate at which player speeds through text
 if (_box_open &amp;&amp; _box_open_t==BOX_OPEN_TIME) {
     //box fully open, add text to buffer:
     var line = current_line;
-    repeat (1+_speed_line*(SPEED_RATE-1)) {
-        var buffer_i=string_length(_text_buffer)
-        if (buffer_i&lt;string_length(line.text))
-            _text_buffer+=string_char_at(line.text,buffer_i+1);
+    if (line!=noone) {
+        repeat (1+_speed_line*(SPEED_RATE-1)) {
+            var buffer_i=string_length(_text_buffer)
+            if (buffer_i&lt;string_length(line.text))
+                _text_buffer+=string_char_at(line.text,buffer_i+1);
+        }
+        if (_skip_line) {
+            _text_buffer=line.text;
+        }
+        //if buffer full, allow advancing:
+        if (string_length(_text_buffer)&gt;=string_length(line.text))
+            if (!line.f_wait)
+                _can_advance=true;
     }
-    if (_skip_line) {
-        _text_buffer=line.text;
-    }
-    //if buffer full, allow advancing:
-    if (string_length(_text_buffer)&gt;=string_length(line.text))
-        if (!line.f_wait)
-            _can_advance=true;
 }
 </string>
           </argument>
@@ -110,9 +114,31 @@ if (_box_open &amp;&amp; _box_open_t==BOX_OPEN_TIME) {
             <kind>1</kind>
             <string>_speed_line=false
 _skip_line=false;
-if (_box_open) {
+_advance=false;
+if (_box_open &amp;&amp; current_line!=noone) {
     var line = current_line;
-    //TODO: collect player input
+    for (var i=0;i&lt;current_line.control_n;i++) {
+        var player = current_line.control_v[i];
+        if (controller.cancel_pressed[player] &amp;&amp; line.f_skip)
+            _skip_line = true;
+        if (controller.cancel_pressed[player] &amp;&amp; _can_advance &amp;&amp; line.option_n==0)
+            _advance=true;
+        if (controller.select_pressed[player] &amp;&amp; _can_advance)
+            _advance=true;
+        if (controller.left_pressed[player] &amp;&amp; _can_advance &amp;&amp; line.option_n&gt;1)
+            _option_selected--;
+        if (controller.right_pressed[player] &amp;&amp; _can_advance &amp;&amp; line.option_n&gt;1)
+            _option_selected++;
+    }
+    if (line.option_n&gt;0) //sanitize option selected
+        _option_selected = (_option_selected % line.option_n + line.option_n) % line.option_n;
+    if (_advance) {
+        assert(_can_advance);
+        //don't accidentally skip next line of dialogue:
+        _skip_line=false;
+        _result=_option_selected;
+        dialogue_advance();
+    }
 }
 </string>
           </argument>
@@ -144,7 +170,7 @@ var screen_height = config.SCREEN_HEIGHT;
 
 
 var box_width = 1024-96*2;
-var box_height = ceil((128+32)*_box_open_t/BOX_OPEN_TIME);
+var box_height = ceil((128+32)*sin(_box_open_t/BOX_OPEN_TIME*pi/2));
 
 var box_x = (screen_width-box_width)/2;
 var box_y = 96;
@@ -164,8 +190,18 @@ if (line!=noone &amp;&amp; _box_open_t&gt;=BOX_OPEN_TIME) {
     var draw_text_x = box_x+8;
     if (line.portrait&gt;=0)
         draw_text_x+=4+background_get_width(line.portrait);
-    draw_set_font(fnt_dialogue);
+    draw_set_font(line.font);
     draw_text(draw_text_x,box_y+24,_text_buffer);
+    if (_can_advance &amp;&amp; line.option_n&gt;0) {
+        option_width=(box_width+box_x-draw_text_x)/line.option_n;
+        for (var i=0;i&lt;line.option_n;i++) {
+            if (_option_selected==i)
+                draw_set_colour(c_red);
+            else
+                draw_set_colour(c_white);
+            draw_text(draw_text_x+option_width*i,box_y+box_height/2,line.option_v[i]);
+        }
+    }
 }
 
 
@@ -175,6 +211,19 @@ draw_rectangle(box_x+1,box_y+1,box_x+1+box_width,box_y+1+box_height,true)
 draw_set_color(config.DLG_BOX_BORDER)
 draw_rectangle(box_x,box_y,box_x+box_width,box_y+box_height,true)
 
+//draw dialogue advance button cues:
+
+if (line!=noone) {
+    if ((line.f_skip&amp;&amp;_box_open_t&gt;=BOX_OPEN_TIME)||_can_advance) {
+        draw_reset();
+        draw_set_halign(fa_center)
+        draw_set_valign(fa_middle)
+        draw_text(box_x+2/3*box_width,box_y+box_height,"[Z] [X]");
+    }
+}
+
+draw_set_halign(fa_left)
+draw_set_valign(fa_top)
 </string>
           </argument>
         </arguments>

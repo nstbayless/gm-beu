@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1000</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -38,7 +38,9 @@ inst_spawn = (instance_create(20,0,ch_spawn));
 inst_spawn.z=-650;
 inst_spawn.nomap=true;
 
-dialogue_started=false;
+mode=0;
+
+possessor_initialize()
 </string>
           </argument>
         </arguments>
@@ -64,21 +66,121 @@ dialogue_started=false;
             <string>if (!halt_execute()) {
     anim++;
     var do_dialogue = false;
-    if (!dialogue_started)
+    var pos_this=id;
+    if (mode==0)
         with (obj_actor) {
             if (x&gt;500) {
-                do_dialogue=true;
-                p_mode=P_DUMMY;
+                do_dialogue=1;
+                with (obj_actor) {
+                    //lock other actors
+                    p_mode=P_DUMMY;
+                }
+                p_mode=P_POSSESSOR;
+                possessor_instance=pos_this;
+                possessor_port=0;
             }
         }
-    
-    if (do_dialogue &amp;&amp; !dialogue_started)
+    if (mode==0&amp;&amp;do_dialogue)
+        mode=1;
+    if (mode==1)
         if (dialogue_lock()) {
             dec_mushy.mode=1;
-            dialogue_enqueue(make_line("Mushroom",prt_mushy,"Hey  you."));
-            dialogue_enqueue(make_line("",prt_mushy,"Huh? Did that mushroom just talk?"));
-            dialogue_started = true;
+            dlg_cue_heyyou=dialogue_enqueue(make_line("Mushroom",prt_mushy,"Hey  you."));
+            dialogue_enqueue(make_line('"You"',prt_pc_main,"Huh? Did that mushroom just talk?"));
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"Nope."));
+            dlg_end = dialogue_enqueue(make_line('"You"',prt_pc_main,"Oh phew, because that would have been really weird."));
+            mode=2;
         }
+    if (mode == 2) {
+        port_do_dir[0]=0;
+        if (dialogue_wait_for(dlg_cue_heyyou)) {
+            //look left
+            port_do_dir[0]=-1;
+            dec_mushy.mode=0;
+        }
+        if (dialogue_wait_for(dlg_end)) {
+            dialogue_unlock();
+            mode=3;
+            with (obj_actor) {
+                //unlock all actors
+                p_mode=P_AUTOMATIC;
+            }
+        }
+    }
+    if (mode==3) {
+        var do_dialogue=0;
+        var pos_this=id;
+        with (obj_actor) {
+            if (x&lt;440||x&gt;700) {
+                do_dialogue=1;
+                if (x&gt;700)
+                    do_dialogue=2;
+                with (obj_actor) {
+                    //lock other actors
+                    p_mode=P_DUMMY;
+                }
+                p_mode=P_POSSESSOR;
+                possessor_instance=pos_this;
+                possessor_port=0;
+            }
+        }
+        if (do_dialogue==1)
+            mode=4;
+        if (do_dialogue==2)
+            mode=6;
+    }
+    if (mode==4) {
+        if (dialogue_lock()) {
+            dialogue_enqueue(make_line("",noone,"(It's a mushroom...)"));
+            dialogue_enqueue(make_line("",noone,"(It appears to have hands.)"));
+            dialogue_enqueue(make_line('"You"',prt_pc_main,"I wonder if it's edible."));
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"No, it's very poisonous."));
+            dialogue_enqueue(make_line('"You"',prt_pc_main,"Drat. I'm hungry. I've been walking such a long way."));
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"Really? How long have you been walking?"));
+            opt_choices = make_line('"You"',prt_pc_main,"");
+            opt_choices.option_n=2;
+            opt_choices.option_v = make_array("3 years", "3 hours");
+            dialogue_enqueue(opt_choices);
+            opt_police = noone;
+            mode=5;
+        }
+    }
+    if (mode==5) {
+        if (dialogue_wait_for(opt_choices)) {
+            if (dialogue_get_result()==0) {
+                dialogue_enqueue(make_line('Mushroom',prt_mushy,"Three years!? I cannot even imagine walking that long."));
+                dialogue_enqueue(make_line('"You"',prt_pc_main,"It's hard to keep track. Maybe it was only three hours."));
+                
+            } else {
+                dialogue_enqueue(make_line('Mushroom',prt_mushy,"Three hours, huh? That's not very long."));
+                dialogue_enqueue(make_line('"You"',prt_pc_main,"You're right. I've probably been walking longer."));      
+            }
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"Where did you come from, then? I happen to be very good at arithmetic. I bet I could tell you how long you've been walking."));
+            dialogue_enqueue(make_line('"You"',prt_pc_main,"Um... For a mushroom that supposedly doesn't speak you sure ask a lot of questions."));
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"I've only asked two questions."));
+            dialogue_enqueue(make_line('"You"',prt_pc_main,"Yeah, exactly."));
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"How many questions should a mushroom be entitled to?"));
+            dialogue_enqueue(make_line('"You"',prt_pc_main,"Now you've asked three. I'm beginning to think you're no ordinary mushroom."));
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"What are you, the mushroom police?"));
+            opt_police = make_line('"You"',prt_pc_main,"")
+            opt_police.option_n=2;
+            opt_police.option_v=make_array("No", "Yes");
+            dialogue_enqueue(opt_police);
+        }
+        if (dialogue_wait_for(opt_police)) {
+            if (dialogue_get_result()==0) {
+                dialogue_enqueue(make_line('"You"',prt_pc_main,"There is no such thing as the mushroom police."));
+            } else {
+                dialogue_enqueue(make_line('"You"',prt_pc_main,"I am, in fact, a member of the mushroom police."));
+            }
+        }
+    }
+    if (mode==6) {
+    
+    }
+    if (mode==7) {
+    
+    }
 }
 </string>
           </argument>

@@ -13,9 +13,9 @@ if (p_mode==P_DUMMY) {
     port=0;
 }
 
-do_dir=0;
 move_x=pos.port_move_x[port];
 move_y=pos.port_move_y[port];
+do_dir=pos.port_do_dir[port];
 do_block=pos.port_do_block[port];
 do_jump=pos.port_do_jump[port];
 do_run=pos.port_do_run[port];
