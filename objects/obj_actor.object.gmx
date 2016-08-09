@@ -109,6 +109,8 @@ spr_hp_ring_loc = spr_hp_ring_med
 //player controlling this
 player = PL_NOPLAYER;
 p_mode = P_AUTOMATIC;
+possessor_instance=noone;
+possessor_port=0;
 
 shadow=noone;
 spr_shadow_loc=spr_shadow_med;

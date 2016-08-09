@@ -117,6 +117,8 @@
     <background>background\bg_mushroom_scene_shrooms_fg</background>
     <background>background\bg_mushroom_scene</background>
     <background>background\bg_mushroom_scene_fg</background>
+    <background>background\prt_mushmom</background>
+    <background>background\prt_mushy</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -189,6 +191,19 @@
       <script>scripts\print.gml</script>
       <script>scripts\make_array.gml</script>
     </scripts>
+    <scripts name="dialogue">
+      <script>scripts\dialogue_unlock.gml</script>
+      <script>scripts\dialogue_lock.gml</script>
+      <script>scripts\make_line.gml</script>
+      <script>scripts\dialogue_enqueue.gml</script>
+      <script>scripts\dialogue_dequeue.gml</script>
+      <script>scripts\dialogue_free.gml</script>
+      <script>scripts\dialogue_replace.gml</script>
+      <script>scripts\dialogue_wait_for.gml</script>
+      <script>scripts\dialogue_wait.gml</script>
+      <script>scripts\dialogue_get_result.gml</script>
+      <script>scripts\dialogue_advance.gml</script>
+    </scripts>
     <script>scripts\get_target_nearest.gml</script>
     <script>scripts\halt_execute_actor.gml</script>
     <script>scripts\instance_create_xyz.gml</script>
@@ -198,6 +213,7 @@
     <font>fonts\jukefont</font>
     <font>fonts\fnt_script</font>
     <font>fonts\fnt_menu</font>
+    <font>fonts\fnt_dialogue</font>
     <font>fonts\cursive</font>
   </fonts>
   <objects name="objects">
@@ -250,6 +266,8 @@
       <object>objects\obj_struct</object>
       <object>objects\obj_main_menu</object>
       <object>objects\config</object>
+      <object>objects\dialogue</object>
+      <object>objects\obj_line</object>
     </objects>
     <objects name="ch_ppt">
       <objects name="ch1">
@@ -271,7 +289,7 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_scene</room>
+    <room>rooms\rm_meta</room>
     <room>rooms\rm_menu</room>
     <room>rooms\rm_inf</room>
     <room>rooms\rm_test_baddies</room>

@@ -37,6 +37,8 @@ cg.aot=0;
 inst_spawn = (instance_create(20,0,ch_spawn));
 inst_spawn.z=-650;
 inst_spawn.nomap=true;
+
+dialogue_started=false;
 </string>
           </argument>
         </arguments>
@@ -60,7 +62,23 @@ inst_spawn.nomap=true;
           <argument>
             <kind>1</kind>
             <string>if (!halt_execute()) {
-anim++;
+    anim++;
+    var do_dialogue = false;
+    if (!dialogue_started)
+        with (obj_actor) {
+            if (x&gt;500) {
+                do_dialogue=true;
+                p_mode=P_DUMMY;
+            }
+        }
+    
+    if (do_dialogue &amp;&amp; !dialogue_started)
+        if (dialogue_lock()) {
+            dec_mushy.mode=1;
+            dialogue_enqueue(make_line("Mushroom",prt_mushy,"Hey  you."));
+            dialogue_enqueue(make_line("",prt_mushy,"Huh? Did that mushroom just talk?"));
+            dialogue_started = true;
+        }
 }
 </string>
           </argument>

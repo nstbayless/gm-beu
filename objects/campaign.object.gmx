@@ -175,7 +175,7 @@ if (frame%30==1) {
 }
 
 //create default room properties:
-if (!instance_exists(room_properties)&amp;&amp;room!=rm_scene&amp;&amp;room!=rm_menu)
+if (!instance_exists(room_properties)&amp;&amp;room!=rm_meta&amp;&amp;room!=rm_menu)
     instance_create(0,0,room_properties);
 
 //size of spawn list:

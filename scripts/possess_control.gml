@@ -9,10 +9,8 @@ var pos = possessor_instance;
 var port = possessor_port;
 
 if (p_mode==P_DUMMY) {
-    if (p_mode==P_DUMMY) {
-        possessor_instance=campaign.possessor_dummy
-        possessor_port=0
-    }
+    pos=campaign.possessor_dummy;
+    port=0;
 }
 
 do_dir=0;

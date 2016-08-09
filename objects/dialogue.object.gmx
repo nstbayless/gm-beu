@@ -2,8 +2,8 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
-  <depth>-5000</depth>
+  <visible>-1</visible>
+  <depth>2000</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,56 +25,29 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>RUMBLE_ENABLED=true;
-TRANSITIONS_ENABLED=true;
-STRIP_THICKNESS=8;
-SMOOTH_STRIPS=true;
-MUSIC_ENABLED=false;
-SFX_ENABLED=true;
-DRAW_GUIDES=false;
-RENDER_STRIP_LINES=false;
-RENDER_DEBUG_OVERLAY=true;
-STORY_MODE_ENABLED=false;
+            <string>queue_n=0;
+queue_v[0]=noone;
 
-//dialogue options:
-DLG_BOX_GRADIENT_TOP = make_colour_rgb(16,18,64);
-DLG_BOX_GRADIENT_BOT = make_colour_rgb(4,5,6);
-DLG_BOX_BORDER_SHADOW = c_gray
-DLG_BOX_BORDER = c_ltgray;
+current_line = noone;
 
-//these update in the step event
-SCREEN_WIDTH=view_wview[0];
-SCREEN_HEIGHT=view_hview[0];
+is_locked=false;
 
-show_debug_overlay(RENDER_DEBUG_OVERLAY);
+_result=0; //result of last dialogue option
 
-RENDER_GROUND_ENABLED=true;
-RENDER_CLIFFS_ENABLED=true;
-RENDER_VWALL_ENABLED=true;
+BOX_OPEN_TIME = 5; //number of frames for box to open/close
+_box_open_t = 0;
+_box_open = false; //true if box is open or opening, false if closed or closing.
+
+_text_buffer = ""; //fills up with text while advancing through dialogue.
+_can_advance=false; //true when dialogue can be advanced.
+
+SPEED_RATE=4; //rate at which player speeds through text
 </string>
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>set version</string>
-          </argument>
-        </arguments>
-      </action>
+    </event>
+    <event eventtype="3" enumb="2">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -91,21 +64,28 @@ RENDER_VWALL_ENABLED=true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>VERSION_TYPE = "alpha"
+            <string>if (_box_open) {
+    _box_open_t = min(_box_open_t+1,BOX_OPEN_TIME)
+} else {
+    _box_open_t = max(_box_open_t-1,0)
+}
 
-var date = date_date_string(GM_build_date)
-var pos = string_pos("/",date)
-var day=string_copy(date,0,pos-1);
-var rest = string_copy(date,pos+1,string_length(date)-pos)
-var pos2 =string_pos("/",rest)
-var month = string_copy(rest,0,pos2-1)
-var year = string_copy(rest,pos2+1,string_length(rest)-pos2)
-
-BUILD_DATE = year+"-"+month+"-"+day
-
-var version = string_copy(GM_version,0,string_length(GM_version)-2);
-
-FULL_VERSION= "v"+version + " ("+VERSION_TYPE+"): " + BUILD_DATE
+if (_box_open &amp;&amp; _box_open_t==BOX_OPEN_TIME) {
+    //box fully open, add text to buffer:
+    var line = current_line;
+    repeat (1+_speed_line*(SPEED_RATE-1)) {
+        var buffer_i=string_length(_text_buffer)
+        if (buffer_i&lt;string_length(line.text))
+            _text_buffer+=string_char_at(line.text,buffer_i+1);
+    }
+    if (_skip_line) {
+        _text_buffer=line.text;
+    }
+    //if buffer full, allow advancing:
+    if (string_length(_text_buffer)&gt;=string_length(line.text))
+        if (!line.f_wait)
+            _can_advance=true;
+}
 </string>
           </argument>
         </arguments>
@@ -128,36 +108,73 @@ FULL_VERSION= "v"+version + " ("+VERSION_TYPE+"): " + BUILD_DATE
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check_pressed(vk_f1))
-    RENDER_STRIP_LINES=!RENDER_STRIP_LINES
-if (keyboard_check_pressed(vk_f2))
-    RENDER_GROUND_ENABLED=!RENDER_GROUND_ENABLED
-if (keyboard_check_pressed(vk_f3))
-    RENDER_CLIFFS_ENABLED=!RENDER_CLIFFS_ENABLED
-if (keyboard_check_pressed(vk_f4))
-    RENDER_VWALL_ENABLED=!RENDER_VWALL_ENABLED
-
-var diff = SCREEN_WIDTH!=window_get_width() || SCREEN_HEIGHT!=window_get_height();    
-SCREEN_WIDTH=window_get_width();
-SCREEN_HEIGHT=window_get_height();
-if (instance_exists(room_properties)) {
-    if (room_properties.room_display_width&gt;=0)
-        SCREEN_WIDTH=room_properties.room_display_width
-    if (room_properties.room_display_height&gt;=0)
-        SCREEN_HEIGHT=room_properties.room_display_height
+            <string>_speed_line=false
+_skip_line=false;
+if (_box_open) {
+    var line = current_line;
+    //TODO: collect player input
 }
-views_enabled=true;
-view_enabled=true;
-view_visible[0]=true;
-view_wview[0]=SCREEN_WIDTH;
-view_hview[0]=SCREEN_HEIGHT;
-view_wport[0]=SCREEN_WIDTH;
-view_hport[0]=SCREEN_HEIGHT;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (_box_open_t&lt;=0)
+    exit;
 
-if (diff &amp;&amp; SCREEN_WIDTH&gt;200 &amp;&amp; SCREEN_HEIGHT &gt;200) {
-    display_set_gui_size(SCREEN_WIDTH, SCREEN_HEIGHT)
-    surface_resize(application_surface, SCREEN_WIDTH,SCREEN_HEIGHT);
+var screen_width = config.SCREEN_WIDTH;
+var screen_height = config.SCREEN_HEIGHT;
+
+
+var box_width = 1024-96*2;
+var box_height = ceil((128+32)*_box_open_t/BOX_OPEN_TIME);
+
+var box_x = (screen_width-box_width)/2;
+var box_y = 96;
+draw_reset();
+
+//draw box background:
+draw_rectangle_colour(box_x,box_y,box_x+box_width,box_y+box_height,config.DLG_BOX_GRADIENT_TOP,config.DLG_BOX_GRADIENT_TOP,config.DLG_BOX_GRADIENT_BOT,config.DLG_BOX_GRADIENT_BOT,false)
+
+//draw box contents:
+var line = current_line;
+if (line!=noone &amp;&amp; _box_open_t&gt;=BOX_OPEN_TIME) {
+    draw_set_font(jukefont);
+    draw_set_halign(fa_left);
+    draw_text(box_x+12,box_y,line.speaker);
+    if (line.portrait&gt;=0)
+        draw_background(line.portrait,box_x+8,box_y+28);
+    var draw_text_x = box_x+8;
+    if (line.portrait&gt;=0)
+        draw_text_x+=4+background_get_width(line.portrait);
+    draw_set_font(fnt_dialogue);
+    draw_text(draw_text_x,box_y+24,_text_buffer);
 }
+
+
+//draw box border 
+draw_set_color(config.DLG_BOX_BORDER_SHADOW)
+draw_rectangle(box_x+1,box_y+1,box_x+1+box_width,box_y+1+box_height,true)
+draw_set_color(config.DLG_BOX_BORDER)
+draw_rectangle(box_x,box_y,box_x+box_width,box_y+box_height,true)
+
 </string>
           </argument>
         </arguments>
