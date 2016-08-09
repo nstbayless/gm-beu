@@ -193,19 +193,25 @@ if (line!=noone &amp;&amp; _box_open_t&gt;=BOX_OPEN_TIME) {
     draw_set_font(line.font);
     draw_text(draw_text_x,box_y+24,_text_buffer);
     if (_can_advance &amp;&amp; line.option_n&gt;0) {
-        option_width=(box_width+box_x-draw_text_x)/line.option_n;
+        //draw options
+        option_width=(box_width+box_x-draw_text_x-16)/line.option_n;
         for (var i=0;i&lt;line.option_n;i++) {
-            if (_option_selected==i)
-                draw_set_colour(c_red);
-            else
-                draw_set_colour(c_white);
-            draw_text(draw_text_x+option_width*i,box_y+box_height/2,line.option_v[i]);
+            var s_width = string_width_ext(line.option_v[i],1,option_width-24);
+            var s_height = string_height_ext(line.option_v[i],1,option_width-24)
+            var s_y_offset=-s_height/2;
+            if (_option_selected==i) {
+                //draw selector box
+                draw_set_colour(config.DLG_SELECTOR);
+                draw_rectangle(draw_text_x+option_width*i,box_y+box_height/2+s_y_offset,draw_text_x+option_width*i+s_width,box_y+box_height/2+s_height+s_y_offset,false)
+            }
+            draw_set_colour(c_white);
+            draw_text_ext(draw_text_x+option_width*i,box_y+box_height/2+s_y_offset,line.option_v[i],1,option_width-24);
         }
     }
 }
 
 
-//draw box border 
+//draw box border
 draw_set_color(config.DLG_BOX_BORDER_SHADOW)
 draw_rectangle(box_x+1,box_y+1,box_x+1+box_width,box_y+1+box_height,true)
 draw_set_color(config.DLG_BOX_BORDER)

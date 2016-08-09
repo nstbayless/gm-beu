@@ -41,6 +41,7 @@ DLG_BOX_GRADIENT_TOP = make_colour_rgb(16,18,64);
 DLG_BOX_GRADIENT_BOT = make_colour_rgb(4,5,6);
 DLG_BOX_BORDER_SHADOW = c_gray
 DLG_BOX_BORDER = c_ltgray;
+DLG_SELECTOR = make_colour_rgb(128,6,6)
 
 //these update in the step event
 SCREEN_WIDTH=view_wview[0];
