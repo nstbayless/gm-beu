@@ -60,6 +60,7 @@
     <instance objName="obj_bg_mountains" x="96" y="96" name="inst_1C2CA499" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="vwall" x="64" y="416" name="inst_06ECC8D4" locked="0" code="depth=1300;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="mob_archer" x="672" y="320" name="inst_60921BDB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="mob_bat" x="576" y="352" name="inst_7532F183" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_darkrock" x="64" y="416" w="32" h="32" xo="224" yo="288" id="10001294" name="inst_B90FF984" depth="1301" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

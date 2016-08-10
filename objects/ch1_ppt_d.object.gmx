@@ -136,7 +136,7 @@ possessor_initialize()
             dialogue_enqueue(make_line('"You"',prt_pc_main,"I wonder if it's edible."));
             dialogue_enqueue(make_line('Mushroom',prt_mushy,"No, it's very poisonous."));
             dialogue_enqueue(make_line('"You"',prt_pc_main,"Drat. I'm hungry. I've been walking such a long way."));
-            dialogue_enqueue(make_line('Mushroom',prt_mushy,"Really? How long have you been walking?"));
+            dlg_begin_bounce = dialogue_enqueue(make_line('Mushroom',prt_mushy,"Really? How long have you been walking?"));
             opt_choices = make_line('"You"',prt_pc_main,"");
             opt_choices.option_n=2;
             opt_choices.option_v = make_array("3 years", "3 hours");
@@ -146,6 +146,8 @@ possessor_initialize()
         }
     }
     if (mode==5) {
+        if (dialogue_wait_for(dlg_begin_bounce))
+            dec_mushy.mode=2;
         if (dialogue_wait_for(opt_choices)) {
             if (dialogue_get_result()==0) {
                 dialogue_enqueue(make_line('Mushroom',prt_mushy,"Three years!? I cannot even imagine walking that long."));

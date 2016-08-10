@@ -4,7 +4,10 @@ anim=floor(anim+1);
 
 AN=AN_idle;
 
-if (phys_moved_dist>0) {
+if (do_fly) {
+    anim_move+=1;
+    AN=AN_fly;
+}else if (phys_moved_dist>0) {
     anim_move+=phys_moved_dist;
     anim=anim_move;
     AN = AN_walk;

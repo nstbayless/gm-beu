@@ -60,7 +60,7 @@ stat_blk_knock_sub=0;
 stat_spd=4;
 stat_blkspd=2;
 stat_run=10;
-stat_hitdrift=2; //speed at which player moves back while in hitstun
+stat_hitdrift=2.5; //speed at which actor moves back while in hitstun
 //jumping
 stat_grav=-3;
 stat_jumpspd=20;
@@ -74,8 +74,10 @@ stat_hit_stun_recovery_mult=2.5;
 stat_hit_stun_recovers=false;
 
 move_x=0;
-move_y=0
+move_y=0;
+move_z=0;
 do_jump=false;
+do_fly=false;
 do_zhalt=false
 do_run=false;
 do_block=false;
@@ -91,6 +93,7 @@ bounce_mult=0;
 
 t_since_hit=-1;
 t_since_jump=-1;
+t_since_attack=-1;
 
 dim_x=20;
 dim_y=20;
@@ -135,7 +138,8 @@ loc_sfx_on_death=sfx_explosion;
 
 AN_idle = make_animation(0,1,1);
 AN_walk = make_animation(0,1,1);
-AN_run = AN_walk
+AN_run = AN_walk;
+AN_fly = AN_walk;
 AN_jump_up = make_animation(0,1,1);
 AN_jump_down = make_animation(0,1,1);
 AN_jump_land = make_animation(0,1,1);
@@ -343,6 +347,8 @@ on_ground=retval[2];
             <string>//input variables:
 //move_x: -1:1
 //move_y -1:1
+//move_z -1:1
+//do_fly {0,1}
 //do_block {0,1}
 //do_jump {0,1}
 //do_run {0,1}
@@ -365,6 +371,9 @@ if (t_hit_stun&gt;0)
     
 var knockback_xdiff=0
 var knockback_ydiff=0;
+
+if (is_flying())
+    on_ground=false;
     
 if (!is_hit_stunned()) {
     //knockback stuff:
@@ -387,6 +396,17 @@ if (!is_hit_stunned()) {
     knockback_vy-=sign_knockback_vy*knockback_friction;
     if (knockback_vy*sign_knockback_vy&lt;=0)
         knockback_vy=0;
+    
+    //gravity
+    if (!on_ground&amp;&amp;!is_flying())
+        vspd+=stat_grav;
+    if (is_flying()) {
+        //if fly
+        sign_vspd=sign(vspd);
+        vspd-=sign_vspd*knockback_friction;
+        if (vspd*sign_vspd&lt;=0)
+        vspd=0;
+    }
 }
 
 //combat mechanics
@@ -395,7 +415,7 @@ if (hp&lt;=0&amp;&amp;t_since_hit&gt;3) {
 }
 else if (t_since_hit&gt;=stat_recharge_delay)
     heal(self,stat_recharge_rate);
-if (z&lt;-2500) {
+if (z&lt;room_properties.bottom) {
     var defn;
     defn[0]=0;
     defn[4]=true;
@@ -433,12 +453,6 @@ if (can_act()&amp;&amp;do_jump&amp;&amp;on_ground) {
 if (can_act()&amp;&amp;do_zhalt&amp;&amp;vspd&gt;0)
         vspd=0;
 
-//gravity
-if (!is_hit_stunned()) {
-    if (!on_ground)
-        vspd+=stat_grav;
-}
-
 //x-y movement
 if (room_properties.sideview)
     move_y=0;
@@ -446,13 +460,16 @@ var xorig=x;
 var yorig=y;
 var xspd = stat_spd;
 var yspd = stat_spd;
+var zspd = stat_spd;
 if (do_run&amp;&amp;!room_properties.no_running) {xspd=stat_run;yspd/=2}
-if (do_block) {xspd=stat_blkspd; yspd=stat_blkspd;}
+if (do_block) {xspd=stat_blkspd; yspd=stat_blkspd; zspd=stat_blkspd;}
 phys_xdiff=0;
 phys_ydiff=0;
+phys_zdiff=0;
 if can_act() {
     phys_xdiff = move_x*xspd;
     phys_ydiff = move_y*yspd;
+    phys_zdiff = move_z*zspd*is_flying();
 }
 
 if (is_hit_stunned()) {
@@ -462,9 +479,10 @@ if (is_hit_stunned()) {
 
 phys_xdiff+=knockback_xdiff;
 phys_ydiff+=knockback_ydiff;
+phys_zdiff+=vspd*!is_hit_stunned();
 
 //do actual movement
-move(phys_xdiff,phys_ydiff,vspd*!is_hit_stunned(),2,ground_rest);
+move(phys_xdiff,phys_ydiff,phys_zdiff,2,ground_rest);
 
 //bounce:
 if (collision_z!=noone &amp;&amp; vspd&lt;0) {

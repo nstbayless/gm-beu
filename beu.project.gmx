@@ -142,6 +142,7 @@
       <script>scripts\get_ground_at.gml</script>
       <script>scripts\sanitize_geohash.gml</script>
       <script>scripts\move.gml</script>
+      <script>scripts\is_flying.gml</script>
       <script>scripts\move_slope.gml</script>
     </scripts>
     <scripts name="combat">
@@ -190,6 +191,9 @@
     <scripts name="util">
       <script>scripts\assert.gml</script>
       <script>scripts\print.gml</script>
+      <script>scripts\vector_difference.gml</script>
+      <script>scripts\vector_length.gml</script>
+      <script>scripts\vector_normalize.gml</script>
       <script>scripts\make_array.gml</script>
     </scripts>
     <scripts name="dialogue">

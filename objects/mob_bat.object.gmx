@@ -39,7 +39,33 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>AN_fly = make_animation(0,3,2);
+            <string>AN_fly = make_animation(0,3,6);
+
+stat_spd=9;
+
+//modes:
+//0: resting on ground.
+//1: circling about target location
+//2: circling about target actor
+//3: swooping in toward target actor
+mode=0;
+
+//begin by circling
+if (random(1)&gt;0.9)
+    mode=1;
+
+has_target_pos=false;
+target_x=0;
+target_y=0;
+target_z=0;
+target_actor=noone;
+swoop_timer=0;
+
+circle_radius=150;
+circle_radian=random(2*pi);
+circle_dir = 1;
+if (random(1)&gt;0.6)
+    circle_dir=-1;
 </string>
           </argument>
         </arguments>
@@ -90,6 +116,112 @@
       </action>
       <action>
         <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>do_atk=false;
+
+switch (mode) {
+case 0: {
+    do_fly=false;
+    target_actor = get_target_nearest()
+    if (instance_exists(target_actor)&amp;&amp;point_distance(x,y,target_actor.x,target_actor.y)&lt;200) {
+        target_x=target_actor.x;
+        target_y=target_actor.y;
+        target_z=target_actor.z;
+        has_target_pos=true;
+        mode=2;
+    } else
+        target_actor=noone;
+} break;
+case 1: {
+    do_fly=true;
+    if (!has_target_pos) {
+        has_target_pos=true;
+        target_x=x;
+        target_y=y;
+        target_z=z+160;
+    }
+    target_actor = get_target_nearest()
+    if (instance_exists(target_actor)&amp;&amp;point_distance(x,y,target_actor.x,target_actor.y)&lt;300) {
+        mode=2;
+    } else
+        target_actor=noone;
+} break;
+case 2: {
+    do_fly=true;
+
+    if (!instance_exists(target_actor)) {
+        mode=1;
+        exit;
+    }
+    swoop_timer++
+    if (random(1)&lt;0.004+0.04 * (swoop_timer&gt;90) + (swoop_timer&gt;130)) {
+        mode=3;
+    }
+    target_z=target_z*.99+target_actor.z*.01;
+    target_y=target_y*.985+target_actor.y*.015;
+    target_x=target_x*.98+target_actor.x*.02;
+
+} break;
+case 3:{
+    do_fly=true;
+    do_atk=true;
+    swoop_timer=0;
+    if (!instance_exists(target_actor)) {
+        mode=1;
+        exit;
+    }
+    target_x=target_actor.x;
+    target_y=target_actor.y;
+    if (abs(target_x-x)&gt;12)//skew to attack along x
+    target_x=(target_x*.4+x*.6);
+    target_z=target_actor.z+target_actor.dim_z/2-dim_z/2;
+    vec_move = vector_difference(make_array(target_x,target_y,target_z),make_array(x,y,z));
+    var len = vector_length(vec_move);
+    if (len&lt;5)
+        mode=2;
+    has_target_pos=true;
+} break;
+}
+
+//circle ominously...
+if (mode==1 || mode == 2 || mode==3) {
+    circle_radian+=2*pi/230;
+    _targ_x=target_x+circle_radius*cos(circle_radian)*(mode!=3);
+    _targ_y=target_y+circle_radius*sin(circle_radian)*circle_dir*(mode!=3);
+    _targ_z=target_z+150*(mode!=3);
+    vec_move = vector_difference(make_array(_targ_x,_targ_y,_targ_z),make_array(x,y,z));
+    var len = vector_length(vec_move);
+    var scale_factor = 1;
+    if (len&lt;10)
+        scale_factor=len/10;
+    if (mode&lt;3)
+        scale_factor*=.4;
+    if (mode==1)
+        scale_factor*=.7;
+    vec_move = vector_normalize(vec_move)
+    move_x=vec_move[0]*scale_factor;
+    move_y=vec_move[1]*scale_factor;
+    move_z=vec_move[2]*scale_factor;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>604</id>
         <kind>0</kind>
         <userelative>0</userelative>
@@ -101,6 +233,76 @@
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>animation_set_frame();
+animation_set_image_index();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>attack</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if can_act()&amp;&amp;do_atk {
+    wnd_spec[0]=dir;
+    if (abs(move_x)&lt;0.1)
+        wnd_spec[0]=0;
+    wnd_spec[1]=4;
+    if attack_rectangle(x-dim_x,y-dim_y,z,x+dim_x,y+dim_y,z+dim_z,wnd_spec)!=noone
+        mode=2;
+}
+</string>
+          </argument>
+        </arguments>
       </action>
       <action>
         <libid>1</libid>

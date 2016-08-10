@@ -35,7 +35,7 @@ for (var i=0;i<reps;i++) {
     var gh_x2 = floor((x+dim_x/2+dx)/gh_w)
     
     var collision_found = false;
-    
+    var gr_diag = noone;
     for (var j=gh_x1;j<=gh_x2;j++) {
         var san_j = sanitize_geohash(j);
         for (var k=0;k<global.ground_n[san_j];k++) {
@@ -48,6 +48,7 @@ for (var i=0;i<reps;i++) {
                     exit;
                 }
                 collision_found=true;
+                gr_diag=gr;
                 if (collision==noone)
                     reps++; //don't increase reps if prior collision for robustness
                 collision=gr;
@@ -63,9 +64,12 @@ for (var i=0;i<reps;i++) {
         if (collision_found)
             break;
     }
+
     
     if (collision_found) {
-        //this is used in the very rare circumstance that multiple collisions
+        //a collision found; figure out which axis.
+
+        //sup_z is used in the very rare circumstance that multiple collisions
         //could occur in one dz movement.
         var sup_z= 1000000*sign(dz);
         var max_h=0;
@@ -95,15 +99,15 @@ for (var i=0;i<reps;i++) {
                 }
             }
         }
-        if (!collision_z||collision_y||collision_x) {
+        if (!(collision_z||collision_y||collision_x)) {
             //didn't find any orthogonal collision, but diagonal collision known to occur.
             //set one collision flag arbitrarily.
-            if (!collision_y)
-                collision_y=true;
-            else if (! collision_x)
-                collision_x=true;
+            if (collision_y==noone)
+                collision_y=gr_diag;
+            else if (collision_x==noone)
+                collision_x=gr_diag;
             else
-                collision_z=true;
+                collision_z=gr_diag;
         }
     } else {
         x+=dx;

@@ -38,6 +38,8 @@ peaceful=false;
 
 no_running=false;
 
+bottom=-2500;
+
 room_display_width=-1;
 room_display_height=-1;
 
