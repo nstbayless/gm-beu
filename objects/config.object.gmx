@@ -138,7 +138,7 @@ if (keyboard_check_pressed(vk_f3))
     RENDER_CLIFFS_ENABLED=!RENDER_CLIFFS_ENABLED
 if (keyboard_check_pressed(vk_f4))
     RENDER_VWALL_ENABLED=!RENDER_VWALL_ENABLED
-if (keyboard_check_pressed(vk_f8)
+if (keyboard_check_pressed(vk_f8))
     RENDER_HITBOX_ENABLED=!RENDER_HITBOX_ENABLED;
 
 var diff = SCREEN_WIDTH!=window_get_width() || SCREEN_HEIGHT!=window_get_height();    
