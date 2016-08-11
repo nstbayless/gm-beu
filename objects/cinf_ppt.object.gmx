@@ -157,7 +157,7 @@ if (gen_x&gt;x) {
         dx=round(dx/32)*32
         p_slime_d = 0.12*(gen_num&gt;11)
         if (gen_num)&gt;6
-            while (random(1)&lt;0.2+p_slime_d*1.5) {
+            while (random(1)&lt;0.15+p_slime_d*0.5) {
                 var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_archer);
                 inst_slime.z=z+8;
             }
@@ -167,7 +167,7 @@ if (gen_x&gt;x) {
                 inst_slime.z=z;
             }
         if (gen_num)&gt;9
-            while (random(1)&lt;0.16+p_slime_d) {
+            while (random(1)&lt;0.16+p_slime_d*.18) {
                 var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_warrior);
                 inst_slime.z=z+64;
             }
