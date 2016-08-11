@@ -27,5 +27,6 @@
     <frame index="4">images\spr_pc_main_4.png</frame>
     <frame index="5">images\spr_pc_main_5.png</frame>
     <frame index="6">images\spr_pc_main_6.png</frame>
+    <frame index="7">images\spr_pc_main_7.png</frame>
   </frames>
 </sprite>

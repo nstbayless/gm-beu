@@ -111,6 +111,7 @@ randomize();
     //generate up to:
     gen_x=x+view_wview[0]+400;
     gen_num++;
+    _subgen_num=0;
     ins_spawn.x=next_spawn_x;
     ins_spawn.y=next_spawn_y;
     ins_spawn.z=next_spawn_z+96;
@@ -134,7 +135,7 @@ if (gen_x&gt;x) {
     //height of generated ground:
     var dw_min = -32
     var dw_max = 32
-    if (x&lt;gen_x){
+    if (x&lt;gen_x){ //TODO: this if statement doesn't do anything. why is it here?
         if (gen_num==1){
             gen_num++;
         } else {
@@ -175,34 +176,39 @@ if (gen_x&gt;x) {
                 var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_slime);
                 inst_slime.z=z+64;
             }
-        while (random(1)&lt;0.01 + p_slime_d) {
-                var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_bat);
-                inst_slime.z=z+5;
-            }
+        if (gen_num&gt;2)
+            while (random(1)&lt;0.05 + p_slime_d ) {
+                    var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_bat);
+                    inst_slime.z=z+5;
+                }
         generate_ground(x,y+dw_min,z,dx,dw_max-dw_min)
         generate_vwall(x,y+dw_max,z,dx,1000);
         print("generated at +" + string(x-camera.x) + " from camera.");
         last_ymin=y+dw_min;
         last_ymax=y+dw_max;
         x+=dx;
-        next_spawn_x=x-dx/3;
-        next_spawn_y=y+dw_min/2+dw_max/2;
-        next_spawn_z=z;
-        cg_capr.x=next_spawn_x;
-        cg_capr.y=next_spawn_y;
-        cg_capr.z=next_spawn_z;
-        if (z&gt;gen_start_z)
+        
+        cg_capr.x=x-dx/3;
+        cg_capr.y=y+dw_min/2+dw_max/2;
+        cg_capr.z=z;
+        if (_subgen_num==0) {
+            next_spawn_x=cg_capr.x
+            next_spawn_y=cg_capr.y
+            next_spawn_z=cg_capr.z;
+        }
+        if (z&gt;gen_start_z+100)
             cg_capr.skew=.25;
-        else
+        if (z&lt;gen_start_z-100)
             cg_capr.skew=-.25;
         abs_ydiff = abs(get_draw_y()-get_draw_y(gen_start_y,gen_start_z))
         if (abs_ydiff&gt;300)
             cg_capr.aot=power(2.7,(300-abs_ydiff)/600);
         else
             cg_capr.aot=1;
+        _subgen_num++;
     }
     //destroy:
-    var max_destroy_x=camera.x-view_wview*3.5;
+    var max_destroy_x=camera.x-view_wview*4.3;
     invis_wall.x=max_destroy_x+view_wview*(1+abs(camera.skew));
     invis_wall.y=y-invis_wall.height/2
     with (ground) {
@@ -221,6 +227,12 @@ if (gen_x&gt;x) {
         if (x&lt;max_destroy_x) {
             instance_destroy();
             print("cliff destroyed");
+        }
+    }
+    with (obj_actor) {
+        if (x&lt;max_destroy_x) {
+            kill()
+            print("actor killed");
         }
     }
     with (camera_guide) {

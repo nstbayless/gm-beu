@@ -135,8 +135,8 @@ possessor_initialize()
             dialogue_enqueue(make_line("",noone,"(It appears to have hands.)"));
             dialogue_enqueue(make_line('"You"',prt_pc_main,"I wonder if it's edible."));
             dialogue_enqueue(make_line('Mushroom',prt_mushy,"No, it's very poisonous."));
-            dialogue_enqueue(make_line('"You"',prt_pc_main,"Drat. I'm hungry. I've been walking such a long way."));
-            dlg_begin_bounce = dialogue_enqueue(make_line('Mushroom',prt_mushy,"Really? How long have you been walking?"));
+            dlg_begin_bounce = dialogue_enqueue(make_line('"You"',prt_pc_main,"Drat. I'm hungry. I've been walking such a long way."));
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"Really? How long have you been walking?"));
             opt_choices = make_line('"You"',prt_pc_main,"");
             opt_choices.option_n=2;
             opt_choices.option_v = make_array("3 years", "3 hours");
@@ -157,7 +157,7 @@ possessor_initialize()
                 dialogue_enqueue(make_line('Mushroom',prt_mushy,"Three hours, huh? That's not very long."));
                 dialogue_enqueue(make_line('"You"',prt_pc_main,"You're right. I've probably been walking longer."));      
             }
-            dialogue_enqueue(make_line('Mushroom',prt_mushy,"Where did you come from, then? I happen to be very good at arithmetic. I bet I could tell you how long you've been walking."));
+            dialogue_enqueue(make_line('Mushroom',prt_mushy,"Where are you walking to anyway?"));
             dialogue_enqueue(make_line('"You"',prt_pc_main,"Um... For a mushroom that supposedly doesn't speak you sure ask a lot of questions."));
             dialogue_enqueue(make_line('Mushroom',prt_mushy,"I've only asked two questions."));
             dialogue_enqueue(make_line('"You"',prt_pc_main,"Yeah, exactly."));

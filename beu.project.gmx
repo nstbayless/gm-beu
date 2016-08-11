@@ -51,6 +51,8 @@
     <sound>sound\sfx_twang2</sound>
     <sound>sound\sfx_heartbeat</sound>
     <sound>sound\sfx_attack</sound>
+    <sound>sound\sfx_attack2</sound>
+    <sound>sound\sfx_attack3</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="decals">
