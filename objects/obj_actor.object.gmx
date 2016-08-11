@@ -526,6 +526,21 @@ if(can_act()&amp;&amp;can_dir&amp;&amp;do_dir!=0)
 //timers:
 if (t_since_hit&gt;=0)
     t_since_hit++;
+
+//display hitbox:
+if (config.RENDER_HITBOX_ENABLED) {
+    var n = obj_gui.hitbox_draw_n++;
+    obj_gui.hitbox_draw_x[n]=x-dim_x/2
+    obj_gui.hitbox_draw_y[n]=y-dim_y/2
+    obj_gui.hitbox_draw_z[n]=z
+    
+    obj_gui.hitbox_draw_w[n]=dim_x
+    obj_gui.hitbox_draw_h[n]=dim_y
+    obj_gui.hitbox_draw_zh[n]=dim_z
+    
+    obj_gui.hitbox_draw_alpha[n]=0.2;
+    obj_gui.hitbox_draw_colour[n]=c_white;
+}
 </string>
           </argument>
         </arguments>

@@ -1,6 +1,8 @@
 //kill(object,[respawn time])
 
-var inst_actor = argument[0]
+var inst_actor = this;
+if (argument_count>0)
+    inst_actor=argument[0]
 var re_time=95;
 if argument_count>1
     re_time=argument[1];

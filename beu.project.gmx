@@ -173,6 +173,7 @@
     <scripts name="draw">
       <script>scripts\draw_reset.gml</script>
       <script>scripts\draw_wheel.gml</script>
+      <script>scripts\draw_box.gml</script>
     </scripts>
     <scripts name="ch">
       <script>scripts\ch_begin_transition.gml</script>

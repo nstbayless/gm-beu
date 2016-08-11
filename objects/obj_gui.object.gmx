@@ -8,6 +8,40 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>hitbox_draw_n=0;
+
+hitbox_draw_x[0]=0;
+hitbox_draw_y[0]=0;
+hitbox_draw_z[0]=0;
+
+hitbox_draw_w[0]=0;
+hitbox_draw_h[0]=0;
+hitbox_draw_zh[0]=0;
+
+hitbox_draw_alpha[0]=0.5;
+hitbox_draw_colour[0]=c_white;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
@@ -73,6 +107,34 @@
     draw_set_halign(fa_left)
     draw_set_valign(fa_top)
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>for (var i=0;i&lt;hitbox_draw_n;i++) {
+    draw_set_colour(hitbox_draw_colour[i]);
+    draw_set_alpha(hitbox_draw_alpha[i]);
+    draw_box(hitbox_draw_x[i],hitbox_draw_y[i],hitbox_draw_z[i],hitbox_draw_w[i],hitbox_draw_h[i],hitbox_draw_zh[i],false)
+}
+hitbox_draw_n=0;
 </string>
           </argument>
         </arguments>

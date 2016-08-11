@@ -38,4 +38,20 @@ with (obj_actor) {
     }
 }
 
+if (config.RENDER_HITBOX_ENABLED) {
+    var n = obj_gui.hitbox_draw_n++;
+    obj_gui.hitbox_draw_x[n]=x1
+    obj_gui.hitbox_draw_y[n]=y1
+    obj_gui.hitbox_draw_z[n]=z1
+    
+    obj_gui.hitbox_draw_w[n]=x2-x1
+    obj_gui.hitbox_draw_h[n]=y2-y1
+    obj_gui.hitbox_draw_zh[n]=z2-z1
+    
+    obj_gui.hitbox_draw_alpha[n]=0.3;
+    obj_gui.hitbox_draw_colour[n]=c_yellow;
+    if (hit!=noone)
+        obj_gui.hitbox_draw_colour[n]=c_red;
+}
+
 return hit;

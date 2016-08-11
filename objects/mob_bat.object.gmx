@@ -297,7 +297,7 @@ animation_set_image_index();
     if (abs(move_x)&lt;0.1)
         wnd_spec[0]=0;
     wnd_spec[1]=4;
-    if attack_rectangle(x-dim_x,y-dim_y,z,x+dim_x,y+dim_y,z+dim_z,wnd_spec)!=noone
+    if attack_rectangle(x-dim_x/2,y-dim_y/2,z,x+dim_x/2,y+dim_y/2,z+dim_z,wnd_spec)!=noone
         mode=2;
 }
 </string>
