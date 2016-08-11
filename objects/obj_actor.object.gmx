@@ -66,7 +66,7 @@ stat_grav=-3;
 stat_jumpspd=20;
 stat_jumpspd_blk=15;
 //knockback:
-stat_knockback_friction_ground=4;
+stat_knockback_friction_ground=3;
 stat_knockback_friction_air=1;
 //multiplies length of hit stun
 stat_hit_stun_recovery_mult=2.5;
@@ -391,38 +391,37 @@ if (!can_move)
 if (can_act())
     is_blocking=do_block;
     
-if (!is_hit_stunned()) {
-    //knockback stuff:
-    knockback_xdiff=knockback_vx;
-    knockback_ydiff=knockback_vy
+
+//knockback stuff:
+knockback_xdiff=knockback_vx;
+knockback_ydiff=knockback_vy
+
+//friction for knockback:
+var knockback_friction = stat_knockback_friction_air;
+if (on_ground)
+    knockback_friction=stat_knockback_friction_ground;
+
+//friction for knockback (x):
+sign_knockback_vx=sign(knockback_vx);
+knockback_vx-=sign_knockback_vx*knockback_friction;
+if (knockback_vx*sign_knockback_vx&lt;=0)
+    knockback_vx=0;
     
-    //friction for knockback:
-    var knockback_friction = stat_knockback_friction_air;
-    if (on_ground)
-        knockback_friction=stat_knockback_friction_ground;
-    
-    //friction for knockback (x):
-    sign_knockback_vx=sign(knockback_vx);
-    knockback_vx-=sign_knockback_vx*knockback_friction;
-    if (knockback_vx*sign_knockback_vx&lt;=0)
-        knockback_vx=0;
-        
-    //friction for knockback (y):
-    sign_knockback_vy=sign(knockback_vy);
-    knockback_vy-=sign_knockback_vy*knockback_friction;
-    if (knockback_vy*sign_knockback_vy&lt;=0)
-        knockback_vy=0;
-    
-    //gravity
-    if (!on_ground&amp;&amp;!is_flying())
-        vspd+=stat_grav;
-    if (is_flying()) {
-        //if fly
-        sign_vspd=sign(vspd);
-        vspd-=sign_vspd*knockback_friction;
-        if (vspd*sign_vspd&lt;=0)
-        vspd=0;
-    }
+//friction for knockback (y):
+sign_knockback_vy=sign(knockback_vy);
+knockback_vy-=sign_knockback_vy*knockback_friction;
+if (knockback_vy*sign_knockback_vy&lt;=0)
+    knockback_vy=0;
+
+//gravity
+if (!on_ground&amp;&amp;!is_flying())
+    vspd+=stat_grav;
+if (is_flying()) {
+    //if fly
+    sign_vspd=sign(vspd);
+    vspd-=sign_vspd*knockback_friction;
+    if (vspd*sign_vspd&lt;=0)
+    vspd=0;
 }
 
 //combat mechanics
@@ -485,7 +484,7 @@ if can_act() &amp;&amp; can_move {
     phys_zdiff = move_z*zspd*is_flying();
 }
 
-if (is_hit_stunned()) {
+if (is_hit_stunned()&amp;&amp;abs(knockback_vx)&lt;12) {
     //drift if hitstunned
     phys_xdiff=-dir*stat_hitdrift;
 } else {
@@ -637,7 +636,7 @@ if (player&gt;=0)
             <kind>1</kind>
             <string>image_xscale=dir
 draw_set_alpha(1);
-if (t_since_hit&gt;=0&amp;&amp;t_since_hit&lt;6) {
+if (is_hit_stunned()) {
     image_blend=c_red;
 } else
     image_blend=c_white;
