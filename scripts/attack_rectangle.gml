@@ -48,7 +48,7 @@ if (config.RENDER_HITBOX_ENABLED) {
     obj_gui.hitbox_draw_h[n]=y2-y1
     obj_gui.hitbox_draw_zh[n]=z2-z1
     
-    obj_gui.hitbox_draw_alpha[n]=0.3;
+    obj_gui.hitbox_draw_alpha[n]=0.5;
     obj_gui.hitbox_draw_colour[n]=c_yellow;
     if (hit!=noone)
         obj_gui.hitbox_draw_colour[n]=c_red;

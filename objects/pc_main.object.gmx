@@ -77,10 +77,12 @@ loc_sfx_on_hit=sfx_hurt;
 //stores information about current combo
 combo_state=0;
 
-combo_grace=20;
+combo_grace=12;
 
 //which attack to do in the step
 do_atk_style=0;
+
+ATK_LEN_ATK2=12;
 </string>
           </argument>
         </arguments>
@@ -251,7 +253,7 @@ do_atk_style=0;
 can_dir=true;
 can_act_misc=true;
 propulsion_x=0;
-if (combo_state==10 &amp;&amp; t_since_attack&lt;12) {
+if (combo_state==10 &amp;&amp; t_since_attack&lt;ATK_LEN_ATK2) {
     can_move=false;
     can_dir=false;
     if (t_since_attack&lt;3)
@@ -260,6 +262,11 @@ if (combo_state==10 &amp;&amp; t_since_attack&lt;12) {
 if (combo_state==11 &amp;&amp; t_since_attack&lt;5) {
     can_act_misc=false;
     propulsion_x=dir*2*(6-t_since_attack)
+}
+if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
+    can_act_misc=false;
+    if (t_since_attack&lt;8)
+        propulsion_x=dir*2*(8-t_since_attack)
 }
 </string>
           </argument>
@@ -315,7 +322,9 @@ if (can_act()&amp;&amp;do_atk) {
     wnd_spec[1]=10;
     wnd_spec[2]=6;
     can_attack=true;
-    if (combo_state==10 &amp;&amp; t_since_attack&lt;12)
+    if (combo_state==10 &amp;&amp; t_since_attack&lt;ATK_LEN_ATK2)
+        can_attack=false;
+    if (combo_state==3 &amp;&amp; t_since_attack &lt; 5)
         can_attack=false;
     if (can_attack) {
         //combo tree:
@@ -325,6 +334,12 @@ if (can_act()&amp;&amp;do_atk) {
             attack_rectangle(x+dir*20-24,y-22,z+1,x+dir*20+24,y+22,z+20,wnd_spec)
             play_sfx_at(x+dir*10,y,z+dim_z/2,sfx_attack3);
             combo_state=2;
+        } else if (do_atk_style==0&amp;&amp;combo_state==2&amp;&amp;t_since_attack&lt;combo_grace) {
+            wnd_spec[1]=17;
+            AN_attack=AN_attack_basic;
+            attack_rectangle(x+dir*32-35,y-15,z+1,x+dir*32+35,y+15,z+25,wnd_spec)
+            play_sfx_at(x+dir*12,y,z+dim_z/2,sfx_attack3);
+            combo_state=3;
         } else if (do_atk_style==1) {
             combo_state=10;
         } else if (do_atk_style==0) {
@@ -338,7 +353,7 @@ if (can_act()&amp;&amp;do_atk) {
 }
 
 //finishing build-up attacks:
-if (t_since_attack==12&amp;&amp;combo_state==10) {
+if (t_since_attack==ATK_LEN_ATK2&amp;&amp;combo_state==10) {
     t_since_attack=0;
     combo_state=11;
     wnd_spec[0]=dir
@@ -391,7 +406,7 @@ if (t_since_attack==12&amp;&amp;combo_state==10) {
 
 if (extra_action==1)
     AN=AN_extra[0];
-if (combo_state==10&amp;&amp;t_since_attack&lt;=12)
+if (combo_state==10&amp;&amp;t_since_attack&lt;=ATK_LEN_ATK2)
     AN=AN_drawback
 
 animation_set_image_index();
