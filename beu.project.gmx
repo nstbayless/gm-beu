@@ -53,6 +53,7 @@
     <sound>sound\sfx_attack</sound>
     <sound>sound\sfx_attack2</sound>
     <sound>sound\sfx_attack3</sound>
+    <sound>sound\sfx_attack_begin</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="decals">
@@ -151,10 +152,12 @@
       <script>scripts\heal.gml</script>
       <script>scripts\kill.gml</script>
       <script>scripts\wound.gml</script>
+      <script>scripts\is_hit_frozen.gml</script>
       <script>scripts\is_hit_stunned.gml</script>
       <script>scripts\can_act.gml</script>
       <script>scripts\get_hit_stun_length.gml</script>
       <script>scripts\attack_rectangle.gml</script>
+      <script>scripts\is_queueing_input.gml</script>
       <script>scripts\add_signed_quadrature.gml</script>
     </scripts>
     <scripts name="generation">
@@ -187,9 +190,10 @@
       <script>scripts\get_gamepad_count.gml</script>
     </scripts>
     <scripts name="sound">
-      <script>scripts\play_sfx.gml</script>
       <script>scripts\music_play.gml</script>
+      <script>scripts\play_sfx.gml</script>
       <script>scripts\play_sfx_at.gml</script>
+      <script>scripts\play_sfx_delay_at.gml</script>
     </scripts>
     <scripts name="util">
       <script>scripts\assert.gml</script>

@@ -49,6 +49,7 @@ stat_recharge_delay=190;
 stat_recharge_rate=0;
 stat_maxhp=20;
 hp=stat_maxhp
+hp_registered=0;
 hp_bardrain=0;
 //how blocking affects damage
 stat_blk_mult=0;
@@ -95,6 +96,8 @@ t_since_hit=-1;
 t_since_jump=-1;
 t_since_attack=-1;
 
+combo_state=0;
+
 dim_x=20;
 dim_y=20;
 dim_z=20;
@@ -128,7 +131,12 @@ attack_lock=0;
 t_hit_stun=0;
 //histry of times hit-stunned before being able to act
 hit_stun_counter=0;
+//completely freezes actor briefly when hit.
+t_hit_freeze=0;
+//set to true when t_hit_freeze reaches 0
+hit_stun_registered=false;
 //certain attacks make this briefly false:
+action_queue_release=false;
 can_move=true;
 can_dir=true;
 can_act_misc=true;
@@ -254,6 +262,67 @@ on_ground=retval[2];
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>hit stun timer</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>action_queue_release=false;
+if (t_hit_stun&gt;0 &amp;&amp; !is_hit_frozen()) {
+    t_hit_stun--;
+    hit_stun_registered=true;
+    if t_hit_stun==0 {
+        hit_stun_registered=false;
+        //stop queueing actions 
+        action_queue_release=true;
+    }
+} 
+if (t_hit_stun&lt;=0)
+    hit_stun_registered=false;
+
+if (t_hit_freeze&gt;0 ) {
+    t_hit_freeze--;
+    if (t_hit_freeze==0&amp;&amp;t_hit_stun&gt;0)
+        hit_stun_registered=true;
+}
+
+if (t_since_hit&gt;=0&amp;&amp;!is_hit_frozen())
+    t_since_hit++;
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="0">
       <action>
@@ -375,8 +444,7 @@ on_ground=retval[2];
 //t_since_hit
 //t_since_jump
 
-if (t_hit_stun&gt;0)
-    t_hit_stun--;
+//hitstun and hitfreeze timers updated in begin step for symmetry
     
 var knockback_xdiff=0
 var knockback_ydiff=0;
@@ -391,45 +459,50 @@ if (!can_move)
 if (can_act())
     is_blocking=do_block;
     
-
-//knockback stuff:
-knockback_xdiff=knockback_vx;
-knockback_ydiff=knockback_vy
-
-//friction for knockback:
-var knockback_friction = stat_knockback_friction_air;
-if (on_ground)
-    knockback_friction=stat_knockback_friction_ground;
-
-//friction for knockback (x):
-sign_knockback_vx=sign(knockback_vx);
-knockback_vx-=sign_knockback_vx*knockback_friction;
-if (knockback_vx*sign_knockback_vx&lt;=0)
-    knockback_vx=0;
+if (!is_hit_frozen()) {
+    //knockback stuff:
+    knockback_xdiff=knockback_vx;
+    knockback_ydiff=knockback_vy
     
-//friction for knockback (y):
-sign_knockback_vy=sign(knockback_vy);
-knockback_vy-=sign_knockback_vy*knockback_friction;
-if (knockback_vy*sign_knockback_vy&lt;=0)
-    knockback_vy=0;
-
-//gravity
-if (!on_ground&amp;&amp;!is_flying())
-    vspd+=stat_grav;
-if (is_flying()) {
-    //if fly
-    sign_vspd=sign(vspd);
-    vspd-=sign_vspd*knockback_friction;
-    if (vspd*sign_vspd&lt;=0)
-    vspd=0;
+    //friction for knockback:
+    var knockback_friction = stat_knockback_friction_air;
+    if (on_ground)
+        knockback_friction=stat_knockback_friction_ground;
+    
+    //friction for knockback (x):
+    sign_knockback_vx=sign(knockback_vx);
+    knockback_vx-=sign_knockback_vx*knockback_friction;
+    if (knockback_vx*sign_knockback_vx&lt;=0)
+        knockback_vx=0;
+        
+    //friction for knockback (y):
+    sign_knockback_vy=sign(knockback_vy);
+    knockback_vy-=sign_knockback_vy*knockback_friction;
+    if (knockback_vy*sign_knockback_vy&lt;=0)
+        knockback_vy=0;
+    
+    //gravity
+    if (abs(knockback_vx)&gt;stat_hitdrift||!is_hit_stunned()) {
+        if (!on_ground&amp;&amp;!is_flying())
+            vspd+=stat_grav;
+        if (is_flying()) {
+            //if fly
+            sign_vspd=sign(vspd);
+            vspd-=sign_vspd*knockback_friction;
+            if (vspd*sign_vspd&lt;=0)
+            vspd=0;
+        }
+    }
 }
 
 //combat mechanics
-if (hp&lt;=0&amp;&amp;t_since_hit&gt;3) {
+if (hp&lt;=0&amp;&amp;t_since_hit&gt;3&amp;&amp;!is_hit_frozen()) {
     kill(this);
 }
 else if (t_since_hit&gt;=stat_recharge_delay)
     heal(self,stat_recharge_rate);
+if (!is_hit_frozen())
+    hp_registered=hp;
 if (z&lt;room_properties.bottom) {
     var defn;
     defn[0]=0;
@@ -452,7 +525,7 @@ if (can_act())
 phys_bounced=false;
 phys_jumped=false;
 
-if (t_since_jump&gt;=0)
+if (t_since_jump&gt;=0 &amp;&amp; !is_hit_frozen())
     t_since_jump++;
 
 //jumping
@@ -484,17 +557,19 @@ if can_act() &amp;&amp; can_move {
     phys_zdiff = move_z*zspd*is_flying();
 }
 
-if (is_hit_stunned()&amp;&amp;abs(knockback_vx)&lt;12) {
+if (is_hit_stunned()&amp;&amp;abs(knockback_vx)&lt;=stat_hitdrift) {
     //drift if hitstunned
     phys_xdiff=-dir*stat_hitdrift;
 } else {
     //propulsion from attacks:
     phys_xdiff+=propulsion_x
 }
+if (is_hit_frozen())
+    phys_xdiff=0;
 
 phys_xdiff+=knockback_xdiff;
 phys_ydiff+=knockback_ydiff;
-phys_zdiff+=vspd*!is_hit_stunned();
+phys_zdiff+=vspd*!is_hit_stunned()*!is_hit_frozen();
 
 //do actual movement
 move(phys_xdiff,phys_ydiff,phys_zdiff,2,ground_rest);
@@ -521,10 +596,10 @@ if (!is_blocking &amp;&amp; can_dir &amp;&amp; can_act()) {
 
 if(can_act()&amp;&amp;can_dir&amp;&amp;do_dir!=0)
     dir=sign(do_dir);
-
-//timers:
-if (t_since_hit&gt;=0)
-    t_since_hit++;
+    
+//attacks:
+if (!is_hit_stunned()&amp;&amp;!is_hit_frozen()&amp;&amp;t_since_attack&gt;=0)
+    t_since_attack++;
 
 //display hitbox:
 if (config.RENDER_HITBOX_ENABLED) {
@@ -538,7 +613,13 @@ if (config.RENDER_HITBOX_ENABLED) {
     obj_gui.hitbox_draw_zh[n]=dim_z
     
     obj_gui.hitbox_draw_alpha[n]=0.2;
-    obj_gui.hitbox_draw_colour[n]=c_white;
+    var col=c_white;
+    if (is_hit_frozen())
+        col=c_orange;
+    if (is_hit_stunned())
+        col = c_red;
+    obj_gui.hitbox_draw_colour[n]=col;
+    
 }
 </string>
           </argument>
@@ -564,8 +645,11 @@ if (config.RENDER_HITBOX_ENABLED) {
             <kind>1</kind>
             <string>var cx = get_draw_x();
 var cy = get_draw_y()-dim_z/2;
+var _hp=hp;
+if (is_hit_frozen())
+    _hp = hp_registered;
 
-if (hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
+if (_hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
     var ring_w = sprite_get_width(spr_hp_ring_loc);
     var ring_h = sprite_get_height(spr_hp_ring_loc);
     var ring_scale = 1;
@@ -575,12 +659,12 @@ if (hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
         if (alph_mult&lt;0.2)
             alph_mult=0.2;
     }
-    if (t_since_hit&gt;=0&amp;&amp;t_since_hit&lt;4){
+    if (t_since_hit&gt;=0&amp;&amp;t_since_hit&lt;4 &amp;&amp; !is_hit_frozen()){
         ring_scale=t_since_hit*0.2/4+0.8;
         ring_scale=sqrt(ring_scale)
     }
     //draw background wheel:
-    var merge_colour_amount=hp/stat_maxhp*3.7-0.8
+    var merge_colour_amount=_hp/stat_maxhp*3.7-0.8
     merge_colour_amount=max(0,min(merge_colour_amount,1))
     var merge_alpha=a_hp_gone_dire*merge_colour_amount+a_hp_gone*(1-merge_colour_amount)
     var c_hp_gone_tmp=merge_colour(c_hp_gone_dire,c_hp_gone,merge_colour_amount)
@@ -591,11 +675,12 @@ if (hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
     //hp remaining wheel:
     draw_wheel(cx,cy,spr_hp_ring_loc,0,hp/stat_maxhp,ring_scale,c_hp_full,a_hp_full*alph_mult)
     
-    if (hp_bardrain&gt;hp)
+    if (hp_bardrain&gt;_hp)
     //hp drain wheel:
-    draw_wheel(cx,cy,spr_hp_ring_loc,hp/stat_maxhp,hp_bardrain/stat_maxhp,ring_scale,c_hp_drain,a_hp_drain*alph_mult)
+    draw_wheel(cx,cy,spr_hp_ring_loc,_hp/stat_maxhp,hp_bardrain/stat_maxhp,ring_scale,c_hp_drain,a_hp_drain*alph_mult)
 }
 
+//off-screen bubbles
 if (player&gt;=0)
     if (cx&lt;view_xview[0]-32||cx &gt; view_xview[0]+view_wview[0]+32) {
         var bubble_dir = sign(cx-camera.x);
@@ -636,7 +721,7 @@ if (player&gt;=0)
             <kind>1</kind>
             <string>image_xscale=dir
 draw_set_alpha(1);
-if (is_hit_stunned()) {
+if (hit_stun_registered) {
     image_blend=c_red;
 } else
     image_blend=c_white;

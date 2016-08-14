@@ -171,7 +171,7 @@ ATK_LEN_ATK2=12;
     move_x = controller.move_x[player];
     move_y = controller.move_y[player];
     do_zhalt=false;
-    if (can_act()) {
+    if (!is_queueing_input()) {
         do_jump=false;
         do_atk=false;
         do_zhalt = !controller.jump_held[player];
@@ -302,67 +302,66 @@ if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//stop running if halted
-if (do_run&amp;&amp;phys_xdiff*dir&lt;=0&amp;&amp;on_ground)
-    do_run=false
-
-//attack
-if (!is_hit_stunned()&amp;&amp;t_since_attack&gt;=0)
-    t_since_attack++;
+            <string>if (!is_hit_frozen()) {
     
-//jump cancelling:
-if (t_since_jump==0) {
-    if (combo_state==11 &amp;&amp; t_since_attack&lt;5) {
-        //cannot jump cancel now
-    } else combo_state=0;
-}
-
-if (can_act()&amp;&amp;do_atk) {
-    wnd_spec[0]=dir
-    wnd_spec[1]=5;
-    wnd_spec[2]=0;
-    can_attack=true;
-    if (combo_state==10 &amp;&amp; t_since_attack&lt;ATK_LEN_ATK2)
-        can_attack=false;
-    if (combo_state==3 &amp;&amp; t_since_attack &lt; 5)
-        can_attack=false;
-    if (can_attack) {
-        //combo tree:
-        if (do_atk_style==0&amp;&amp;combo_state==1&amp;&amp;t_since_attack&lt;combo_grace) {
-            wnd_spec[1]=8;
-            
-            AN_attack=AN_attack_basic;
-            attack_rectangle(x+dir*20-24,y-22,z+1,x+dir*20+24,y+22,z+20,wnd_spec)
-            play_sfx_at(x+dir*10,y,z+dim_z/2,sfx_attack3);
-            combo_state=2;
-        } else if (do_atk_style==0&amp;&amp;combo_state==2&amp;&amp;t_since_attack&lt;combo_grace) {
-            wnd_spec[1]=12;
-            wnd_spec[2]=13;
-            AN_attack=AN_attack_basic;
-            attack_rectangle(x+dir*32-35,y-15,z+1,x+dir*32+35,y+15,z+25,wnd_spec)
-            play_sfx_at(x+dir*12,y,z+dim_z/2,sfx_attack3);
-            combo_state=3;
-        } else if (do_atk_style==1) {
-            combo_state=10;
-        } else if (do_atk_style==0) {
-            AN_attack=AN_attack_basic;
-            attack_rectangle(x+dir*20-20,y-20,z+1,x+dir*20+20,y+20,z+20,wnd_spec)
-            play_sfx_at(x,y,z+dim_z/2,sfx_attack);
-            combo_state=1;
-        }
-        t_since_attack=0;
+    //stop running if halted
+    if (do_run&amp;&amp;phys_xdiff*dir&lt;=0&amp;&amp;on_ground&amp;&amp;!is_hit_frozen())
+        do_run=false
+        
+    //jump cancelling:
+    if (t_since_jump==0) {
+        if (combo_state==11 &amp;&amp; t_since_attack&lt;5) {
+            //cannot jump cancel now
+        } else combo_state=0;
     }
-}
-
-//finishing build-up attacks:
-if (t_since_attack==ATK_LEN_ATK2&amp;&amp;combo_state==10) {
-    t_since_attack=0;
-    combo_state=11;
-    wnd_spec[0]=dir
-    wnd_spec[1]=53;
-    wnd_spec[2]=30;
-    attack_rectangle(x+dir*30-45,y-28,z+1,x+dir*30+45,y+28,z+30,wnd_spec)
-    play_sfx_at(x,y,z+dim_z/2,sfx_attack2);
+    
+    if (can_act()&amp;&amp;do_atk) {
+        wnd_spec[0]=dir
+        wnd_spec[1]=5;
+        wnd_spec[2]=0;
+        can_attack=true;
+        if (combo_state==10 &amp;&amp; t_since_attack&lt;ATK_LEN_ATK2)
+            can_attack=false;
+        if (combo_state==3 &amp;&amp; t_since_attack &lt; 5)
+            can_attack=false;
+        if (can_attack) {
+            //combo tree:
+            if (do_atk_style==0&amp;&amp;combo_state==1&amp;&amp;t_since_attack&lt;combo_grace) {
+                wnd_spec[1]=8;
+                
+                AN_attack=AN_attack_basic;
+                attack_rectangle(x+dir*20-24,y-22,z+1,x+dir*20+24,y+22,z+20,wnd_spec)
+                play_sfx_at(x+dir*10,y,z+dim_z/2,sfx_attack3);
+                combo_state=2;
+            } else if (do_atk_style==0&amp;&amp;combo_state==2&amp;&amp;t_since_attack&lt;combo_grace) {
+                wnd_spec[1]=12;
+                wnd_spec[2]=13;
+                AN_attack=AN_attack_basic;
+                attack_rectangle(x+dir*32-35,y-15,z+1,x+dir*32+35,y+15,z+25,wnd_spec)
+                play_sfx_at(x+dir*12,y,z+dim_z/2,sfx_attack3);
+                combo_state=3;
+            } else if (do_atk_style==1) {
+                combo_state=10;
+            } else if (do_atk_style==0) {
+                AN_attack=AN_attack_basic;
+                attack_rectangle(x+dir*20-20,y-20,z+1,x+dir*20+20,y+20,z+20,wnd_spec)
+                play_sfx_at(x,y,z+dim_z/2,sfx_attack);
+                combo_state=1;
+            }
+            t_since_attack=0;
+        }
+    }
+    
+    //finishing build-up attacks:
+    if (t_since_attack==ATK_LEN_ATK2&amp;&amp;combo_state==10) {
+        t_since_attack=0;
+        combo_state=11;
+        wnd_spec[0]=dir
+        wnd_spec[1]=53;
+        wnd_spec[2]=30;
+        attack_rectangle(x+dir*30-45,y-28,z+1,x+dir*30+45,y+28,z+30,wnd_spec)
+        play_sfx_at(x,y,z+dim_z/2,sfx_attack2);
+    }
 }
 </string>
           </argument>

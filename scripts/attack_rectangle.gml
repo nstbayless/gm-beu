@@ -20,6 +20,7 @@ if (z1>z2) {
 }
 
 var hit=noone;
+var __defn7_return_=0;
 
 with (obj_actor) {
     if faction!=afaction {
@@ -31,7 +32,9 @@ with (obj_actor) {
             if (z2>=z)
              if (z1<=z+dim_z) {
                 //attack struck!
+                __defn7_return=0;
                 wound(self,afaction,defn);
+                __defn7_return_=__defn7_return
                 hit=id
              }
           
@@ -51,7 +54,10 @@ if (config.RENDER_HITBOX_ENABLED) {
     obj_gui.hitbox_draw_alpha[n]=0.5;
     obj_gui.hitbox_draw_colour[n]=c_yellow;
     if (hit!=noone)
-        obj_gui.hitbox_draw_colour[n]=c_red;
+        obj_gui.hitbox_draw_alpha[n]=0.8;
 }
+
+if (hit) //set own hit freeze time
+    t_hit_freeze=__defn7_return_
 
 return hit;

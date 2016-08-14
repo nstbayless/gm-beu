@@ -1,14 +1,21 @@
 //animation_set_frame(): AN_* -> anim,AN
 
-anim=floor(anim+1);
+var anim_lock = false;
+if (is_hit_frozen())
+    anim_lock=true;
+
+if (!anim_lock)
+    anim=floor(anim+1);
 
 AN=AN_idle;
 
 if (do_fly) {
-    anim_move+=1;
+    if (!anim_lock)
+        anim_move+=1;
     AN=AN_fly;
 }else if (phys_moved_dist>0) {
-    anim_move+=phys_moved_dist;
+    if (!anim_lock)
+        anim_move+=phys_moved_dist;
     anim=anim_move;
     AN = AN_walk;
     if (do_run)
@@ -21,5 +28,5 @@ if (is_blocking)
 if (t_since_attack>=0&&t_since_attack<5)
     AN = AN_attack;
 
-if (is_hit_stunned())
+if (hit_stun_registered)
     AN = AN_hitstun;

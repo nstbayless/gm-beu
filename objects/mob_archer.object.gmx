@@ -51,8 +51,6 @@ hp=stat_maxhp;
 anim_t=0;
 anim_walk_t=0;
 ai_target=noone
-t_since_shot=-1;
-t_since_atk=-1;
 
 stat_spd=3
 </string>
@@ -145,7 +143,7 @@ if instance_exists(ai_target) {
         do_shoot=true;
     var dist_x = abs(ai_target.x-x);
     var dist_y= abs(ai_target.y-y);
-    if (dist_x&lt;=50) {
+    if (dist_x&lt;=50&amp;&amp;dist_y&lt;20) {
         do_shoot=false;
         move_x=(dist_x&gt;10)*do_dir/5;
         do_atk=true;
@@ -182,7 +180,7 @@ if instance_exists(ai_target) {
             <kind>1</kind>
             <string>can_move=true;
 can_dir=true;
-if (t_since_shot&gt;=0&amp;&amp;t_since_shot&lt;16) {
+if (t_since_attack&gt;=0&amp;&amp;(t_since_attack&lt;16||(t_since_attack&lt;14&amp;&amp;combo_state==0))) {
     can_move=false;
     can_dir=false;
 }
@@ -240,16 +238,12 @@ if (t_since_shot&gt;=0&amp;&amp;t_since_shot&lt;16) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (can_act()&amp;&amp;t_since_shot&gt;=0)
-    t_since_shot++;
+            <string>if (can_act()&amp;&amp;do_shoot&amp;&amp;(t_since_attack&gt;23||t_since_attack==-1)) {
+    t_since_attack=0;
+    combo_state=1;
+}
     
-if (t_since_atk&gt;=0)
-    t_since_atk++;
-
-if (can_act()&amp;&amp;do_shoot&amp;&amp;(t_since_shot&gt;23||t_since_shot==-1))
-    t_since_shot=0;
-    
-if (can_act()&amp;&amp;(t_since_shot==14)) {
+if (can_act()&amp;&amp;(t_since_attack==14)&amp;&amp;combo_state==1) {
     var bullet = instance_create_xyz(x+dir*4,y,z+25,obj_bullet);
     bullet.dir=dir;
     bullet.faction=faction;
@@ -262,12 +256,13 @@ if (can_act()&amp;&amp;(t_since_shot==14)) {
     play_sfx_at(x,y,z+dim_z/2,sfx_to_play)
 }
 
-if (can_act()&amp;&amp;do_atk&amp;&amp;(t_since_atk&gt;13||t_since_atk==-1)) {
+if (can_act()&amp;&amp;do_atk&amp;&amp;(t_since_attack&gt;13||t_since_attack==-1)) {
+    combo_state=0;
     wnd_spec[0]=dir;
     wnd_spec[1]=1.5;
     attack_rectangle(x+16*dir-16,y-12,z+16,x+16*dir+16,y+12,z+8,wnd_spec)
     play_sfx_at(x,y,z+dim_z/2,sfx_attack) 
-    t_since_atk=0;
+    t_since_attack=0;
 }
 </string>
           </argument>
@@ -320,14 +315,14 @@ if (phys_moved_dist&gt;0) {
     anim=AN_walk;   
 }
 
-if (t_since_shot&lt;14) {
+if (t_since_attack&lt;14 &amp;&amp; combo_state==1) {
     anim=AN_shoot;
-    _anim_t=t_since_shot;
+    _anim_t=t_since_attack;
 }
 
-if (t_since_atk&gt;=0&amp;&amp;t_since_atk&lt;6) {
+if (t_since_attack&gt;=0&amp;&amp;t_since_attack&lt;6 &amp;&amp; combo_state==0) {
     anim=AN_atk;
-    _anim_t=t_since_atk;
+    _anim_t=t_since_attack;
 }
 
 an_i=anim[0];
