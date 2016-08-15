@@ -54,9 +54,6 @@ hp_bardrain=0;
 //how blocking affects damage
 stat_blk_mult=0;
 stat_blk_sub=0;
-//how blocking affects knockback
-stat_blk_knock_mult=0.3;
-stat_blk_knock_sub=0;
 //speed
 stat_spd=4;
 stat_blkspd=2;
@@ -569,7 +566,7 @@ if (is_hit_frozen())
 
 phys_xdiff+=knockback_xdiff;
 phys_ydiff+=knockback_ydiff;
-phys_zdiff+=vspd*!is_hit_stunned()*!is_hit_frozen();
+phys_zdiff+=vspd*(!is_hit_stunned()||abs(knockback_vx)&gt;stat_hitdrift)*!is_hit_frozen();
 
 //do actual movement
 move(phys_xdiff,phys_ydiff,phys_zdiff,2,ground_rest);

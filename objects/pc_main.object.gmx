@@ -171,6 +171,8 @@ ATK_LEN_ATK2=12;
     move_x = controller.move_x[player];
     move_y = controller.move_y[player];
     do_zhalt=false;
+    if (t_since_attack==0)
+        do_atk=false; //prevents double attack despite release
     if (!is_queueing_input()) {
         do_jump=false;
         do_atk=false;
@@ -358,7 +360,6 @@ if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
         combo_state=11;
         wnd_spec[0]=dir
         wnd_spec[1]=53;
-        wnd_spec[2]=30;
         attack_rectangle(x+dir*30-45,y-28,z+1,x+dir*30+45,y+28,z+30,wnd_spec)
         play_sfx_at(x,y,z+dim_z/2,sfx_attack2);
     }

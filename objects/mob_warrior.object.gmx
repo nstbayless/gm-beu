@@ -59,7 +59,7 @@ dim_z=32;
 dim_x=24;
 dim_y=24;
 
-stat_maxhp=45;
+stat_maxhp=58;
 hp=stat_maxhp;
 
 t_atk=0;
