@@ -40,12 +40,15 @@
           <argument>
             <kind>1</kind>
             <string>AN_idle = make_animation(0,1,1);
-AN_walk = make_animation(1,4,12);
-AN_run=AN_walk;
+AN_walk = make_animation(1,4,16);
+AN_run = make_animation(1,4,20);
 AN_block = make_animation(5,1,1);
-AN_attack = make_animation(6,1,1);
 AN_hitstun = make_animation(5,1,1);
 AN_extra[0] = make_animation(5,1,1);
+
+AN_attack = make_animation(7,1,1);
+AN_attack_basic = AN_attack;
+AN_drawback = make_animation(6,1,1)
 
 anim=0;
 
@@ -66,10 +69,20 @@ c_hp_gone_dire=make_color_hsv(4,252,250);
 a_hp_gone_dire=0.8;
 
 dim_z=40;
+dim_x=30;
+dim_y=20;
 
 loc_sfx_on_hit=sfx_hurt;
 
+//stores information about current combo
+combo_state=0;
 
+combo_grace=11;
+
+//which attack to do in the step
+do_atk_style=0;
+
+ATK_LEN_ATK2=12;
 </string>
           </argument>
         </arguments>
@@ -158,16 +171,21 @@ loc_sfx_on_hit=sfx_hurt;
     move_x = controller.move_x[player];
     move_y = controller.move_y[player];
     do_zhalt=false;
-    if (can_act()) {
+    if (t_since_attack==0)
+        do_atk=false; //prevents double attack despite release
+    if (!is_queueing_input()) {
         do_jump=false;
         do_atk=false;
         do_zhalt = !controller.jump_held[player];
         do_dir=0;
-    }
-    if (!controller.block_held[player])
+    } else if (!controller.block_held[player])
         do_dir = controller.right_pressed[player]-controller.left_pressed[player]
     do_jump |= controller.jump_pressed[player];
-    do_atk |= controller.atk_pressed[player];
+    do_atk |= controller.atk_pressed[player] | controller.atk2_pressed[player];
+    if (controller.atk_pressed[player])
+        do_atk_style=0;
+    if (controller.atk2_pressed[player])
+        do_atk_style=1;
     
     if (do_run_timer&gt;0)
         do_run_timer--;
@@ -219,6 +237,45 @@ loc_sfx_on_hit=sfx_hurt;
       </action>
       <action>
         <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>can_move=true;
+can_dir=true;
+can_act_misc=true;
+propulsion_x=0;
+if (combo_state==10 &amp;&amp; t_since_attack&lt;ATK_LEN_ATK2) {
+    can_move=false;
+    can_dir=false;
+    if (t_since_attack&lt;3)
+        can_dir=true;
+}
+if (combo_state==11 &amp;&amp; t_since_attack&lt;5) {
+    can_act_misc=false;
+    propulsion_x=dir*2*(6-t_since_attack)
+}
+if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
+    can_act_misc=false;
+    if (t_since_attack&lt;8)
+        propulsion_x=dir*2*(8-t_since_attack)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>604</id>
         <kind>0</kind>
         <userelative>0</userelative>
@@ -247,20 +304,65 @@ loc_sfx_on_hit=sfx_hurt;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//stop running if halted
-if (do_run&amp;&amp;phys_xdiff*dir&lt;=0&amp;&amp;on_ground)
-    do_run=false
+            <string>if (!is_hit_frozen()) {
     
-//attack
-if (t_since_attack&gt;=0)
-    t_since_attack++;
-if (can_act()&amp;&amp;do_atk) {
-    wnd_spec[0]=dir
-    wnd_spec[1]=10;
-    wnd_spec[2]=6;
-    t_since_attack=0;
-    attack_rectangle(x+dir*20-20,y-20,z+1,x+dir*20+20,y+20,z+20,wnd_spec)
-    play_sfx_at(x,y,z+8,sfx_attack);
+    //stop running if halted
+    if (do_run&amp;&amp;phys_xdiff*dir&lt;=0&amp;&amp;on_ground&amp;&amp;!is_hit_frozen())
+        do_run=false
+        
+    //jump cancelling:
+    if (t_since_jump==0) {
+        if (combo_state==11 &amp;&amp; t_since_attack&lt;5) {
+            //cannot jump cancel now
+        } else combo_state=0;
+    }
+    
+    if (can_act()&amp;&amp;do_atk) {
+        wnd_spec[0]=dir
+        wnd_spec[1]=5;
+        wnd_spec[2]=0;
+        can_attack=true;
+        if (combo_state==10 &amp;&amp; t_since_attack&lt;ATK_LEN_ATK2)
+            can_attack=false;
+        if (combo_state==3 &amp;&amp; t_since_attack &lt; 5)
+            can_attack=false;
+        if (can_attack) {
+            //combo tree:
+            if (do_atk_style==0&amp;&amp;combo_state==1&amp;&amp;t_since_attack&lt;combo_grace) {
+                wnd_spec[1]=8;
+                
+                AN_attack=AN_attack_basic;
+                post_attack(attack_rectangle(x+dir*16-28,y-22,z+1,x+dir*16+28,y+22,z+20,wnd_spec))
+                play_sfx_at(x+dir*10,y,z+dim_z/2,sfx_attack3);
+                combo_state=2;
+            } else if (do_atk_style==0&amp;&amp;combo_state==2&amp;&amp;t_since_attack&lt;combo_grace) {
+                wnd_spec[1]=12;
+                wnd_spec[2]=13;
+                AN_attack=AN_attack_basic;
+                post_attack(attack_rectangle(x+dir*30-37,y-15,z+1,x+dir*30+37,y+15,z+25,wnd_spec))
+                play_sfx_at(x+dir*12,y,z+dim_z/2,sfx_attack3);
+                combo_state=3;
+            } else if (do_atk_style==1) {
+                combo_state=10;
+            } else if (do_atk_style==0) {
+                AN_attack=AN_attack_basic;
+                post_attack(attack_rectangle(x+dir*16-24,y-20,z+1,x+dir*16+24,y+20,z+20,wnd_spec))
+                play_sfx_at(x,y,z+dim_z/2,sfx_attack);
+                combo_state=1;
+            }
+            t_since_attack=0;
+        }
+    }
+    
+    //finishing build-up attacks:
+    if (t_since_attack==ATK_LEN_ATK2&amp;&amp;combo_state==10) {
+        t_since_attack=0;
+        combo_state=11;
+        wnd_spec[0]=dir
+        wnd_spec[1]=53;
+        post_attack(attack_rectangle(x+dir*30-45,y-28,z+1,x+dir*30+45,y+28,z+30,wnd_spec))
+        play_sfx_at(x,y,z+dim_z/2,sfx_attack2);
+    }
 }
 </string>
           </argument>
@@ -306,6 +408,8 @@ if (can_act()&amp;&amp;do_atk) {
 
 if (extra_action==1)
     AN=AN_extra[0];
+if (combo_state==10&amp;&amp;t_since_attack&lt;=ATK_LEN_ATK2)
+    AN=AN_drawback
 
 animation_set_image_index();
 </string>

@@ -84,6 +84,8 @@ jump_pressed[0]=false;
 jump_held[0]=false;
 atk_pressed[0]=false
 atk_held[0]=false
+atk2_pressed[0]=false;
+atk2_held[0]=false;
 block_held[0]=false
 
 left_pressed[0]=false;
@@ -124,6 +126,8 @@ for (var i=0;i&lt;gamepad_count;i++) {
     jump_held[i]=gamepad_button_check(i,gp_face1);
     atk_pressed[i]=gamepad_button_check_pressed(i,gp_face3);
     atk_held[i]=gamepad_button_check(i,gp_face3);
+    atk2_pressed[i]=gamepad_button_check_pressed(i,gp_face2);
+    atk2_held[i]=gamepad_button_check(i,gp_face2);
     block_held[i]=gamepad_button_check(i,gp_shoulderlb);
     
     left_pressed[i]=false;
@@ -153,6 +157,8 @@ jump_pressed[0]|=keyboard_check_pressed(ord("Z"));
 jump_held[0]|=keyboard_check(ord("Z"));
 atk_pressed[0]|=keyboard_check_pressed(ord("X"));
 atk_held[0]|=keyboard_check(ord("X"));
+atk2_pressed[0]|=keyboard_check_pressed(ord("C"));
+atk2_held[0]|=keyboard_check(ord("C"));
 block_held[0]|=keyboard_check(vk_shift);
 
 left_pressed[0]|=keyboard_check_pressed(vk_left);

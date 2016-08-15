@@ -2,8 +2,6 @@
 ### (With RPG elements?)
 #### (And Co-Op!)
 
-Version 0.2.4 (alpha)
-
 [Download binary](../../releases/)
 
 Controls:
@@ -11,6 +9,8 @@ Controls:
 `z` (to jump)
 
 `x` (to punch, not very well.)
+
+`c` (to punch, better.)
 
 `arrow keys` (to move; double tap horizontally to run)
 

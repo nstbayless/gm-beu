@@ -59,7 +59,7 @@ dim_z=32;
 dim_x=24;
 dim_y=24;
 
-stat_maxhp=45;
+stat_maxhp=58;
 hp=stat_maxhp;
 
 t_atk=0;
@@ -233,8 +233,6 @@ if instance_exists(ai_target) &amp;&amp; ai_target!=noone {
           <argument>
             <kind>1</kind>
             <string>//attack
-if (t_since_attack&gt;=0)
-    t_since_attack++;
 if (can_act()&amp;&amp;do_atk) {
     wnd_spec[0]=dir
     wnd_spec[1]=5;

@@ -51,6 +51,9 @@
     <sound>sound\sfx_twang2</sound>
     <sound>sound\sfx_heartbeat</sound>
     <sound>sound\sfx_attack</sound>
+    <sound>sound\sfx_attack2</sound>
+    <sound>sound\sfx_attack3</sound>
+    <sound>sound\sfx_attack_begin</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="decals">
@@ -85,6 +88,7 @@
     <sprite>sprites\spr_arrow</sprite>
     <sprite>sprites\spr_bat</sprite>
     <sprite>sprites\spr_bubble_pointer</sprite>
+    <sprite>sprites\spr_mushy</sprite>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="art">
@@ -113,6 +117,12 @@
     <background>background\bg_mountain_scene_tree</background>
     <background>background\bg_mountain_scene</background>
     <background>background\bg_mountain_scene_fg</background>
+    <background>background\bg_mushroom_scene_shrooms_fg</background>
+    <background>background\bg_mushroom_scene</background>
+    <background>background\bg_mushroom_scene_fg</background>
+    <background>background\prt_mushmom</background>
+    <background>background\prt_mushy</background>
+    <background>background\prt_pc_main</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -129,19 +139,29 @@
       <script>scripts\find_z_rest.gml</script>
       <script>scripts\get_draw_depth.gml</script>
       <script>scripts\get_grounds_in.gml</script>
+      <script>scripts\register_ground.gml</script>
+      <script>scripts\unregister_ground.gml</script>
+      <script>scripts\collides_ag_offset.gml</script>
+      <script>scripts\get_ground_at.gml</script>
+      <script>scripts\sanitize_geohash.gml</script>
+      <script>scripts\move.gml</script>
+      <script>scripts\is_flying.gml</script>
+      <script>scripts\move_slope.gml</script>
     </scripts>
     <scripts name="combat">
       <script>scripts\heal.gml</script>
       <script>scripts\kill.gml</script>
       <script>scripts\wound.gml</script>
+      <script>scripts\is_hit_frozen.gml</script>
       <script>scripts\is_hit_stunned.gml</script>
       <script>scripts\can_act.gml</script>
       <script>scripts\get_hit_stun_length.gml</script>
       <script>scripts\attack_rectangle.gml</script>
+      <script>scripts\is_queueing_input.gml</script>
       <script>scripts\add_signed_quadrature.gml</script>
+      <script>scripts\post_attack.gml</script>
     </scripts>
     <scripts name="generation">
-      <script>scripts\generate_cliffs_between.gml</script>
       <script>scripts\generate_vwall.gml</script>
       <script>scripts\generate_ground.gml</script>
       <script>scripts\split_bg_to_ground.gml</script>
@@ -157,6 +177,7 @@
     <scripts name="draw">
       <script>scripts\draw_reset.gml</script>
       <script>scripts\draw_wheel.gml</script>
+      <script>scripts\draw_box.gml</script>
     </scripts>
     <scripts name="ch">
       <script>scripts\ch_begin_transition.gml</script>
@@ -164,22 +185,43 @@
       <script>scripts\get_art.gml</script>
       <script>scripts\get_player_name.gml</script>
       <script>scripts\get_player_color.gml</script>
+      <script>scripts\get_spawn_coords.gml</script>
     </scripts>
     <scripts name="gamepad">
       <script>scripts\scale_gp_axis.gml</script>
       <script>scripts\get_gamepad_count.gml</script>
     </scripts>
     <scripts name="sound">
-      <script>scripts\play_sfx.gml</script>
       <script>scripts\music_play.gml</script>
+      <script>scripts\play_sfx.gml</script>
       <script>scripts\play_sfx_at.gml</script>
+      <script>scripts\play_sfx_delay_at.gml</script>
     </scripts>
     <scripts name="util">
       <script>scripts\assert.gml</script>
       <script>scripts\print.gml</script>
+      <script>scripts\vector_difference.gml</script>
+      <script>scripts\vector_length.gml</script>
+      <script>scripts\get_coords.gml</script>
+      <script>scripts\vector_normalize.gml</script>
       <script>scripts\make_array.gml</script>
     </scripts>
+    <scripts name="dialogue">
+      <script>scripts\dialogue_unlock.gml</script>
+      <script>scripts\dialogue_lock.gml</script>
+      <script>scripts\make_line.gml</script>
+      <script>scripts\sanitize_line.gml</script>
+      <script>scripts\dialogue_enqueue.gml</script>
+      <script>scripts\dialogue_dequeue.gml</script>
+      <script>scripts\dialogue_free.gml</script>
+      <script>scripts\dialogue_replace.gml</script>
+      <script>scripts\dialogue_wait_for.gml</script>
+      <script>scripts\dialogue_wait.gml</script>
+      <script>scripts\dialogue_get_result.gml</script>
+      <script>scripts\dialogue_advance.gml</script>
+    </scripts>
     <script>scripts\get_target_nearest.gml</script>
+    <script>scripts\get_random_alive_player.gml</script>
     <script>scripts\halt_execute_actor.gml</script>
     <script>scripts\instance_create_xyz.gml</script>
     <script>scripts\halt_execute.gml</script>
@@ -188,6 +230,7 @@
     <font>fonts\jukefont</font>
     <font>fonts\fnt_script</font>
     <font>fonts\fnt_menu</font>
+    <font>fonts\fnt_dialogue</font>
     <font>fonts\cursive</font>
   </fonts>
   <objects name="objects">
@@ -207,6 +250,7 @@
     <object>objects\ch_spawn</object>
     <object>objects\obj_bg_mountains</object>
     <objects name="decals">
+      <object>objects\dec_mushy</object>
       <object>objects\dec_sakura</object>
       <object>objects\decal</object>
     </objects>
@@ -239,31 +283,37 @@
       <object>objects\obj_struct</object>
       <object>objects\obj_main_menu</object>
       <object>objects\config</object>
+      <object>objects\dialogue</object>
+      <object>objects\obj_line</object>
     </objects>
     <objects name="ch_ppt">
       <objects name="ch1">
-        <object>objects\obj_ch1_fg</object>
         <object>objects\ch1_ppt_a</object>
+        <object>objects\obj_ch1_fg</object>
         <object>objects\obj_ch1_bg</object>
-        <object>objects\obj_ch1_fg_b</object>
         <object>objects\ch1_ppt_b</object>
+        <object>objects\obj_ch1_fg_b</object>
         <object>objects\obj_ch1_bg_b</object>
         <object>objects\ch1_ppt_c</object>
         <object>objects\obj_ch1_fg_c</object>
         <object>objects\obj_ch1_bg_c</object>
+        <object>objects\ch1_ppt_d</object>
+        <object>objects\obj_ch1_bg_d</object>
+        <object>objects\obj_ch1_fg_d</object>
       </objects>
       <object>objects\cinf_ppt</object>
       <object>objects\rm_test_1_ppt</object>
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_scene</room>
+    <room>rooms\rm_meta</room>
     <room>rooms\rm_menu</room>
     <room>rooms\rm_inf</room>
     <room>rooms\rm_test_baddies</room>
     <room>rooms\rm_test_1</room>
     <room>rooms\rm_c1_a</room>
     <room>rooms\rm_c1_b</room>
+    <room>rooms\rm_c1_d</room>
     <room>rooms\rm_c1_c</room>
   </rooms>
   <constants number="11">

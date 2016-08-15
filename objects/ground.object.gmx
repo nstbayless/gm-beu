@@ -44,6 +44,10 @@ height=sprite_height;
 zbot=-1000
 surf=-1;
 
+//allows players to move up/down the surface.
+//Don't enable for non-sloped surfaces, since it's slow.
+slope_px=0;
+
 strip_thickness=config.STRIP_THICKNESS;
 
 strips[0]=noone;
@@ -54,7 +58,52 @@ tint_edges=false;
 edge_tint_col=c_white;
 edge_tint_a=0.05;
 edge_tint_thickness=3;
+
+//registered in room properties
+registered=false;
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>601</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_execute_script</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>9</kind>
+            <script>unregister_ground</script>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>this</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -355,6 +404,7 @@ event_user(2);
           <argument>
             <kind>1</kind>
             <string>event_user(0);
+register_ground(this);
 </string>
           </argument>
         </arguments>

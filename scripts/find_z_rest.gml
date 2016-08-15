@@ -8,7 +8,7 @@ var z1=argument4;
 
 var grounds=get_grounds_in(x1,y1,x2,y2);
 //highest ground encountered below z:
-var maxz=-10000
+var maxz=room_properties.bottom
 var argmaxz=noone;
 for (i=0;grounds[i]!=noone;i++) {
     if (grounds[i].z<=z1  && grounds[i].z>maxz) {
@@ -17,7 +17,7 @@ for (i=0;grounds[i]!=noone;i++) {
     }
 }
 var retval;
-retval[0]=argmaxz
-retval[1]=maxz;
-retval[2]=(z1==maxz)
+retval[0]=argmaxz //zrest instance
+retval[1]=maxz;   //zrest location
+retval[2]=(z1==maxz) //on ground
 return retval;

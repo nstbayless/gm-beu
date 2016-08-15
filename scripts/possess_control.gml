@@ -9,15 +9,13 @@ var pos = possessor_instance;
 var port = possessor_port;
 
 if (p_mode==P_DUMMY) {
-    if (p_mode==P_DUMMY) {
-        possessor_instance=campaign.possessor_dummy
-        possessor_port=0
-    }
+    pos=campaign.possessor_dummy;
+    port=0;
 }
 
-do_dir=0;
 move_x=pos.port_move_x[port];
 move_y=pos.port_move_y[port];
+do_dir=pos.port_do_dir[port];
 do_block=pos.port_do_block[port];
 do_jump=pos.port_do_jump[port];
 do_run=pos.port_do_run[port];

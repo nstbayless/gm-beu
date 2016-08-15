@@ -1,3 +1,3 @@
 //can_act
 
-return (!is_hit_stunned() && abs(knockback_vx)<5 && abs(knockback_vy)<5)
+return (!is_hit_stunned() && can_act_misc && !is_hit_frozen())

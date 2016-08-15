@@ -76,7 +76,7 @@ if (t_fadeout)
 if (do_fadeout)
     t_fadeout++;
 if (t_fadeout&gt;30)
-    room_goto(rm_c1_c);
+    room_goto(rm_c1_d);
 </string>
           </argument>
         </arguments>

@@ -43,6 +43,7 @@ art[3]=art3;
 
 //number of pc's currently playing
 pc_count=0
+pc_alive_count=0;
 gamepad_count = 0
 //the actor controlled by the given player
 pc_actor[pc_count]=noone;
@@ -88,7 +89,9 @@ if (instance_exists(room_properties))
             last_element=i;
             if (spawn_timer[i]&lt;=0) {
                 var player = spawn_player[i];
-                var pc_inst = instance_create_xyz(ch_spawn.x,ch_spawn.y,ch_spawn.z,pc_actor_obj[player]);
+                var spawn_coords = get_spawn_coords();
+                pc_alive_count++;
+                var pc_inst = instance_create_xyz(spawn_coords[0],spawn_coords[1],spawn_coords[2],pc_actor_obj[player]);
                 pc_inst.player=player;
                 obj_focus.subfocus[player]=pc_inst;
                 pc_actor[player]=pc_inst;
@@ -124,6 +127,8 @@ if (frame%30==1) {
             //remove players
             for (var i=pc_count-1;i&gt;=tmp_pc_count;i--) {
                 instance_activate_object(pc_actor[i])
+                if (instance_exists(pc_actor[i]))
+                    pc_alive_count--; //checks if actor alive before decrementing
                 with (pc_actor[i]) {
                     instance_destroy();
                 }
@@ -162,6 +167,7 @@ if (frame%30==1) {
     obj_focus.nomap=true;
     for (var i=0;i&lt;pc_count;i++) {
         lpc = instance_create(0,0,pc_actor_obj[i]);
+        pc_alive_count++;
         lpc.player=i;
         lpc.y=ch_spawn.y;
         lpc.x=ch_spawn.x+i*32;
@@ -175,7 +181,7 @@ if (frame%30==1) {
 }
 
 //create default room properties:
-if (!instance_exists(room_properties)&amp;&amp;room!=rm_scene&amp;&amp;room!=rm_menu)
+if (!instance_exists(room_properties)&amp;&amp;room!=rm_meta&amp;&amp;room!=rm_menu)
     instance_create(0,0,room_properties);
 
 //size of spawn list:
