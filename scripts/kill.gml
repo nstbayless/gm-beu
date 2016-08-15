@@ -13,6 +13,7 @@ with (inst_actor) {
         campaign.spawn_timer[campaign.spawn_n]=re_time;
         campaign.spawn_player[campaign.spawn_n]=player;
         campaign.spawn_n++;
+        campaign.pc_alive_count--;
         instance_deactivate_object(this);
     } else instance_destroy();
     if (loc_sfx_on_death>=0)

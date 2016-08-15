@@ -185,6 +185,7 @@
       <script>scripts\get_art.gml</script>
       <script>scripts\get_player_name.gml</script>
       <script>scripts\get_player_color.gml</script>
+      <script>scripts\get_spawn_coords.gml</script>
     </scripts>
     <scripts name="gamepad">
       <script>scripts\scale_gp_axis.gml</script>
@@ -201,6 +202,7 @@
       <script>scripts\print.gml</script>
       <script>scripts\vector_difference.gml</script>
       <script>scripts\vector_length.gml</script>
+      <script>scripts\get_coords.gml</script>
       <script>scripts\vector_normalize.gml</script>
       <script>scripts\make_array.gml</script>
     </scripts>
@@ -219,6 +221,7 @@
       <script>scripts\dialogue_advance.gml</script>
     </scripts>
     <script>scripts\get_target_nearest.gml</script>
+    <script>scripts\get_random_alive_player.gml</script>
     <script>scripts\halt_execute_actor.gml</script>
     <script>scripts\instance_create_xyz.gml</script>
     <script>scripts\halt_execute.gml</script>

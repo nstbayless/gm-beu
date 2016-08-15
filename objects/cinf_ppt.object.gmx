@@ -184,6 +184,8 @@ if (gen_x&gt;x) {
         generate_ground(x,y+dw_min,z,dx,dw_max-dw_min)
         generate_vwall(x,y+dw_max,z,dx,1000);
         print("generated at +" + string(x-camera.x) + " from camera.");
+        //ensure room properties bottom is sufficient:
+        room_properties.bottom = min(room_properties.bottom,-1*abs(z)-300);
         last_ymin=y+dw_min;
         last_ymax=y+dw_max;
         x+=dx;
