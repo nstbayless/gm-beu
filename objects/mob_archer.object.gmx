@@ -53,6 +53,7 @@ anim_walk_t=0;
 ai_target=noone
 
 stat_spd=3
+dim_z=50;
 </string>
           </argument>
         </arguments>

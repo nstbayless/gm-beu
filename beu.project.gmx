@@ -159,6 +159,7 @@
       <script>scripts\attack_rectangle.gml</script>
       <script>scripts\is_queueing_input.gml</script>
       <script>scripts\add_signed_quadrature.gml</script>
+      <script>scripts\post_attack.gml</script>
     </scripts>
     <scripts name="generation">
       <script>scripts\generate_vwall.gml</script>

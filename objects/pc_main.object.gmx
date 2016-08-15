@@ -332,21 +332,21 @@ if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
                 wnd_spec[1]=8;
                 
                 AN_attack=AN_attack_basic;
-                attack_rectangle(x+dir*20-24,y-22,z+1,x+dir*20+24,y+22,z+20,wnd_spec)
+                post_attack(attack_rectangle(x+dir*16-28,y-22,z+1,x+dir*16+28,y+22,z+20,wnd_spec))
                 play_sfx_at(x+dir*10,y,z+dim_z/2,sfx_attack3);
                 combo_state=2;
             } else if (do_atk_style==0&amp;&amp;combo_state==2&amp;&amp;t_since_attack&lt;combo_grace) {
                 wnd_spec[1]=12;
                 wnd_spec[2]=13;
                 AN_attack=AN_attack_basic;
-                attack_rectangle(x+dir*32-35,y-15,z+1,x+dir*32+35,y+15,z+25,wnd_spec)
+                post_attack(attack_rectangle(x+dir*30-37,y-15,z+1,x+dir*30+37,y+15,z+25,wnd_spec))
                 play_sfx_at(x+dir*12,y,z+dim_z/2,sfx_attack3);
                 combo_state=3;
             } else if (do_atk_style==1) {
                 combo_state=10;
             } else if (do_atk_style==0) {
                 AN_attack=AN_attack_basic;
-                attack_rectangle(x+dir*20-20,y-20,z+1,x+dir*20+20,y+20,z+20,wnd_spec)
+                post_attack(attack_rectangle(x+dir*16-24,y-20,z+1,x+dir*16+24,y+20,z+20,wnd_spec))
                 play_sfx_at(x,y,z+dim_z/2,sfx_attack);
                 combo_state=1;
             }
@@ -360,7 +360,7 @@ if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
         combo_state=11;
         wnd_spec[0]=dir
         wnd_spec[1]=53;
-        attack_rectangle(x+dir*30-45,y-28,z+1,x+dir*30+45,y+28,z+30,wnd_spec)
+        post_attack(attack_rectangle(x+dir*30-45,y-28,z+1,x+dir*30+45,y+28,z+30,wnd_spec))
         play_sfx_at(x,y,z+dim_z/2,sfx_attack2);
     }
 }
