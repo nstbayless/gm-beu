@@ -677,7 +677,7 @@ if (_hp&lt;stat_maxhp &amp;&amp; player == PL_NOPLAYER) {
     draw_wheel(cx,cy,spr_hp_ring_loc,0,1,ring_scale,c_hp_gone_tmp,merge_alpha*alph_mult)
     
     //hp remaining wheel:
-    draw_wheel(cx,cy,spr_hp_ring_loc,0,hp/stat_maxhp,ring_scale,c_hp_full,a_hp_full*alph_mult)
+    draw_wheel(cx,cy,spr_hp_ring_loc,0,_hp/stat_maxhp,ring_scale,c_hp_full,a_hp_full*alph_mult)
     
     if (hp_bardrain&gt;_hp)
     //hp drain wheel:
