@@ -137,6 +137,7 @@ if (_box_open &amp;&amp; current_line!=noone) {
         //don't accidentally skip next line of dialogue:
         _skip_line=false;
         _result=_option_selected;
+        _option_selected=0;
         dialogue_advance();
     }
 }

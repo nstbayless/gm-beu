@@ -1,5 +1,3 @@
-//halt_execute
+//halt_execute_actor()
 
-if (room_properties.paused)
-    return true;
-return false;
+return halt_execute()

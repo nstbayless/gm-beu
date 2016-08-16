@@ -167,7 +167,7 @@ ATK_LEN_ATK2=12;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (player&gt;=0) {
+            <string>if (player&gt;=0) if (!obj_gui.menu_open[player]) {
     move_x = controller.move_x[player];
     move_y = controller.move_y[player];
     do_zhalt=false;

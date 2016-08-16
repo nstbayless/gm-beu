@@ -69,9 +69,9 @@ with (obj) {
     if (default_hitfreeze) {
         defn[7]=min(25,floor(damage/10)*2);
         if (defn[7])>0
-            defn[7]+=3
-        if (defn[7])>8
-            defn[7]=floor(8+(defn[7]-8/1.5))
+            defn[7]+=2
+        if (defn[7])>7
+            defn[7]=floor(7+(defn[7]-7)/1.5)
     }
     __defn7_return=defn[7];
     

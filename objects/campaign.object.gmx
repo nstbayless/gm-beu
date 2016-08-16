@@ -80,7 +80,10 @@ frame=0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//last element encountered on first traversal:
+            <string>if (halt_execute())
+    exit;
+
+//last element encountered on first traversal:
 var last_element=-1;
 if (instance_exists(room_properties))
     for (var i=0;i&lt;spawn_n;i++) {

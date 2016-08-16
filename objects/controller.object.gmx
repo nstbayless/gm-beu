@@ -93,7 +93,7 @@ right_pressed[0]=false;
 up_pressed[0]=false;
 down_pressed[0]=false;
 
-open_menu_pressed[0]=false;
+toggle_menu_pressed[0]=false;
 select_pressed[0]=false;
 cancel_pressed[0]=false;
 
@@ -135,7 +135,7 @@ for (var i=0;i&lt;gamepad_count;i++) {
     up_pressed[i]=false;
     down_pressed[i]=false;
     
-    open_menu_pressed[i]=gamepad_button_check_pressed(i,gp_start);
+    toggle_menu_pressed[i]=gamepad_button_check_pressed(i,gp_start);
     select_pressed[i]=gamepad_button_check_pressed(i,gp_face1);
     cancel_pressed[i]=gamepad_button_check_pressed(i,gp_face2)
     
@@ -166,8 +166,8 @@ right_pressed[0]|=keyboard_check_pressed(vk_right);
 up_pressed[0]|=keyboard_check_pressed(vk_up);
 down_pressed[0]|=keyboard_check_pressed(vk_down);
 
-open_menu_pressed[0]|=keyboard_check_pressed(vk_enter);
-select_pressed[0]=(select_pressed[0]|keyboard_check_pressed(vk_enter)|keyboard_check_pressed(ord("Z")))&amp;!open_menu_pressed[0];
+toggle_menu_pressed[0]|=keyboard_check_pressed(vk_space);
+select_pressed[0]=(select_pressed[0]|keyboard_check_pressed(vk_enter)|keyboard_check_pressed(ord("Z")))
 cancel_pressed[0]=(cancel_pressed[0]|keyboard_check_pressed(vk_escape)|keyboard_check_pressed(ord("X")))
 
 if (keyboard_check(vk_right)) move_x[0]=1;

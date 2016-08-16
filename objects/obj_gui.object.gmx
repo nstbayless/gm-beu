@@ -37,6 +37,63 @@ hitbox_draw_zh[0]=0;
 
 hitbox_draw_alpha[0]=0.5;
 hitbox_draw_colour[0]=c_white;
+
+menus_open=0;
+menu_open[0]=0;
+menu_width=180;
+menu_height=180;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!instance_exists(room_properties))
+    exit;
+
+menus_open=0;
+alive_menus_open=0;
+menu_open[controller.player_count]=false;
+menu_select[controller.player_count]=0;
+//ask players for pause control:
+for (var i=0;i&lt;controller.player_count;i++) {
+    if (controller.toggle_menu_pressed[i]) {
+        menu_open[i]=!menu_open[i];
+    }
+    if (menu_open[i]) {
+        //control in menu:   
+        menus_open++;
+        if (instance_exists(campaign.pc_actor[i]))
+            alive_menus_open++;
+        if (controller.up_pressed[i]) {
+            menu_select[i]--;
+        }
+        if (controller.down_pressed[i]) {
+            menu_select[i]++;
+        }
+   }    
+}
+
+if (alive_menus_open==campaign.pc_alive_count&amp;&amp;alive_menus_open&gt;0||campaign.pc_alive_count==0&amp;&amp;menus_open&gt;0)
+    room_properties.paused=true;
+else
+    room_properties.paused=false;
 </string>
           </argument>
         </arguments>
@@ -60,7 +117,7 @@ hitbox_draw_colour[0]=c_white;
           <argument>
             <kind>1</kind>
             <string>if (instance_exists(room_properties)) {
-    if (room_properties.peaceful)
+    if (room_properties.peaceful&amp;&amp;menus_open==0)
         exit;
     draw_reset();
     //only draw if this is an actual game-room
@@ -79,6 +136,7 @@ hitbox_draw_colour[0]=c_white;
         var hpp = 0;
         var hpp_drain = 0;
         var hp_border_color = c_gray;
+        var hpbar_height=24;
         if (instance_exists(actor_target)) {
             hpp=actor_target.hp/actor_target.stat_maxhp;
             hpp_drain = actor_target.hp_bardrain/actor_target.stat_maxhp;
@@ -87,22 +145,34 @@ hitbox_draw_colour[0]=c_white;
                 if (is_hit_stunned())
                     hp_border_color=c_red;
         }
-        draw_set_colour(get_player_color(i));
-        draw_set_alpha(0.4);
-        draw_circle(cx,cy-48,width/3.5,false);
-        draw_set_color(c_white);
-        //lighting bubble
-        draw_circle(cx-24,cy-48-24,width/13,false)
-        draw_reset();
-        draw_text(cx,cy-48-7,get_player_name(i))
+        if (menu_open[i]) {
+            draw_rectangle_colour(cx-menu_width/2,cy-menu_height-hpbar_height/2,cx+menu_width/2,cy-hpbar_height/2,config.DLG_BOX_GRADIENT_TOP,config.DLG_BOX_GRADIENT_TOP,config.DLG_BOX_GRADIENT_BOT,config.DLG_BOX_GRADIENT_BOT,false)
+            draw_set_color(c_gray)
+            draw_rectangle(cx-menu_width/2+1,cy-menu_height-hpbar_height/2+1,cx+menu_width/2+1,cy-hpbar_height/2+1,true)
+            draw_set_color(hp_border_color)
+            draw_rectangle(cx-menu_width/2,cy-menu_height-hpbar_height/2,cx+menu_width/2,cy-hpbar_height/2,true)
+            var menu_sel_y = cy-menu_height-hpbar_height/2+24*menu_select[i]
+            draw_set_color(config.DLG_SELECTOR)
+            draw_rectangle(cx-menu_width/2+4,menu_sel_y+4,cx+menu_width/2-4,menu_sel_y+24,false)
+        } else {
+            draw_set_colour(get_player_color(i));
+            draw_set_alpha(0.4);
+            draw_circle(cx,cy-48,width/3.5,false);
+            draw_set_color(c_white);
+            //lighting bubble
+            draw_circle(cx-24,cy-48-24,width/13,false)
+            draw_reset();
+            draw_text(cx,cy-48-7,get_player_name(i))
+        }
+        //health bar:
         draw_set_color(c_black);
-        draw_rectangle(xl,cy-12,xl+width,cy+12,false)
+        draw_rectangle(xl,cy-hpbar_height/2,xl+width,cy+hpbar_height/2,false)
         draw_set_color(c_red);
-        draw_rectangle(xl+width*(1-hpp_drain),cy-12,xl+width,cy+12,false)
+        draw_rectangle(xl+width*(1-hpp_drain),cy-hpbar_height/2,xl+width,cy+hpbar_height/2,false)
         draw_set_color(c_green);
-        draw_rectangle(xl+width*(1-hpp),cy-12,xl+width,cy+12,false)
+        draw_rectangle(xl+width*(1-hpp),cy-hpbar_height/2,xl+width,cy+hpbar_height/2,false)
         draw_set_color(hp_border_color);
-        draw_rectangle(xl,cy-12,xl+width,cy+12,true)
+        draw_rectangle(xl,cy-hpbar_height/2,xl+width,cy+hpbar_height/2,true)
     }
     draw_set_halign(fa_left)
     draw_set_valign(fa_top)
