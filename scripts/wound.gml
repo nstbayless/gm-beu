@@ -101,7 +101,7 @@ with (obj) {
     if (abs(knockback_vx)>30||(!on_ground&&abs(knockback_vx)>24))
         sak_angle=min(pi/3.5,abs(knockback_vx)/36-0.6)
     if (sak_angle>0.03) {
-        vspd=sin(sak_angle)*knockback_vx;
+        vspd=sin(sak_angle)*abs(knockback_vx);
         is_jumping=false;
     }
     knockback_vx=cos(sak_angle)*knockback_vx;

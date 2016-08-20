@@ -65,13 +65,14 @@ height=config.SCREEN_HEIGHT;
 ANIM_TIME=15;
 if (mode==0) {
     t_begin_anim=0;
-    opt_n=4;
+    opt_n=5;
     opt_text[0]="Begin"
     opt_text[1]="Continue"
     opt_text[2]="Config"
     opt_text[3]="Jump To Room"
+    opt_text[4]="Infinite Mode"
     
-    opt_disabled[0]=!config.STORY_MODE_ENABLED;
+    opt_disabled[0]=!config.BETA_RELEASE;
     opt_disabled[1]=true;
     opt_disabled[opt_n]=0;
     subchoice=0;
@@ -104,7 +105,7 @@ if (mode==1) {
 FIRST_ROOM=rm_inf;
 if (mode==2) {
     opt_n=0;
-    while room_exists(FIRST_ROOM+opt_n) {
+    while room_exists(FIRST_ROOM+opt_n) &amp;&amp; (FIRST_ROOM+opt_n!=_rm_unreleased||!config.BETA_RELEASE) {
         opt_text[opt_n]=room_get_name(FIRST_ROOM+opt_n);
         opt_disabled[opt_n]=false;
         opt_n++;
@@ -139,7 +140,7 @@ opt_selected=(opt_selected+opt_n) % opt_n;
 if (mode==0 &amp;&amp; select_val) {
     switch (opt_selected) {
     case 0:
-        if (config.STORY_MODE_ENABLED==false)
+        if (config.BETA_RELEASE==false)
             exit;
         mode=3;
         t_begin_anim=0;
@@ -157,6 +158,10 @@ if (mode==0 &amp;&amp; select_val) {
     case 3:
         mode=2;
         opt_selected=0;
+        break;
+    case 4:
+        room_goto(rm_inf)
+        instance_destroy();
         break;
     default:
         break;

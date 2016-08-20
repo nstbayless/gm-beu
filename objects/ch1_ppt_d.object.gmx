@@ -84,6 +84,7 @@ possessor_initialize()
         mode=1;
     if (mode==1)
         if (dialogue_lock()) {
+            dialogue.auto_dummy=false;
             dec_mushy.mode=1;
             dlg_cue_heyyou=dialogue_enqueue(make_line("Mushroom",prt_mushy,"Hey  you."));
             dialogue_enqueue(make_line('"You"',prt_pc_main,"Huh? Did that mushroom just talk?"));

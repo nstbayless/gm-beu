@@ -18,7 +18,7 @@ with (dialogue) {
     if (line!=noone) {
         //add in new line:
         _box_open=true;
-        //set up controller:
+        //set up controller default:
         if (line.f_any_control && line.control_n==0) {
             line.control_n=control_n;
             line.control_v=control_v;

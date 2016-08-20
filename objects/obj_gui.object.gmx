@@ -72,9 +72,16 @@ alive_menus_open=0;
 menu_open[controller.player_count]=false;
 menu_select[controller.player_count]=0;
 //ask players for pause control:
+
 for (var i=0;i&lt;controller.player_count;i++) {
+    if (room_properties.sem_critical) {
+        //cannot have menus open in a critical moment
+        menu_open[i]=false;
+        continue;
+    }
     if (controller.toggle_menu_pressed[i]) {
         menu_open[i]=!menu_open[i];
+        menu_select[i]=0;
     }
     if (menu_open[i]) {
         //control in menu:   

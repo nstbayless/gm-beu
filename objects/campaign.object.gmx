@@ -83,9 +83,13 @@ frame=0;
             <string>if (halt_execute())
     exit;
 
-//last element encountered on first traversal:
-var last_element=-1;
 if (instance_exists(room_properties))
+    if (room_properties.sem_critical)
+        exit;
+    
+//last element encountered on first traversal:
+if (instance_exists(room_properties)) {
+    var last_element=-1;
     for (var i=0;i&lt;spawn_n;i++) {
         spawn_timer[i]--;
         if spawn_player[i]&gt;=0 {
@@ -102,8 +106,8 @@ if (instance_exists(room_properties))
             }
         }
     }
-
-spawn_n=last_element+1;
+    spawn_n=last_element+1;
+}
 
 //adjust number of players if gamepad inserted:
 

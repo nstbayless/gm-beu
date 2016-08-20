@@ -445,7 +445,7 @@ if (t_since_hit&gt;=0&amp;&amp;!is_hit_frozen())
 //t_since_jump
 
 //hitstun and hitfreeze timers updated in begin step for symmetry
-    
+
 var knockback_xdiff=0
 var knockback_ydiff=0;
 

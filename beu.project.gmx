@@ -89,6 +89,7 @@
     <sprite>sprites\spr_bat</sprite>
     <sprite>sprites\spr_bubble_pointer</sprite>
     <sprite>sprites\spr_mushy</sprite>
+    <sprite>sprites\spr_hooded</sprite>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="art">
@@ -123,6 +124,7 @@
     <background>background\prt_mushmom</background>
     <background>background\prt_mushy</background>
     <background>background\prt_pc_main</background>
+    <background>background\prt_hooded</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -182,6 +184,7 @@
     <scripts name="ch">
       <script>scripts\ch_begin_transition.gml</script>
       <script>scripts\open_menu.gml</script>
+      <script>scripts\is_pc.gml</script>
       <script>scripts\get_art.gml</script>
       <script>scripts\get_player_name.gml</script>
       <script>scripts\get_player_color.gml</script>
@@ -219,6 +222,8 @@
       <script>scripts\dialogue_wait.gml</script>
       <script>scripts\dialogue_get_result.gml</script>
       <script>scripts\dialogue_advance.gml</script>
+      <script>scripts\dummy_pcs.gml</script>
+      <script>scripts\undummy_pcs.gml</script>
     </scripts>
     <script>scripts\get_target_nearest.gml</script>
     <script>scripts\get_random_alive_player.gml</script>
@@ -301,6 +306,10 @@
         <object>objects\obj_ch1_bg_d</object>
         <object>objects\obj_ch1_fg_d</object>
       </objects>
+      <objects name="chwave">
+        <object>objects\chwave_ppt</object>
+        <object>objects\mob_hood</object>
+      </objects>
       <object>objects\cinf_ppt</object>
       <object>objects\rm_test_1_ppt</object>
     </objects>
@@ -311,10 +320,14 @@
     <room>rooms\rm_inf</room>
     <room>rooms\rm_test_baddies</room>
     <room>rooms\rm_test_1</room>
-    <room>rooms\rm_c1_a</room>
-    <room>rooms\rm_c1_b</room>
-    <room>rooms\rm_c1_d</room>
-    <room>rooms\rm_c1_c</room>
+    <room>rooms\rm_wave</room>
+    <rooms name="unreleased">
+      <room>rooms\_rm_unreleased</room>
+      <room>rooms\rm_c1_a</room>
+      <room>rooms\rm_c1_b</room>
+      <room>rooms\rm_c1_d</room>
+      <room>rooms\rm_c1_c</room>
+    </rooms>
   </rooms>
   <constants number="11">
     <constant name="cgs_halt">4</constant>

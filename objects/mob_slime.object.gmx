@@ -182,11 +182,15 @@ if instance_exists(ai_target) &amp;&amp; ai_target!=noone {
         slide_timer=40;
         slide_x=ai_target.x-x;
         slide_y=ai_target.y-y;
-        var len = point_distance(0,0,slide_x,slide_y);
-        if (len&gt;0) {
-            slide_x/=len;
-            slide_y/=len;
-        }
+        var rad=0;
+        if (slide_x!=0 or slide_y!=0)
+            rad = degtorad(point_direction(0,0,slide_x,slide_y));
+        else
+            rad=random(2*pi)
+        var len=point_distance(0,0,slide_x,slide_y);
+        rad_offset = max(-0.8,min(0.8,(random(0.2)-0.1)*len/90));
+        slide_x=cos(rad+rad_offset);
+        slide_y=-sin(rad+rad_offset)
         if (random(1)&lt;chance_jump) {
             do_jump=true;
             t_since_jump=0;

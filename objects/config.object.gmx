@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>RUMBLE_ENABLED=true;
+            <string>BETA_RELEASE=false;
+RUMBLE_ENABLED=true;
 TRANSITIONS_ENABLED=true;
 STRIP_THICKNESS=8;
 SMOOTH_STRIPS=true;
@@ -34,7 +35,6 @@ SFX_ENABLED=true;
 DRAW_GUIDES=false;
 RENDER_STRIP_LINES=false;
 RENDER_DEBUG_OVERLAY=true;
-STORY_MODE_ENABLED=false;
 RENDER_HITBOX_ENABLED=false;
 
 //dialogue options:

@@ -59,6 +59,9 @@ snd_daemon_y[0]=0;
 snd_daemon_z[0]=0;
 snd_daemon_sfx[0]=noone;
 snd_daemon_delay[0]=0;
+
+//increments when in a "critical moment" -- means players cannot spawn/despawn
+sem_critical=0;
 </string>
           </argument>
         </arguments>

@@ -254,7 +254,7 @@ image_yscale=height/32;
         surface_set_target(strip_surf);
         draw_clear_alpha(c_black,0)
         draw_surface_part(surf,0,strip_thickness*i,surf_w,strip_thickness,0,0);
-        strip = instance_create(x,y+strip_thickness*i,ground_strip)
+        strip = instance_create(minx,y+strip_thickness*i,ground_strip)
         strip.z=z
         strip.surf=strip_surf;
         strip.surf_w=surf_w;
