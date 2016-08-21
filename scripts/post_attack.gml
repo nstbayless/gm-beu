@@ -7,6 +7,7 @@ if (obj_hit!=noone) {
     if (!on_ground) {
         //aerial attack; bounce
         vspd=8;
+        is_bounced=true;
         t_hit_freeze+=3;
         knockback_vx-=5*dir;
         is_jumping=false;

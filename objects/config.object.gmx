@@ -47,6 +47,8 @@ DLG_SELECTOR = make_colour_rgb(128,6,6)
 //these update in the step event
 SCREEN_WIDTH=view_wview[0];
 SCREEN_HEIGHT=view_hview[0];
+GUI_WIDTH=view_wview[0];
+GUI_HEIGHT=view_hview[0];
 
 show_debug_overlay(RENDER_DEBUG_OVERLAY);
 
@@ -141,15 +143,28 @@ if (keyboard_check_pressed(vk_f4))
 if (keyboard_check_pressed(vk_f8))
     RENDER_HITBOX_ENABLED=!RENDER_HITBOX_ENABLED;
 
-var diff = SCREEN_WIDTH!=window_get_width() || SCREEN_HEIGHT!=window_get_height();    
-SCREEN_WIDTH=window_get_width();
-SCREEN_HEIGHT=window_get_height();
+desired_width=max(250,window_get_width())
+desired_height=max(200,window_get_height())
+desired_gui_width=desired_width;
+desired_gui_height=desired_height;
+if (desired_width&gt;430||desired_height&gt;400) {
+    desired_width/=2
+    desired_height/=2;
+}
+
 if (instance_exists(room_properties)) {
     if (room_properties.room_display_width&gt;=0)
-        SCREEN_WIDTH=room_properties.room_display_width
+        desired_width=room_properties.room_display_width
     if (room_properties.room_display_height&gt;=0)
-        SCREEN_HEIGHT=room_properties.room_display_height
+        desired_height=room_properties.room_display_height
 }
+    
+var diff = SCREEN_WIDTH!=desired_width || SCREEN_HEIGHT!=desired_height || desired_gui_width!=GUI_WIDTH || desired_gui_height!=GUI_HEIGHT;   
+SCREEN_WIDTH=desired_width;
+SCREEN_HEIGHT=desired_height;
+GUI_WIDTH=desired_gui_width;
+GUI_HEIGHT=desired_gui_height;
+
 views_enabled=true;
 view_enabled=true;
 view_visible[0]=true;
@@ -158,8 +173,8 @@ view_hview[0]=SCREEN_HEIGHT;
 view_wport[0]=SCREEN_WIDTH;
 view_hport[0]=SCREEN_HEIGHT;
 
-if (diff &amp;&amp; SCREEN_WIDTH&gt;200 &amp;&amp; SCREEN_HEIGHT &gt;200) {
-    display_set_gui_size(SCREEN_WIDTH, SCREEN_HEIGHT)
+if (diff) {
+    display_set_gui_size(GUI_WIDTH, GUI_HEIGHT)
     surface_resize(application_surface, SCREEN_WIDTH,SCREEN_HEIGHT);
 }
 </string>

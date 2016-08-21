@@ -11,6 +11,4 @@ if argument_count<1
 else
     ly=argument[1]
 
-var ycentre = view_yview[0] + view_hview[0]/2
-
-return lx+(ly-ycentre)*camera.skew
+return lx+(ly)*camera.skew

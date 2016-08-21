@@ -128,14 +128,14 @@ else
     draw_reset();
     //only draw if this is an actual game-room
     var p_n = campaign.pc_count;
-    var player_gui_delta = config.SCREEN_WIDTH/p_n;
+    var player_gui_delta = config.GUI_WIDTH/p_n;
     var player_gui_x_offset = player_gui_delta/2;
     draw_set_halign(fa_center)
     draw_set_valign(fa_middle)
     draw_set_font(fnt_script);
     for (var i=0;i&lt;p_n;i++) {
         var cx = player_gui_delta*i+player_gui_x_offset;
-        var cy = config.SCREEN_HEIGHT-24;
+        var cy = config.GUI_HEIGHT-24;
         var width = 200;
         var xl = cx-width/2;
         var actor_target = campaign.pc_actor[i];

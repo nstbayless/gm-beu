@@ -48,6 +48,7 @@ AN_extra[0] = make_animation(5,1,1);
 
 AN_attack = make_animation(7,1,1);
 AN_attack_basic = AN_attack;
+AN_attack_kick = make_animation(8,1,1)
 AN_drawback = make_animation(6,1,1)
 
 anim=0;
@@ -270,6 +271,23 @@ if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
     if (t_since_attack&lt;8)
         propulsion_x=dir*2*(8-t_since_attack)
 }
+if (combo_state==20 &amp;&amp; can_act()) {
+    wnd_spec[0]=dir;
+    wnd_spec[1]=9;
+    AN_attack=AN_attack_kick;
+    var obj_hit = attack_rectangle(x+dim_x*dir/2-dim_x/1.5,y-dim_y/1.5,z-9, x+dim_x*dir/2+dim_x/1.5,y+dim_y/1.5,z+dim_z/3,wnd_spec);
+    if (obj_hit) {reset_attack();post_attack(obj_hit);vspd=17;knockback_vx=-3*dir;}
+    else if (on_ground||t_since_attack&gt;25) reset_attack()
+    else {
+        if (!is_bounced) {
+            propulsion_x=(stat_run-2)*dir;
+            can_act_misc=false;
+        } else {
+            move_x/=1.7;
+            move_y/=1.7;
+        }
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -314,7 +332,7 @@ if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
     if (t_since_jump==0) {
         if (combo_state==11 &amp;&amp; t_since_attack&lt;5) {
             //cannot jump cancel now
-        } else combo_state=0;
+        } else reset_attack();
     }
     
     if (can_act()&amp;&amp;do_atk) {
@@ -325,6 +343,8 @@ if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
         if (combo_state==10 &amp;&amp; t_since_attack&lt;ATK_LEN_ATK2)
             can_attack=false;
         if (combo_state==3 &amp;&amp; t_since_attack &lt; 5)
+            can_attack=false;
+        if (combo_state==20)
             can_attack=false;
         if (can_attack) {
             //combo tree:
@@ -344,6 +364,11 @@ if (combo_state==3 &amp;&amp; t_since_attack&lt;10) {
                 combo_state=3;
             } else if (do_atk_style==1) {
                 combo_state=10;
+            } else if (do_atk_style==0&amp;&amp;!on_ground) {
+                combo_state=20;
+                play_sfx_at(x,y,z,sfx_attack2);
+                if (vspd&gt;0&amp;&amp;!is_bounced)
+                    vspd/=8;
             } else if (do_atk_style==0) {
                 AN_attack=AN_attack_basic;
                 post_attack(attack_rectangle(x+dir*16-24,y-20,z+1,x+dir*16+24,y+20,z+20,wnd_spec))
@@ -410,6 +435,8 @@ if (extra_action==1)
     AN=AN_extra[0];
 if (combo_state==10&amp;&amp;t_since_attack&lt;=ATK_LEN_ATK2)
     AN=AN_drawback
+if (combo_state==20)
+    AN=AN_attack
 
 animation_set_image_index();
 </string>

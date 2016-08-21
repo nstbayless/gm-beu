@@ -82,6 +82,7 @@ do_block=false;
 do_atk=false;
 is_blocking=false;
 is_jumping=false;
+is_bounced=false;
 extra_action=0;
 do_dir=0;
 
@@ -553,6 +554,7 @@ if (!is_hit_frozen()) {
             vspd-=sign_vspd*knockback_friction;
             if (vspd*sign_vspd&lt;=0) {
                 vspd=0;
+                is_bounced=false;
                 is_jumping=false;
             }
         }
@@ -595,6 +597,7 @@ if (t_since_jump&gt;=0 &amp;&amp; !is_hit_frozen())
 //jumping
 if (can_act()&amp;&amp;do_jump&amp;&amp;on_ground) {
         t_since_jump=0;
+        on_ground=false;
         is_jumping=true;
         if (!is_blocking) vspd=stat_jumpspd;
         else vspd=stat_jumpspd_blk;
@@ -644,10 +647,14 @@ if (collision_z!=noone &amp;&amp; vspd&lt;0) {
     is_jumping=false;
     vspd*=-bounce_mult;
     vspd-=bounce_sub
+    is_bounced=true;
     if (vspd&gt;bounce_max&amp;&amp;bounce_max&gt;0)
         vspd=bounce_max;
-    if (vspd&lt;0)
+    if (vspd&lt;0) {
         vspd=0;
+        is_bounced=false;
+        on_ground=true;
+    }
 }
 
 phys_moved_dist = point_distance(0,0,phys_xdiff,phys_ydiff);

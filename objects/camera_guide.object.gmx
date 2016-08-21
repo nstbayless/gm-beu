@@ -109,7 +109,6 @@ aot=1;
     }
 }
 
-
 //adjust camera coords (overrides code in camera)
 view_xview[0]=camera.x-view_wview[0]/2;
 view_yview[0]=camera.y-view_hview[0]/2;

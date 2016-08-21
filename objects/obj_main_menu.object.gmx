@@ -59,8 +59,8 @@ fadespd=2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>width=config.SCREEN_WIDTH;
-height=config.SCREEN_HEIGHT;
+            <string>width=config.GUI_WIDTH;
+height=config.GUI_HEIGHT;
 
 ANIM_TIME=15;
 if (mode==0) {

@@ -279,8 +279,8 @@ if (wave_active) {
             <kind>1</kind>
             <string>if (!show_gui)
     exit;
-var width = config.SCREEN_WIDTH;
-var height = config.SCREEN_HEIGHT;
+var width = config.GUI_WIDTH;
+var height = config.GUI_HEIGHT;
 
 draw_set_alpha(1);
 if (wave_active)
