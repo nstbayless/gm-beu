@@ -45,7 +45,7 @@ z_rest=0;
 ground_rest=noone;
 on_ground=false;
 
-stat_recharge_delay=190;
+stat_recharge_delay=110;
 stat_recharge_rate=0;
 stat_maxhp=20;
 hp=stat_maxhp
@@ -149,6 +149,10 @@ loc_sfx_on_hit=sfx_hit;
 loc_sfx_on_block=sfx_ping;
 loc_sfx_on_death=sfx_explosion;
 
+//on_ scripts:
+on_death = false;
+
+//animation stuff
 AN_idle = make_animation(0,1,1);
 AN_walk = make_animation(0,1,1);
 AN_run = AN_walk;
@@ -164,12 +168,56 @@ AN_attack=AN_idle
 
 anim=0;
 anim_move=0;
+
+
 </string>
           </argument>
         </arguments>
       </action>
     </event>
     <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>612</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>halt_execute_actor()</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
       <action>
         <libid>1</libid>
         <id>605</id>
@@ -322,6 +370,20 @@ if (t_since_hit&gt;=0&amp;&amp;!is_hit_frozen())
 </string>
           </argument>
         </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="3" enumb="0">

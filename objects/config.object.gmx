@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>BETA_RELEASE=false;
+            <string>BETA_RELEASE=true;
 RUMBLE_ENABLED=true;
 TRANSITIONS_ENABLED=true;
 STRIP_THICKNESS=8;

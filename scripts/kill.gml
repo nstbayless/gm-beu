@@ -9,6 +9,8 @@ if argument_count>1
 with (inst_actor) {
     if (obj_explosion_loc>=0)
         (instance_create(x,y,obj_explosion_loc)).z=z;
+    if (on_death)
+        script_execute(on_death);
     if (player>=0) {
         campaign.spawn_timer[campaign.spawn_n]=re_time;
         campaign.spawn_player[campaign.spawn_n]=player;

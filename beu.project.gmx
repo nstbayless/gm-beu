@@ -178,10 +178,11 @@
     </scripts>
     <scripts name="draw">
       <script>scripts\draw_reset.gml</script>
+      <script>scripts\draw_reset_full.gml</script>
       <script>scripts\draw_wheel.gml</script>
       <script>scripts\draw_box.gml</script>
     </scripts>
-    <scripts name="ch">
+    <scripts name="ppt">
       <script>scripts\ch_begin_transition.gml</script>
       <script>scripts\open_menu.gml</script>
       <script>scripts\is_pc.gml</script>
@@ -225,10 +226,23 @@
       <script>scripts\dummy_pcs.gml</script>
       <script>scripts\undummy_pcs.gml</script>
     </scripts>
+    <scripts name="chapter_scripts">
+      <scripts name="chwave">
+        <script>scripts\scr_chwave_mob_death_counter.gml</script>
+        <script>scripts\scr_chwave_end.gml</script>
+        <script>scripts\scr_chwave_get_mobcount.gml</script>
+        <script>scripts\scr_chwave_get_ontick.gml</script>
+        <script>scripts\scr_chwave_1_tick.gml</script>
+        <script>scripts\scr_chwave_2_tick.gml</script>
+        <script>scripts\scr_chwave_3_tick.gml</script>
+        <script>scripts\scr_chwave_4_tick.gml</script>
+        <script>scripts\scr_chwave_5_tick.gml</script>
+      </scripts>
+    </scripts>
     <script>scripts\get_target_nearest.gml</script>
     <script>scripts\get_random_alive_player.gml</script>
-    <script>scripts\halt_execute_actor.gml</script>
     <script>scripts\instance_create_xyz.gml</script>
+    <script>scripts\halt_execute_actor.gml</script>
     <script>scripts\halt_execute.gml</script>
   </scripts>
   <fonts name="fonts">

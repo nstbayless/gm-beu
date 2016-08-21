@@ -39,7 +39,6 @@ hitbox_draw_alpha[0]=0.5;
 hitbox_draw_colour[0]=c_white;
 
 menus_open=0;
-menu_open[0]=0;
 menu_width=180;
 menu_height=180;
 </string>
@@ -64,14 +63,14 @@ menu_height=180;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!instance_exists(room_properties))
-    exit;
-
-menus_open=0;
+            <string>menus_open=0;
 alive_menus_open=0;
 menu_open[controller.player_count]=false;
 menu_select[controller.player_count]=0;
 //ask players for pause control:
+
+if (!instance_exists(room_properties))
+    exit;
 
 for (var i=0;i&lt;controller.player_count;i++) {
     if (room_properties.sem_critical) {

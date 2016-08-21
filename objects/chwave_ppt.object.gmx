@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>mode=0;
+            <string>mode=0; //TODO: this is temporary. Reset to mode=0.
 wave=0;
 
 wave_mob_max=0;
@@ -33,8 +33,10 @@ wave_mob_n=0;
 
 show_gui=false;
 
-total_waves=1;
-wave_started[total_waves]=0;
+total_waves=5;
+wave_started=false;
+wave_start_timer=0;
+wave_active=false;
 </string>
           </argument>
         </arguments>
@@ -153,12 +155,14 @@ if (mode==3) {
     }
 }
 
-if (mode==4&amp;&amp;!instance_exists(mob_hood))
+if (mode==4&amp;&amp;!instance_exists(mob_hood)) {
     mode=5;
+}
 
 if (mode==5) {
     show_gui=true;
-    wave=1;
+    if (wave==0)
+        wave=1;
 }
 </string>
           </argument>
@@ -208,32 +212,35 @@ if (mode==5) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!wave_started[wave]) {
-    wave_started[wave]=true;
+            <string>wave_active=false;
+wave_mod = ((wave-1) % total_waves) +1
+
+if (!wave_started) {
+    wave_started=true;
     wave_timer=0;
     wave_mob_spawned=0;
-}
-
-if (wave==1) {
-    if (wave_timer==0) {
-        wave_mob_max=7;
+    wave_start_timer=5.5*30;
+    if (wave&gt;30) //TODO: proper "win"
+        open_menu();
+} 
+if wave_start_timer&lt;=0
+    wave_active=true;
+else {
+    wave_start_timer--;
+    if (wave_start_timer==0) {
+        wave_active=true;
+        wave_mob_max=scr_chwave_get_mobcount(wave);
         wave_mob_n=wave_mob_max;
     }
-    if (wave_timer%6==0) {
-        if (wave_mob_spawned&lt;wave_mob_max) {
-            wave_mob_spawned++;
-            var lx = arena0.x
-            var ly = arena0.y;
-            var lw = arena0.width;
-            var lh = arena0.height;
-            var margin = 16;
-            var mob = instance_create_xyz(lx+random(lw-2*margin)+margin,ly+random(lh-2*margin)+margin,1300,mob_slime);
-            mob.bounce_max=14;
-        }
-    }
 }
 
-wave_timer++;
+if (wave_active) {
+    script_execute(scr_chwave_get_ontick(wave_mod));
+    
+    if (wave_mob_n==0&amp;&amp;wave_mob_max&gt;0)
+        scr_chwave_end();
+    wave_timer++;
+}
 </string>
           </argument>
         </arguments>
@@ -275,11 +282,14 @@ wave_timer++;
 var width = config.SCREEN_WIDTH;
 var height = config.SCREEN_HEIGHT;
 
-draw_set_alpha(0.8);
-draw_set_colour(make_colour_rgb(40,100,255));
+draw_set_alpha(1);
+if (wave_active)
+    draw_set_colour(make_colour_rgb(40,100,255));
+else
+    draw_set_colour(c_ltgray);
 draw_set_font(jukefont);
 
-var d_rect_width=140;
+var d_rect_width=170;
 var d_rect_lmarg = 20;
 var d_rect_ymarg = 46;
 var d_height = 20;
@@ -290,6 +300,36 @@ var p = 0;
 if (wave_mob_max&gt;0)
     p=wave_mob_n/wave_mob_max;
 draw_rectangle(width-d_rect_width-d_rect_lmarg+d_margin,d_rect_ymarg+d_margin,width-(d_rect_width-d_margin*2)*(1-p)-d_rect_lmarg-d_margin,d_rect_ymarg+d_height-d_margin,false);
+
+if (wave_started&amp;&amp;!wave_active&amp;&amp;wave_start_timer&lt;=5*30) {
+    var color = c_aqua;
+    if (wave_start_timer&lt;4)
+        color=c_white;
+    draw_set_halign(fa_center)
+    draw_set_valign(fa_middle);
+    draw_set_font(fnt_script)
+    var t = (5*30-wave_start_timer)
+    var scale=1;
+    var alph=1;
+    if (t&lt;6) {
+        scale=sqrt(sqrt(t/5.7));
+        alph=t/6;
+    }
+    
+    draw_wheel(width/2,height/2,spr_hp_ring_med,0,1,scale,color,0.2*alph)
+    draw_wheel(width/2,height/2,spr_hp_ring_med,wave_start_timer/5/30,1,scale,color,0.8*alph)
+    draw_set_colour(c_yellow);
+    draw_set_alpha(1);
+    if (color==c_white)
+        draw_set_color(color);
+    var off_y=0;
+
+    if (t&lt;10)
+        off_y=floor((10-t)*(10-t)*-3.5)
+    draw_text(width/2,height/2+off_y,"Get Ready!")
+    
+    draw_reset_full();
+}
 </string>
           </argument>
         </arguments>

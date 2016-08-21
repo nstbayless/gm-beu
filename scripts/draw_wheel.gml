@@ -1,4 +1,5 @@
 //draw_wheel(x,y,sprite,p1,p2,scale,color,alpha);
+//p1 <= p2
 
 var lx=argument0;
 var ly=argument1;
@@ -12,8 +13,8 @@ var alpha=argument7;
 if (p2<=p1)
     exit;
 
-var ring_w = sprite_get_width(spr_hp_ring_loc);
-var ring_h = sprite_get_height(spr_hp_ring_loc);
+var ring_w = sprite_get_width(sprite);
+var ring_h = sprite_get_height(sprite);
 
 if (p1==0&&p2==1) {
     draw_set_color(color);

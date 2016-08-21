@@ -178,9 +178,9 @@ if (gen_x&gt;x) {
             }
         if (gen_num&gt;2)
             while (random(1)&lt;0.05 + p_slime_d ) {
-                    var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_bat);
-                    inst_slime.z=z+5;
-                }
+                var inst_slime = instance_create(x+random(dx),y+dw_min+random(dw_max-dw_min),mob_bat);
+                inst_slime.z=z+5;
+            }
         generate_ground(x,y+dw_min,z,dx,dw_max-dw_min)
         generate_vwall(x,y+dw_max,z,dx,1000);
         print("generated at +" + string(x-camera.x) + " from camera.");
