@@ -246,6 +246,9 @@
     <script>scripts\halt_execute_actor.gml</script>
     <script>scripts\halt_execute.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\shd_tv.shader</shader>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\jukefont</font>
     <font>fonts\fnt_script</font>
@@ -302,6 +305,7 @@
       <object>objects\obj_gui</object>
       <object>objects\obj_struct</object>
       <object>objects\obj_main_menu</object>
+      <object>objects\display</object>
       <object>objects\config</object>
       <object>objects\dialogue</object>
       <object>objects\obj_line</object>

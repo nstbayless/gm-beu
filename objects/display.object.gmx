@@ -2,8 +2,8 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
-  <depth>-5000</depth>
+  <visible>-1</visible>
+  <depth>0</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,97 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>BETA_RELEASE=true;
-RUMBLE_ENABLED=true;
-TRANSITIONS_ENABLED=true;
-STRIP_THICKNESS=8;
-SMOOTH_STRIPS=true;
-MUSIC_ENABLED=false;
-SFX_ENABLED=true;
-DRAW_GUIDES=false;
-RENDER_STRIP_LINES=false;
-RENDER_DEBUG_OVERLAY=true;
-RENDER_HITBOX_ENABLED=false;
-
-//dialogue options:
-DLG_BOX_GRADIENT_TOP = make_colour_rgb(16,18,64);
-DLG_BOX_GRADIENT_BOT = make_colour_rgb(4,5,6);
-DLG_BOX_BORDER_SHADOW = c_gray
-DLG_BOX_BORDER = c_ltgray;
-DLG_SELECTOR = make_colour_rgb(128,6,6)
-
-//these update in the step event
-SCREEN_WIDTH=1;
-SCREEN_HEIGHT=1;
-GUI_WIDTH=1
-GUI_HEIGHT=1
-
-show_debug_overlay(RENDER_DEBUG_OVERLAY);
-
-RENDER_GROUND_ENABLED=true;
-RENDER_CLIFFS_ENABLED=true;
-RENDER_VWALL_ENABLED=true;
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>set version</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>VERSION_TYPE = "alpha"
-
-var date = date_date_string(GM_build_date)
-var pos = string_pos("/",date)
-var day=string_copy(date,0,pos-1);
-var rest = string_copy(date,pos+1,string_length(date)-pos)
-var pos2 =string_pos("/",rest)
-var month = string_copy(rest,0,pos2-1)
-var year = string_copy(rest,pos2+1,string_length(rest)-pos2)
-
-BUILD_DATE = year+"-"+month+"-"+day
-
-var version = string_copy(GM_version,0,string_length(GM_version)-2);
-
-FULL_VERSION= "v"+version + " ("+VERSION_TYPE+"): " + BUILD_DATE
+            <string>display_full_width=0;
+display_full_height=0;
+application_surface_draw_enable(false);
+t=0;
+s_time = shader_get_uniform( shd_tv, "time");
+s_bw = shader_get_uniform( shd_tv, "bw");
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="1">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -132,16 +53,92 @@ FULL_VERSION= "v"+version + " ("+VERSION_TYPE+"): " + BUILD_DATE
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check_pressed(vk_f1))
-    RENDER_STRIP_LINES=!RENDER_STRIP_LINES
-if (keyboard_check_pressed(vk_f2))
-    RENDER_GROUND_ENABLED=!RENDER_GROUND_ENABLED
-if (keyboard_check_pressed(vk_f3))
-    RENDER_CLIFFS_ENABLED=!RENDER_CLIFFS_ENABLED
-if (keyboard_check_pressed(vk_f4))
-    RENDER_VWALL_ENABLED=!RENDER_VWALL_ENABLED
-if (keyboard_check_pressed(vk_f8))
-    RENDER_HITBOX_ENABLED=!RENDER_HITBOX_ENABLED;
+            <string>prev_width = display_full_width
+prev_height = display_full_height
+
+display_full_width = window_get_width();
+display_full_height = window_get_height();
+
+screen_min_width=800;
+screen_min_height=500;
+
+scale_factor=min(floor(display_full_width/screen_min_width),floor(display_full_height/screen_min_height));
+if (scale_factor==0)
+    scale_factor=min((display_full_width/screen_min_width),(display_full_height/screen_min_height));
+
+config.SCREEN_WIDTH=screen_min_width;
+config.SCREEN_HEIGHT=screen_min_height;
+config.GUI_WIDTH=display_full_width;
+config.GUI_HEIGHT=display_full_height;
+
+view_enabled=true;
+view_visible[0]=true;
+view_wview[0]=config.SCREEN_WIDTH;
+view_hview[0]=config.SCREEN_HEIGHT;
+
+if (prev_width!=display_full_width||prev_height!=display_full_height) {
+    surface_resize(application_surface,config.SCREEN_WIDTH,config.SCREEN_HEIGHT);
+    display_set_gui_maximise(1,1,0,0);
+    application_surface_draw_enable(false);
+}
+t+=0.01
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="77">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>surface_reset_target();
+
+var draw_width = config.SCREEN_WIDTH*scale_factor;
+var draw_height = config.SCREEN_HEIGHT*scale_factor;
+
+var offx = (display_full_width-draw_width)/2
+var offy = (display_full_height-draw_height)/2
+shader_set(shd_tv);
+shader_set_uniform_f(s_time, t);
+shader_set_uniform_f(s_bw, 1);
+draw_surface_stretched(application_surface,offx,offy,draw_width,draw_height);
+shader_reset();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="76">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>surface_set_target(application_surface);
 </string>
           </argument>
         </arguments>
