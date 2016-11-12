@@ -123,16 +123,28 @@ else
           <argument>
             <kind>1</kind>
             <string>if (instance_exists(room_properties)) {
+    //only draw if this is an actual game-room
     if (room_properties.peaceful&amp;&amp;menus_open==0)
         exit;
+    // only display gui if hostile, or menus open
+    
     draw_reset();
-    //only draw if this is an actual game-room
     var p_n = campaign.pc_count;
     var player_gui_delta = config.GUI_WIDTH/p_n;
     var player_gui_x_offset = player_gui_delta/2;
     draw_set_halign(fa_center)
     draw_set_valign(fa_middle)
     draw_set_font(fnt_script);
+    if (!campaign.pc_infinite_lives) {
+        //draw lives
+        draw_set_alpha(0.7);
+        var spr_life_w = sprite_get_width(spr_life)*3/4;
+        var spr_life_h = sprite_get_height(spr_life);
+        for (var i=0;i&lt;campaign.pc_lives;i++) {
+            draw_sprite(spr_life,0,spr_life_w*i,config.GUI_HEIGHT-spr_life_h);
+        }
+    }
+    draw_set_alpha(1);
     for (var i=0;i&lt;p_n;i++) {
         var cx = player_gui_delta*i+player_gui_x_offset;
         var cy = config.GUI_HEIGHT-24;
@@ -144,6 +156,7 @@ else
         var hp_border_color = c_gray;
         var hpbar_height=24;
         if (instance_exists(actor_target)) {
+            // select health bar stats
             hpp=actor_target.hp/actor_target.stat_maxhp;
             hpp_drain = actor_target.hp_bardrain/actor_target.stat_maxhp;
             hp_border_color=c_white;
@@ -152,6 +165,7 @@ else
                     hp_border_color=c_red;
         }
         if (menu_open[i]) {
+            // draw menu
             draw_rectangle_colour(cx-menu_width/2,cy-menu_height-hpbar_height/2,cx+menu_width/2,cy-hpbar_height/2,config.DLG_BOX_GRADIENT_TOP,config.DLG_BOX_GRADIENT_TOP,config.DLG_BOX_GRADIENT_BOT,config.DLG_BOX_GRADIENT_BOT,false)
             draw_set_color(c_gray)
             draw_rectangle(cx-menu_width/2+1,cy-menu_height-hpbar_height/2+1,cx+menu_width/2+1,cy-hpbar_height/2+1,true)
@@ -161,6 +175,7 @@ else
             draw_set_color(config.DLG_SELECTOR)
             draw_rectangle(cx-menu_width/2+4,menu_sel_y+4,cx+menu_width/2-4,menu_sel_y+24,false)
         } else {
+            // draw status
             draw_set_colour(get_player_color(i));
             draw_set_alpha(0.4);
             draw_circle(cx,cy-48,width/3.5,false);
@@ -205,7 +220,9 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (var i=0;i&lt;hitbox_draw_n;i++) {
+            <string>// draw hitboxes
+
+for (var i=0;i&lt;hitbox_draw_n;i++) {
     draw_set_colour(hitbox_draw_colour[i]);
     draw_set_alpha(hitbox_draw_alpha[i]);
     draw_box(hitbox_draw_x[i],hitbox_draw_y[i],hitbox_draw_z[i],hitbox_draw_w[i],hitbox_draw_h[i],hitbox_draw_zh[i],false)

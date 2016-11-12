@@ -33,6 +33,9 @@ wave_mob_n=0;
 
 show_gui=false;
 
+campaign.pc_lives=0;
+campaign.pc_infinite_lives=false;
+
 total_waves=5;
 wave_started=false;
 wave_start_timer=0;

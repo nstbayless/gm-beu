@@ -83,8 +83,10 @@
     <sprite>sprites\spr_slime</sprite>
     <sprites name="hud">
       <sprite>sprites\spr_hp_ring_small</sprite>
+      <sprite>sprites\spr_life</sprite>
       <sprite>sprites\spr_hp_ring_med</sprite>
     </sprites>
+    <sprite>sprites\spr_whalegod</sprite>
     <sprite>sprites\spr_arrow</sprite>
     <sprite>sprites\spr_bat</sprite>
     <sprite>sprites\spr_bubble_pointer</sprite>
@@ -305,6 +307,7 @@
       <object>objects\obj_gui</object>
       <object>objects\obj_struct</object>
       <object>objects\obj_main_menu</object>
+      <object>objects\obj_tpk</object>
       <object>objects\display</object>
       <object>objects\config</object>
       <object>objects\dialogue</object>

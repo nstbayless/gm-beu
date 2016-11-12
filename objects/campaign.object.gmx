@@ -49,12 +49,14 @@ gamepad_count = 0
 pc_actor[pc_count]=noone;
 //list of pcs in the party
 pc_actor_obj[pc_count]=noone;
+pc_lives=0;
+pc_infinite_lives=true;
 
 possessor_dummy=instance_create(0,0,obj_struct);
 possessor_dummy.persistent=true;
 with (possessor_dummy) possessor_initialize();
 
-open_menu();
+open_menu(); //opens main menu at start of game
 audio_falloff_set_model(audio_falloff_linear_distance_clamped);
 
 frame=0;
@@ -94,10 +96,11 @@ if (instance_exists(room_properties)) {
         spawn_timer[i]--;
         if spawn_player[i]&gt;=0 {
             last_element=i;
-            if (spawn_timer[i]&lt;=0) {
+            if (spawn_timer[i]&lt;=0 &amp;&amp; (pc_lives &gt;0 || pc_infinite_lives)) {
                 var player = spawn_player[i];
                 var spawn_coords = get_spawn_coords();
                 pc_alive_count++;
+                pc_lives--;
                 var pc_inst = instance_create_xyz(spawn_coords[0],spawn_coords[1],spawn_coords[2],pc_actor_obj[player]);
                 pc_inst.player=player;
                 obj_focus.subfocus[player]=pc_inst;
@@ -107,6 +110,12 @@ if (instance_exists(room_properties)) {
         }
     }
     spawn_n=last_element+1;
+    
+    if (pc_lives&lt;=0&amp;&amp;!pc_infinite_lives&amp;&amp;pc_alive_count&lt;=0) {
+        //out of lives:
+        if (!instance_exists(obj_tpk))
+            instance_create(0,0,obj_tpk);
+    }
 }
 
 //adjust number of players if gamepad inserted:
@@ -134,8 +143,10 @@ if (frame%30==1) {
             //remove players
             for (var i=pc_count-1;i&gt;=tmp_pc_count;i--) {
                 instance_activate_object(pc_actor[i])
-                if (instance_exists(pc_actor[i]))
+                if (instance_exists(pc_actor[i])) {
                     pc_alive_count--; //checks if actor alive before decrementing
+                    pc_lives++;
+                }
                 with (pc_actor[i]) {
                     instance_destroy();
                 }
@@ -172,6 +183,7 @@ if (frame%30==1) {
     if (!instance_exists(obj_focus))
         instance_create(0,0,obj_focus)
     obj_focus.nomap=true;
+    pc_alive_count=0;
     for (var i=0;i&lt;pc_count;i++) {
         lpc = instance_create(0,0,pc_actor_obj[i]);
         pc_alive_count++;

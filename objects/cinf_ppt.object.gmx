@@ -45,6 +45,8 @@ ins_spawn=instance_create(x+32,y,ch_spawn);
 ins_spawn.z=z+96;
 ins_spawn.nomap=true;
 
+pc_lives = 10;
+
 var cg = instance_create(x,y,camera_guide);
 cg.camera_guide_style = cgs_capl;
 cg.active=true;

@@ -3,8 +3,8 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
-  <persistent>-1</persistent>
+  <depth>-30000</depth>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,12 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>display_full_width=0;
-display_full_height=0;
-application_surface_draw_enable(false);
-t=0;
-s_time = shader_get_uniform( shd_tv, "time");
-s_bw = shader_get_uniform( shd_tv, "bw");
+            <string>// start fading out
+
+gameover_t=0;
+gameover_t_max = 198;
 </string>
           </argument>
         </arguments>
@@ -53,41 +51,24 @@ s_bw = shader_get_uniform( shd_tv, "bw");
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>prev_width = display_full_width
-prev_height = display_full_height
-
-display_full_width = window_get_width();
-display_full_height = window_get_height();
-
-screen_min_width=680;
-screen_min_height=380;
-
-scale_factor=min(floor(display_full_width/screen_min_width),floor(display_full_height/screen_min_height));
-if (scale_factor==0)
-    scale_factor=min((display_full_width/screen_min_width),(display_full_height/screen_min_height));
-
-config.SCREEN_WIDTH=screen_min_width;
-config.SCREEN_HEIGHT=screen_min_height;
-config.GUI_WIDTH=display_full_width;
-config.GUI_HEIGHT=display_full_height;
-
-view_enabled=true;
-view_visible[0]=true;
-view_wview[0]=config.SCREEN_WIDTH;
-view_hview[0]=config.SCREEN_HEIGHT;
-
-if (prev_width!=display_full_width||prev_height!=display_full_height) {
-    surface_resize(application_surface,config.SCREEN_WIDTH,config.SCREEN_HEIGHT);
-    display_set_gui_maximise(1,1,0,0);
-    application_surface_draw_enable(false);
+            <string>if (campaign.pc_lives&gt;0||campaign.pc_infinite_lives||campaign.pc_alive_count&gt;0) {
+    //lives regained, stop fadeout sequence
+    gameover_t--;
+    
+    if (gameover_t&lt;0)
+        instance_destroy();
+} else {
+    gameover_t++;
+    if (gameover_t&gt;gameover_t_max) {
+        open_menu();
+    }
 }
-t+=0.01
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="77">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -104,41 +85,27 @@ t+=0.01
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_reset_target();
+            <string>var p_t = gameover_t/gameover_t_max;
 
-var draw_width = config.SCREEN_WIDTH*scale_factor;
-var draw_height = config.SCREEN_HEIGHT*scale_factor;
+var p_w = max(0,p_t*1.2-0.2);
 
-var offx = (display_full_width-draw_width)/2
-var offy = (display_full_height-draw_height)/2
-shader_set(shd_tv);
-shader_set_uniform_f(s_time, t);
-shader_set_uniform_f(s_bw, 1);
-draw_surface_stretched(application_surface,offx,offy,draw_width,draw_height);
-shader_reset();
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="76">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>surface_set_target(application_surface);
+var p_fade = p_t*p_t*1.2;
+
+var dx = view_xview[0];
+var dy = view_yview[0];
+
+draw_set_alpha(p_fade);
+draw_set_colour(c_black);
+draw_rectangle(dx,dy,config.SCREEN_WIDTH+dx,config.SCREEN_HEIGHT+dy,false);
+draw_set_colour(c_white)
+draw_set_alpha(1);
+
+var frame = floor(p_w*12) % 2
+
+var whale_x = sin(p_t*4*pi + sqrt(p_t))*10 + config.SCREEN_WIDTH/2;
+var whale_y = sin(p_w*p_w*pi)*config.SCREEN_HEIGHT*3/5-60;
+
+draw_sprite(spr_whalegod,frame,whale_x+dx,whale_y+dy);
 </string>
           </argument>
         </arguments>
